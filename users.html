@@ -1,0 +1,153 @@
+<html>
+<head>
+<title>Users</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newUser() { showform('insert'); }
+    function updateUser(pid) { showform('update'); }
+    function deleteUser(pid) { showform ('delete'); }
+    function browseUsers() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseUsers()">
+<h1>Users</h1>
+
+[ <a href="restaurants.html">restaurants</a> | <a href="Users.html">Users</a> | Certifications | Users Certified ]
+
+<div id="browse">
+<p><a href="#" onClick="showAll()">Display all forms</a> </p>
+<table border="1" cellpadding="5">
+  <tr>
+    <th><a href="#" onClick="newUser()">New</a></th>
+    <th></th>
+    <th>id</th>
+    <th>fname</th>
+    <th>lname</th>
+    <th>homeworld</th>
+    <th>age</th>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td align="right" >1</td>
+    <td >William</td>
+    <td align="right" >Adama</td>
+    <td>Caprica</td>
+    <td>61</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td align="right" >2</td>
+    <td>Lee</td>
+    <td align="right" >Adama</td>
+    <td >Caprica</td>
+    <td>30</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td>3</td>
+    <td>Laura</td>
+    <td align="right" >Roslin</td>
+    <td>Caprica</td>
+    <td><em>NULL</em></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addrestaurant">
+        <legend><strong>Add User</strong></legend>
+          <fieldset class="fields">
+            <label> first name </label> <input type="text" name="fname">
+            <label> last name </label> <input type="text" name="lname">
+            <label> e-mail </label> <input type="text" name="email">
+            <label> city </label> <select name="city">
+            	<option value="0">&nbsp;</option>
+                <option value="1">San Francisco</option>
+                <option value="2">Portland</option>
+                <option value="3">Los Angeles</option>
+                </select>
+      </fieldset>
+          <input class="btn" type="submit" id="addUser" value="Add User">
+          <input class="btn" type="button" value="cancel" onClick="browseUsers()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+    <form method="POST" id="UpdateUser">
+        <legend><strong>Update User</strong></legend>
+          <fieldset class="fields">
+          <input type="hidden" name="UserID" id="updateUserID" value="1">
+          <label> ID: </label> 1
+            <label> first name </label> <input type="text" name="fname" value="Michael">
+            <label> last name </label> <input type="text" name="lname" value="Scott">
+            <label> e-mail </label> <input type="text" name="email" value="mscott@gmail.com">
+            <label> city </label> <select name="city">
+            	<option value="0">&nbsp;</option>
+                <option value="1" selected>San Francisco</option>
+                <option value="2">Portland</option>
+                <option value="3">Los Angeles</option>
+                </select>
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveUser" value="Save Update User">
+          <input class="btn" type="button" value="cancel" onClick="browseUsers()">
+	</form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteUser">
+      <legend><strong>Delete User</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="UserID" id="deleteUserID" value="1">
+          <label><strong>ID:</strong></label> 1
+            <label> <strong>Name</strong> </label> Michael Scott
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteUser" value="Delete User">
+          <input class="btn" type="button" value="cancel" onClick="browseUsers()">
+  </form> 
+</div><!-- delete -->
+
+</body>
+</html>
