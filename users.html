@@ -50,7 +50,7 @@
 <body onload="browseUsers()">
 <h1>Users</h1>
 
-[ <a href="restaurants.html">restaurants</a> | <a href="Users.html">Users</a> | Certifications | Users Certified ]
+[ <a href="restaurants.html">Restaurants</a> | <a href="users.html">Users</a> | <a href="cities.html">Cities</a> | <a href="reviews.html">Reviews</a> ]
 
 <div id="browse">
 <p><a href="#" onClick="showAll()">Display all forms</a> </p>
@@ -58,38 +58,50 @@
   <tr>
     <th><a href="#" onClick="newUser()">New</a></th>
     <th></th>
-    <th>id</th>
-    <th>fname</th>
-    <th>lname</th>
-    <th>homeworld</th>
-    <th>age</th>
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>City</th>
   </tr>
   <tr>
     <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
     <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
-    <td align="right" >1</td>
-    <td >William</td>
-    <td align="right" >Adama</td>
-    <td>Caprica</td>
-    <td>61</td>
+    <td align="center">1</td>
+    <td >Michael</td>
+    <td align="left" >Scott</td>
+    <td align="center">Los Angeles</td>
   </tr>
   <tr>
     <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
     <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
-    <td align="right" >2</td>
-    <td>Lee</td>
-    <td align="right" >Adama</td>
-    <td >Caprica</td>
-    <td>30</td>
+    <td align="center">2</td>
+    <td>Pamela</td>
+    <td align="left" >Beesly</td>
+    <td align="center">Los Angeles</td>
   </tr>
   <tr>
     <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
     <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
-    <td>3</td>
-    <td>Laura</td>
-    <td align="right" >Roslin</td>
-    <td>Caprica</td>
-    <td><em>NULL</em></td>
+    <td align="center">3</td>
+    <td>Jim</td>
+    <td align="left" >Halpert</td>
+    <td align="center">Los Angeles</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td align="center">4</td>
+    <td>Dwight</td>
+    <td align="left" >Schrute</td>
+    <td align="center">Portland</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td align="center">5</td>
+    <td>Angela</td>
+    <td align="left" >Martin</td>
+    <td align="center">San Francisco</td>
   </tr>
 </table>
 <p>&nbsp;</p>
@@ -98,10 +110,10 @@
     <form method="POST" id="addrestaurant">
         <legend><strong>Add User</strong></legend>
           <fieldset class="fields">
-            <label> first name </label> <input type="text" name="fname">
-            <label> last name </label> <input type="text" name="lname">
-            <label> e-mail </label> <input type="text" name="email">
-            <label> city </label> <select name="city">
+            <label> First Name </label> <input type="text" name="fname">
+            <label> Last Name </label> <input type="text" name="lname">
+            <label> E-mail </label> <input type="text" name="email">
+            <label> City </label> <select name="city">
             	<option value="0">&nbsp;</option>
                 <option value="1">San Francisco</option>
                 <option value="2">Portland</option>
@@ -119,10 +131,10 @@
           <fieldset class="fields">
           <input type="hidden" name="UserID" id="updateUserID" value="1">
           <label> ID: </label> 1
-            <label> first name </label> <input type="text" name="fname" value="Michael">
-            <label> last name </label> <input type="text" name="lname" value="Scott">
-            <label> e-mail </label> <input type="text" name="email" value="mscott@gmail.com">
-            <label> city </label> <select name="city">
+            <label> First Name </label> <input type="text" name="fname" value="Michael">
+            <label> Last Name </label> <input type="text" name="lname" value="Scott">
+            <label> E-mail </label> <input type="text" name="email" value="mscott@gmail.com">
+            <label> City </label> <select name="city">
             	<option value="0">&nbsp;</option>
                 <option value="1" selected>San Francisco</option>
                 <option value="2">Portland</option>
