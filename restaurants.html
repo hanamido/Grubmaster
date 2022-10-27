@@ -65,6 +65,7 @@
                 <th>Website</th>
                 <th>Email</th>
                 <th>City</th>
+                <th>Cuisine(s)</th>
             </tr>
             <tr>
                 <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
@@ -74,6 +75,7 @@
                 <td align="center">https://savor.menu/</td>
                 <td><em>NULL</em></td>
                 <td align="center">San Francisco</td>
+                <td align="center">Mediterranean, Vegetarian</td>
             </tr>
             <tr>
                 <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
@@ -109,17 +111,64 @@
         <form method="POST" id="addRestaurant">
             <legend><strong>Add Restaurant</strong></legend>
                 <fieldset class="fields">
-                    <label>Name</label> <input type="text" name="restaurant_name">
-                    <label>Website</label> <input type="text" name="restaurant_website">
-                    <label>Email</label> <input type="text" name="restaurant_email">
-                    <label>City</label> <select name="city">
+                    <label>Name: </label> <input type="text" name="restaurant_name">
+                    <label>Website: </label> <input type="text" name="restaurant_website">
+                    <label>Email: </label> <input type="text" name="restaurant_email">
+                    <label>City: </label> <select name="city_name">
                         <option value="0">&nbsp;</option>
                         <option value="1">San Francisco</option>
                         <option value="2">Portland</option>
                         <option value="3">Los Angeles</option>
                         <option value="4">San Diego</option>
-                        <option value="5">Settle</option>
+                        <option value="5">Seattle</option>
                     </select>
+                    <p>
+                    <label>Cuisine 1: </label><select name="cuisine1">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">Mediterranean</option>
+                        <option value="2">Japanese</option>
+                        <option value="3">Cajun</option>
+                        <option value="4">French</option>
+                        <option value="5">Ramen</option>
+                        <option value="6">Southern</option>
+                        <option value="7">Vegetarian</option>
+                    </select>
+                    <label>Cuisine 2: </label><select name="cuisine2">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">Mediterranean</option>
+                        <option value="2">Japanese</option>
+                        <option value="3">Cajun</option>
+                        <option value="4">French</option>
+                        <option value="5">Ramen</option>
+                        <option value="6">Southern</option>
+                        <option value="7">Vegetarian</option>
+                    </select>
+                    <label>Cuisine 3: </label><select name="cuisine3">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">Mediterranean</option>
+                        <option value="2">Japanese</option>
+                        <option value="3">Cajun</option>
+                        <option value="4">French</option>
+                        <option value="5">Ramen</option>
+                        <option value="6">Southern</option>
+                        <option value="7">Vegetarian</option>
+                    </select>
+                    </p>
+                    <p><label>Cuisine (Select up to 3)</label> <input type="checkbox" value="1">
+                    <label for="1">Mediterranean</label>
+                    <input type="checkbox" value="2">
+                    <label for="2">Japanese</label>
+                    <input type="checkbox" value="3">
+                    <label for="3">Cajun</label> 
+                    <input type="checkbox" value="4">
+                    <label for="4">French</label>
+                    <input type="checkbox" value="5">
+                    <label for="5">Ramen</label>
+                    <input type="checkbox" value="6">
+                    <label for="6">Southern</label>
+                    <input type="checkbox" value="7">
+                    <label for="7">Vegetarian</label>
+                </p>
                 </fieldset>
                     <input class="btn" type="submit" id="addRestaurant" value="Add Restaurant">
                     <input class="btn" type="button" value="Cancel" onClick="browseRestaurants()">
@@ -135,7 +184,7 @@
                         <label> Name: </label> <input type="text" name="restaurant_name" value="Savor">
                         <label> Website: </label> <input type="restaurant_website" value="https://savor.menu/">
                         <label> Email: </label> <input type="restaurant_email">
-                        <label>City</label> <select name="city">
+                        <label>City:</label> <select name="city">
                             <option value="0">&nbsp;</option>
                             <option value="1">San Francisco</option>
                             <option value="2">Portland</option>
@@ -143,6 +192,37 @@
                             <option value="4">San Diego</option>
                             <option value="5">Settle</option>
                         </select>
+                        <p>
+                            <label>Cuisine 1: </label><select name="cuisine1">
+                                <option value="0">&nbsp;</option>
+                                <option value="1">Mediterranean</option>
+                                <option value="2">Japanese</option>
+                                <option value="3">Cajun</option>
+                                <option value="4">French</option>
+                                <option value="5">Ramen</option>
+                                <option value="6">Southern</option>
+                                <option value="7">Vegetarian</option>
+                            </select>
+                            <label>Cuisine 2: </label><select name="cuisine2">
+                                <option value="0">&nbsp;</option>
+                                <option value="1">Mediterranean</option>
+                                <option value="2">Japanese</option>
+                                <option value="3">Cajun</option>
+                                <option value="4">French</option>
+                                <option value="5">Ramen</option>
+                                <option value="6">Southern</option>
+                                <option value="7">Vegetarian</option>
+                            </select>
+                            <label>Cuisine 3: </label><select name="cuisine3">
+                                <option value="0">&nbsp;</option>
+                                <option value="1">Mediterranean</option>
+                                <option value="2">Japanese</option>
+                                <option value="3">Cajun</option>
+                                <option value="4">French</option>
+                                <option value="5">Ramen</option>
+                                <option value="6">Southern</option>
+                                <option value="7">Vegetarian</option>
+                            </select>
                 </fieldset>
                     <input class="btn" type="submit" id="updateSaveRestaurant" value="Save Update to Restaurant">
                     <input class="btn" type="button" value="Cancel" onClick="browseRestaurants()">
