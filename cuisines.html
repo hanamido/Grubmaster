@@ -118,8 +118,7 @@
             <legend><strong>Update Cuisine</strong></legend>
                 <fieldset class="fields">
                     <input type="hidden" name="updateCuisineID" value="1">
-                    <label> ID: </label> 1
-                        <label> Name: </label> <input type="text" name="cuisine_name" value="Mediterranean">
+                    <label> Name: </label> <input type="text" name="cuisine_name" value="Mediterranean">
                 </fieldset>
                     <input class="btn" type="submit" id="updateSaveCuisine" value="Save Update to Cuisine">
                     <input class="btn" type="button" value="Cancel" onClick="browseCuisines()">
@@ -130,10 +129,21 @@
         <form method="POST" id="deleteCuisine">
             <legend><strong>Delete Cuisine</strong></legend>
                 <fieldset class="fields">
+                    <label>Select the cuisine you wish to delete:</label>
+                    <select>
+                        <option value="0">&nbsp;</option>
+                        <option value="1">Mediterranean</option>
+                        <option value="2">Japanese</option>
+                        <option value="3">Cajun</option>
+                        <option value="4">French</option>
+                        <option value="5">Ramen</option>
+                        <option value="6">Southern</option>
+                        <option value="7">Vegetarian</option>
+                    </select>
                     <p>Are you sure you wish to delete the following entry?</p>
                     <input type="hidden" name="cuisine_id" id="deleteCuisineID" value="1">
-                    <label><strong> ID: </strong></label> 1
-                    <label><strong> Name: </strong></label> Mediterranean
+                    <label><strong> ID: </strong></label> 
+                    <label><strong> Name: </strong></label>
                 </fieldset>
                 <input class="btn" type="submit" id="deleteCuisine" value="Delete Cuisine">
                 <input class="btn" type="button" value="cancel" onClick="browseCuisines()">

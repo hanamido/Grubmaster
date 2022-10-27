@@ -118,10 +118,20 @@
         <form method="POST" id="deleteCity">
             <legend><strong>Delete City</strong></legend>
                 <fieldset class="fields">
+                    <label>
+                        <select>
+                            <option value="0">&nbsp;</option>
+                            <option value="1">San Francisco</option>
+                            <option value="2">Portland</option>
+                            <option value="3">Los Angeles</option>
+                            <option value="4">San Diego</option>
+                            <option value="5">Seattle</option>
+                        </select>
+                    </label>
                     <p>Are you sure you wish to delete the following entry?</p>
                     <input type="hidden" name="city_id" id="deleteCityID" value="1">
-                    <label><strong> ID: </strong></label> 1
-                    <label><strong> Name: </strong></label> San Francisco
+                    <label><strong> ID: </strong></label>
+                    <label><strong> Name: </strong></label>
                 </fieldset>
                 <input class="btn" type="submit" id="deleteCity" value="Delete City">
                 <input class="btn" type="button" value="cancel" onClick="browseCities()">

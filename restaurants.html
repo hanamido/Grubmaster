@@ -162,17 +162,16 @@
             <legend><strong>Update Restaurant</strong></legend>
                 <fieldset class="fields">
                     <input type="hidden" name="updateRestaurantID" value="1">
-                    <label> ID: </label> 1
-                        <label> Name: </label> <input type="text" name="restaurant_name" value="Savor">
-                        <label> Website: </label> <input type="restaurant_website" value="https://savor.menu/">
-                        <label> Email: </label> <input type="restaurant_email">
-                        <label>City:</label> <select name="city">
+                    <label> Name: </label> <input type="text" name="restaurant_name" value="Savor">
+                    <label> Website: </label> <input type="restaurant_website" value="https://savor.menu/">
+                    <label> Email: </label> <input type="restaurant_email">
+                    <label>City:</label> <select name="city_name">
                             <option value="0">&nbsp;</option>
                             <option value="1">San Francisco</option>
                             <option value="2">Portland</option>
                             <option value="3">Los Angeles</option>
                             <option value="4">San Diego</option>
-                            <option value="5">Settle</option>
+                            <option value="5">Seattle</option>
                         </select>
                         <p>
                             <label>Cuisine 1: </label><select name="cuisine1">
@@ -205,10 +204,17 @@
         <form method="POST" id="deleteRestaurant">
             <legend><strong>Delete Restaurant</strong></legend>
                 <fieldset class="fields">
+                    <label>Select the restaurant you wish to delete:</label>
+                    <select name="restaurant_id">
+                        <option id="1" value="1">Savor</option>
+                        <option id="2" value="2">Marufuku Ramen</option>
+                        <option id="3" value="3">Screen Door Eastside</option>
+                        <option id="4" value="4">Republique</option>
+                    </select>    
                     <p>Are you sure you wish to delete the following entry?</p>
-                    <input type="hidden" name="restaurant_id" id="deleteRestaurantID" value="1">
-                    <label><strong> ID: </strong></label> 1
-                    <label><strong> Name: </strong></label> Savor
+                    <input type="hidden" name="restaurant_id" id="deleteRestaurantID" value="2">
+                    <label><strong> ID: </strong></label>
+                    <label><strong> Name: </strong></label>
                 </fieldset>
                 <input class="btn" type="submit" id="deleteRestaurant" value="Delete Restaurant">
                 <input class="btn" type="button" value="cancel" onClick="browseRestaurants()">
