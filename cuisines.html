@@ -1,0 +1,145 @@
+<!-- CRUD on available Cuisines -->
+<!-- READ Operation: Display cuisine name -->
+
+<html>
+<head>
+<title>Cuisines</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="Javascript">
+    function showform(dowhat) {
+        /*
+        * four DIVS: browse (Read), Insert, Update, Delete
+        */
+        if (dowhat == 'insert'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		}
+		else if (dowhat == 'delete'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'block';
+		}
+        else if (dowhat == 'all'){
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('update').style.display = 'block';
+			document.getElementById('delete').style.display = 'block';
+		}
+		else { //by default display browse
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		}
+    }
+    function newCuisine() { showform('insert'); }
+    function updateCuisine(cuisine_id) { showform('update'); }
+    function deleteCuisine(cuisine_id) { showform('delete'); }
+    function browseCuisines() { showform('browse'); }
+    function showAll() { showform('all'); }
+</script>
+</head>
+
+<body onload="browseCuisines()">
+    <h1>Cuisines</h1>
+
+    [ <a href="restaurants.html">Restaurants</a> | <a href ="cities.html">Cities</a> | <a href="cuisines.html">Cuisines</a> | <a href="users.html">Users</a> | <a href="reviews.html">Reviews</a> ]
+    
+    <div id="browse">
+        <p><a href="#" onClick="showAll()">Display all forms</a></p>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th><a href="#" onClick="newCuisine()">New</a></th>
+                <th></th>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCuisine('this.cuisine_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteRestaurant('this.cuisine_id')">Delete</a></td>
+                <td align="center" >1</td>
+                <td align="center">Mediterranean</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCuisine('this.cuisine_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCuisine('this.cuisine_id')">Delete</a></td>
+                <td align="center">2</td>
+                <td align="center">Japanese</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCuisine('this.cuisine_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCuisine('this.cuisine_id')">Delete</a></td>
+                <td align="center">3</td>
+                <td align="center">Cajun</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCuisine('this.cuisine_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCuisine('this.cuisine_id')">Delete</a></td>
+                <td align="center">4</td>
+                <td align="center">French</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCuisine('this.cuisine_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCuisine('this.cuisine_id')">Delete</a></td>
+                <td align="center">5</td>
+                <td align="center">Ramen</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCuisine('this.cuisine_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCuisine('this.cuisine_id')">Delete</a></td>
+                <td align="center">6</td>
+                <td align="center">Southern</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCuisine('this.cuisine_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCuisine('this.cuisine_id')">Delete</a></td>
+                <td align="center">7</td>
+                <td align="center">Vegetarian</td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+    </div>
+    <div id="insert" style="display: block">
+        <form method="POST" id="addCuisine">
+            <legend><strong>Add Cuisine</strong></legend>
+                <fieldset class="fields">
+                    <label>Name</label> <input type="text" name="cuisine_name">
+                </fieldset>
+                    <input class="btn" type="submit" id="addCuisine" value="Add Cuisine">
+                    <input class="btn" type="button" value="Cancel" onClick="browseCuisines()">
+        </form>
+    </div> <!-- inserts a new Cuisine -->
+    <p>&nbsp;</p>
+    <div id="update">
+        <form method="POST" id="updateCuisine">
+            <legend><strong>Update Cuisine</strong></legend>
+                <fieldset class="fields">
+                    <input type="hidden" name="updateCuisineID" value="1">
+                    <label> ID: </label> 1
+                        <label> Name: </label> <input type="text" name="cuisine_name" value="Mediterranean">
+                </fieldset>
+                    <input class="btn" type="submit" id="updateSaveCuisine" value="Save Update to Cuisine">
+                    <input class="btn" type="button" value="Cancel" onClick="browseCuisines()">
+        </form>
+    </div>
+    <p>&nbsp;</p>
+    <div id="delete" style="display: block">
+        <form method="POST" id="deleteCuisine">
+            <legend><strong>Delete Cuisine</strong></legend>
+                <fieldset class="fields">
+                    <p>Are you sure you wish to delete the following entry?</p>
+                    <input type="hidden" name="cuisine_id" id="deleteCuisineID" value="1">
+                    <label><strong> ID: </strong></label> 1
+                    <label><strong> Name: </strong></label> Mediterranean
+                </fieldset>
+                <input class="btn" type="submit" id="deleteCuisine" value="Delete Cuisine">
+                <input class="btn" type="button" value="cancel" onClick="browseCuisines()">
+        </form>
+    </div> <!-- delete a cuisine -->
+
+</body>
+</html>
+

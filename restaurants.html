@@ -1,5 +1,5 @@
 <!-- CRUD on available restaurants -->
-<!-- READ Operation: display restaurant name, website, email, cuisine -->
+<!-- READ Operation: display restaurant name, website, email, city -->
 
 <html>
 <head>
@@ -44,15 +44,15 @@
     function newRestaurant() { showform('insert'); }
     function updateRestaurant(restaurant_id) { showform('update'); }
     function deleteRestaurant(restaurant_id) { showform('delete'); }
-    function browseRestaurant() { showform('browse'); }
+    function browseRestaurants() { showform('browse'); }
     function showAll() { showform('all'); }
 </script>
 </head>
 
-<body onload="browseRestaurant()">
+<body onload="browseRestaurants()">
     <h1>Restaurants</h1>
 
-    [ <a href="restaurants.html">Restaurants</a> | <a href ="cities.html">Cities</a> | <a href="cuisines.html">Cuisines</a> ]
+    [ <a href="restaurants.html">Restaurants</a> | <a href ="cities.html">Cities</a> | <a href="cuisines.html">Cuisines</a> | <a href="users.html">Users</a> | <a href="reviews.html">Reviews</a> ]
     
     <div id="browse">
         <p><a href="#" onClick="showAll()">Display all forms</a></p>
