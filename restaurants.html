@@ -52,7 +52,7 @@
 <body onload="browseRestaurants()">
     <h1>Restaurants</h1>
 
-    [ <a href="restaurants.html">Restaurants</a> | <a href ="cities.html">Cities</a> | <a href="cuisines.html">Cuisines</a> | <a href="users.html">Users</a> | <a href="reviews.html">Reviews</a> ]
+    [ <a href="restaurants.html">Restaurants</a> | <a href ="cities.html">Cities</a> | <a href="cuisines.html">Cuisines</a> | <a href="restaurants-cuisines.html" <a href="users.html">Users</a> | <a href="reviews.html">Reviews</a> ]
     
     <div id="browse">
         <p><a href="#" onClick="showAll()">Display all forms</a></p>
@@ -65,7 +65,8 @@
                 <th>Website</th>
                 <th>Email</th>
                 <th>City</th>
-                <th>Cuisine(s)</th>
+                <th>Cuisine 1</th>
+                <th>Cuisine 2</th>
             </tr>
             <tr>
                 <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
@@ -75,7 +76,8 @@
                 <td align="center">https://savor.menu/</td>
                 <td><em>NULL</em></td>
                 <td align="center">San Francisco</td>
-                <td align="center">Mediterranean, Vegetarian</td>
+                <td align="center">Mediterranean</td>
+                <td align="center">Vegetarian</td>
             </tr>
             <tr>
                 <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
@@ -85,6 +87,8 @@
                 <td align="center">https://www.marufukuramen.com/sanfrancisco</td>
                 <td><em>NULL</em></td>
                 <td align="center">San Francisco</td>
+                <td align="center">Ramen</td>
+                <td align="center">Japanese</td>
             </tr>
             <tr>
                 <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
@@ -94,6 +98,8 @@
                 <td align="center">https://screendoorrestaurant.com/</td>
                 <td><em>NULL</em></td>
                 <td align="center">Portland</td>
+                <td align='center'>Cajun</td>
+                <td align="center">Southern</td>
             </tr>
             <tr>
                 <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
@@ -103,6 +109,8 @@
                 <td align="center">https://republiquela.com/</td>
                 <td align="center">info@republiquela.com</td>
                 <td align="center">Los Angeles</td>
+                <td align="center">French</td>
+                <td align="center"><em>NULL</em></td>
             </tr>
         </table>
         <p>&nbsp;</p>
@@ -143,32 +151,6 @@
                         <option value="6">Southern</option>
                         <option value="7">Vegetarian</option>
                     </select>
-                    <label>Cuisine 3: </label><select name="cuisine3">
-                        <option value="0">&nbsp;</option>
-                        <option value="1">Mediterranean</option>
-                        <option value="2">Japanese</option>
-                        <option value="3">Cajun</option>
-                        <option value="4">French</option>
-                        <option value="5">Ramen</option>
-                        <option value="6">Southern</option>
-                        <option value="7">Vegetarian</option>
-                    </select>
-                    </p>
-                    <p><label>Cuisine (Select up to 3)</label> <input type="checkbox" value="1">
-                    <label for="1">Mediterranean</label>
-                    <input type="checkbox" value="2">
-                    <label for="2">Japanese</label>
-                    <input type="checkbox" value="3">
-                    <label for="3">Cajun</label> 
-                    <input type="checkbox" value="4">
-                    <label for="4">French</label>
-                    <input type="checkbox" value="5">
-                    <label for="5">Ramen</label>
-                    <input type="checkbox" value="6">
-                    <label for="6">Southern</label>
-                    <input type="checkbox" value="7">
-                    <label for="7">Vegetarian</label>
-                </p>
                 </fieldset>
                     <input class="btn" type="submit" id="addRestaurant" value="Add Restaurant">
                     <input class="btn" type="button" value="Cancel" onClick="browseRestaurants()">
@@ -204,16 +186,6 @@
                                 <option value="7">Vegetarian</option>
                             </select>
                             <label>Cuisine 2: </label><select name="cuisine2">
-                                <option value="0">&nbsp;</option>
-                                <option value="1">Mediterranean</option>
-                                <option value="2">Japanese</option>
-                                <option value="3">Cajun</option>
-                                <option value="4">French</option>
-                                <option value="5">Ramen</option>
-                                <option value="6">Southern</option>
-                                <option value="7">Vegetarian</option>
-                            </select>
-                            <label>Cuisine 3: </label><select name="cuisine3">
                                 <option value="0">&nbsp;</option>
                                 <option value="1">Mediterranean</option>
                                 <option value="2">Japanese</option>
