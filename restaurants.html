@@ -1,0 +1,226 @@
+<!-- CRUD on available restaurants -->
+<!-- READ Operation: display restaurant name, website, email, city -->
+
+<html>
+<head>
+<title>Restaurants</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="Javascript">
+    function showform(dowhat) {
+        /*
+        * four DIVS: browse (Read), Insert, Update, Delete
+        */
+        if (dowhat == 'insert'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		}
+		else if (dowhat == 'update'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'block';
+			document.getElementById('delete').style.display = 'none';
+		}
+		else if (dowhat == 'delete'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'block';
+		}
+        else if (dowhat == 'all'){
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('update').style.display = 'block';
+			document.getElementById('delete').style.display = 'block';
+		}
+		else { //by default display browse
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		}
+    }
+    function newRestaurant() { showform('insert'); }
+    function updateRestaurant(restaurant_id) { showform('update'); }
+    function deleteRestaurant(restaurant_id) { showform('delete'); }
+    function browseRestaurants() { showform('browse'); }
+    function showAll() { showform('all'); }
+</script>
+</head>
+
+<body onload="browseRestaurants()">
+    <h1>Restaurants</h1>
+
+    [ <a href="restaurants.html">Restaurants</a> | <a href ="cities.html">Cities</a> | <a href="cuisines.html">Cuisines</a> | <a href="restaurants-cuisines.html" <a href="users.html">Users</a> | <a href="reviews.html">Reviews</a> ]
+    
+    <div id="browse">
+        <p><a href="#" onClick="showAll()">Display all forms</a></p>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th><a href="#" onClick="newRestaurant()">New</a></th>
+                <th></th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Website</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Cuisine 1</th>
+                <th>Cuisine 2</th>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteRestaurant('this.restaurant_id')">Delete</a></td>
+                <td align="center" >1</td>
+                <td align="center">Savor</td>
+                <td align="center">https://savor.menu/</td>
+                <td><em>NULL</em></td>
+                <td align="center">San Francisco</td>
+                <td align="center">Mediterranean</td>
+                <td align="center">Vegetarian</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteRestaurant('this.restaurant_id')">Delete</a></td>
+                <td align="center">2</td>
+                <td align="center">Marufuku Ramen</td>
+                <td align="center">https://www.marufukuramen.com/sanfrancisco</td>
+                <td><em>NULL</em></td>
+                <td align="center">San Francisco</td>
+                <td align="center">Ramen</td>
+                <td align="center">Japanese</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteRestaurant('this.restaurant_id')">Delete</a></td>
+                <td align="center">3</td>
+                <td align="center">Screen Door Eastside</td>
+                <td align="center">https://screendoorrestaurant.com/</td>
+                <td><em>NULL</em></td>
+                <td align="center">Portland</td>
+                <td align='center'>Cajun</td>
+                <td align="center">Southern</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateRestaurant('this.restaurant_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteRestaurant('this.restaurant_id')">Delete</a></td>
+                <td align="center">4</td>
+                <td align="center">Republique</td>
+                <td align="center">https://republiquela.com/</td>
+                <td align="center">info@republiquela.com</td>
+                <td align="center">Los Angeles</td>
+                <td align="center">French</td>
+                <td align="center"><em>NULL</em></td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+    </div>
+    <div id="insert" style="display: block">
+        <form method="POST" id="addRestaurant">
+            <legend><strong>Add Restaurant</strong></legend>
+                <fieldset class="fields">
+                    <label>Name: </label> <input type="text" name="restaurant_name">
+                    <label>Website: </label> <input type="text" name="restaurant_website">
+                    <label>Email: </label> <input type="text" name="restaurant_email">
+                    <label>City: </label> <select name="city_name">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">San Francisco</option>
+                        <option value="2">Portland</option>
+                        <option value="3">Los Angeles</option>
+                        <option value="4">San Diego</option>
+                        <option value="5">Seattle</option>
+                    </select>
+                    <p>
+                    <label>Cuisine 1: </label><select name="cuisine1">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">Mediterranean</option>
+                        <option value="2">Japanese</option>
+                        <option value="3">Cajun</option>
+                        <option value="4">French</option>
+                        <option value="5">Ramen</option>
+                        <option value="6">Southern</option>
+                        <option value="7">Vegetarian</option>
+                    </select>
+                    <label>Cuisine 2: </label><select name="cuisine2">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">Mediterranean</option>
+                        <option value="2">Japanese</option>
+                        <option value="3">Cajun</option>
+                        <option value="4">French</option>
+                        <option value="5">Ramen</option>
+                        <option value="6">Southern</option>
+                        <option value="7">Vegetarian</option>
+                    </select>
+                </fieldset>
+                    <input class="btn" type="submit" id="addRestaurant" value="Add Restaurant">
+                    <input class="btn" type="button" value="Cancel" onClick="browseRestaurants()">
+        </form>
+    </div> <!-- inserts a new Restaurant -->
+    <p>&nbsp;</p>
+    <div id="update">
+        <form method="POST" id="updateRestaurant">
+            <legend><strong>Update Restaurant</strong></legend>
+                <fieldset class="fields">
+                    <input type="hidden" name="updateRestaurantID" value="1">
+                    <label> Name: </label> <input type="text" name="restaurant_name" value="Savor">
+                    <label> Website: </label> <input type="restaurant_website" value="https://savor.menu/">
+                    <label> Email: </label> <input type="restaurant_email">
+                    <label>City:</label> <select name="city_name">
+                            <option value="0">&nbsp;</option>
+                            <option value="1">San Francisco</option>
+                            <option value="2">Portland</option>
+                            <option value="3">Los Angeles</option>
+                            <option value="4">San Diego</option>
+                            <option value="5">Seattle</option>
+                        </select>
+                        <p>
+                            <label>Cuisine 1: </label><select name="cuisine1">
+                                <option value="0">&nbsp;</option>
+                                <option value="1">Mediterranean</option>
+                                <option value="2">Japanese</option>
+                                <option value="3">Cajun</option>
+                                <option value="4">French</option>
+                                <option value="5">Ramen</option>
+                                <option value="6">Southern</option>
+                                <option value="7">Vegetarian</option>
+                            </select>
+                            <label>Cuisine 2: </label><select name="cuisine2">
+                                <option value="0">&nbsp;</option>
+                                <option value="1">Mediterranean</option>
+                                <option value="2">Japanese</option>
+                                <option value="3">Cajun</option>
+                                <option value="4">French</option>
+                                <option value="5">Ramen</option>
+                                <option value="6">Southern</option>
+                                <option value="7">Vegetarian</option>
+                            </select>
+                </fieldset>
+                    <input class="btn" type="submit" id="updateSaveRestaurant" value="Save Update to Restaurant">
+                    <input class="btn" type="button" value="Cancel" onClick="browseRestaurants()">
+        </form>
+    </div>
+    <p>&nbsp;</p>
+    <div id="delete" style="display: block">
+        <form method="POST" id="deleteRestaurant">
+            <legend><strong>Delete Restaurant</strong></legend>
+                <fieldset class="fields">
+                    <label>Select the restaurant you wish to delete:</label>
+                    <select name="restaurant_id">
+                        <option id="1" value="1">Savor</option>
+                        <option id="2" value="2">Marufuku Ramen</option>
+                        <option id="3" value="3">Screen Door Eastside</option>
+                        <option id="4" value="4">Republique</option>
+                    </select>    
+                    <p>Are you sure you wish to delete the following entry?</p>
+                    <input type="hidden" name="restaurant_id" id="deleteRestaurantID" value="2">
+                    <label><strong> ID: </strong></label>
+                    <label><strong> Name: </strong></label>
+                </fieldset>
+                <input class="btn" type="submit" id="deleteRestaurant" value="Delete Restaurant">
+                <input class="btn" type="button" value="cancel" onClick="browseRestaurants()">
+        </form>
+    </div> <!-- delete a restaurant -->
+
+</body>
+</html>
+

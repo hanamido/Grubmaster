@@ -1,0 +1,143 @@
+<!-- CRUD on available Cities -->
+<!-- READ Operation: display city name -->
+
+<html>
+<head>
+<title>Cities</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="Javascript">
+    function showform(dowhat) {
+        /*
+        * four DIVS: browse (Read), Insert, Update, Delete
+        */
+        if (dowhat == 'insert'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		}
+		else if (dowhat == 'delete'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'block';
+		}
+        else if (dowhat == 'all'){
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('update').style.display = 'block';
+			document.getElementById('delete').style.display = 'block';
+		}
+		else { //by default display browse
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		}
+    }
+    function newCity() { showform('insert'); }
+    function updateCity(city_id) { showform('update'); }
+    function deleteCity(city_id) { showform('delete'); }
+    function browseCities() { showform('browse'); }
+    function showAll() { showform('all'); }
+</script>
+</head>
+
+<body onload="browseCities()">
+    <h1>Cities</h1>
+
+    [ <a href="restaurants.html">Restaurants</a> | <a href ="cities.html">Cities</a> | <a href="cuisines.html">Cuisines</a> | <a href="users.html">Users</a> | <a href="reviews.html">Reviews</a> ]
+    
+    <div id="browse">
+        <p><a href="#" onClick="showAll()">Display all forms</a></p>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th><a href="#" onClick="newCity()">New</a></th>
+                <th></th>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
+                <td align="center" >1</td>
+                <td align="center">San Francisco</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
+                <td align="center" >2</td>
+                <td align="center">Portland</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
+                <td align="center" >3</td>
+                <td align="center">Los Angeles</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
+                <td align="center">4</td>
+                <td align="center">San Diego</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
+                <td align="center">5</td>
+                <td align="center">Seattle</td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+    </div>
+    <div id="insert" style="display: block">
+        <form method="POST" id="addCity">
+            <legend><strong>Add City</strong></legend>
+                <fieldset class="fields">
+                    <label>Name</label> <input type="text" name="city_name">
+                </fieldset>
+                    <input class="btn" type="submit" id="addCity" value="Add City">
+                    <input class="btn" type="button" value="Cancel" onClick="browseCities()">
+        </form>
+    </div> <!-- inserts a new Cuisine -->
+    <p>&nbsp;</p>
+    <div id="update">
+        <form method="POST" id="updateCity">
+            <legend><strong>Update City</strong></legend>
+                <fieldset class="fields">
+                    <input type="hidden" name="updateCityID" value="1">
+                    <label> ID: </label> 1
+                        <label> Name: </label> <input type="text" name="city_name" value="San Francisco">
+                </fieldset>
+                    <input class="btn" type="submit" id="updateSaveCity" value="Save Update to City">
+                    <input class="btn" type="button" value="Cancel" onClick="browseCities()">
+        </form>
+    </div>
+    <p>&nbsp;</p>
+    <div id="delete" style="display: block">
+        <form method="POST" id="deleteCity">
+            <legend><strong>Delete City</strong></legend>
+                <fieldset class="fields">
+                    <label>
+                        <select>
+                            <option value="0">&nbsp;</option>
+                            <option value="1">San Francisco</option>
+                            <option value="2">Portland</option>
+                            <option value="3">Los Angeles</option>
+                            <option value="4">San Diego</option>
+                            <option value="5">Seattle</option>
+                        </select>
+                    </label>
+                    <p>Are you sure you wish to delete the following entry?</p>
+                    <input type="hidden" name="city_id" id="deleteCityID" value="1">
+                    <label><strong> ID: </strong></label>
+                    <label><strong> Name: </strong></label>
+                </fieldset>
+                <input class="btn" type="submit" id="deleteCity" value="Delete City">
+                <input class="btn" type="button" value="cancel" onClick="browseCities()">
+        </form>
+    </div> <!-- delete a cuisine -->
+
+</body>
+</html>
+
