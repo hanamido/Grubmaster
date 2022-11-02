@@ -1,7 +1,9 @@
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Users</title>
-<link href="style.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script language="JavaScript">
 		function showform(dowhat) {
 			/*
@@ -9,30 +11,28 @@
 			* this function sets one visible the others not
 			*/
 			if (dowhat == 'insert'){
+        document.getElementById('search').style.display = 'none';
 				document.getElementById('browse').style.display = 'none';
 				document.getElementById('insert').style.display = 'block';
 				document.getElementById('update').style.display = 'none';
 				document.getElementById('delete').style.display = 'none';
 			}
 			else if (dowhat == 'update'){
+        document.getElementById('search').style.display = 'none';
 				document.getElementById('browse').style.display = 'none';
 				document.getElementById('insert').style.display = 'none';
 				document.getElementById('update').style.display = 'block';
 				document.getElementById('delete').style.display = 'none';
 			}
 			else if (dowhat == 'delete'){
+        document.getElementById('search').style.display = 'none';
 				document.getElementById('browse').style.display = 'none';
 				document.getElementById('insert').style.display = 'none';
 				document.getElementById('update').style.display = 'none';
 				document.getElementById('delete').style.display = 'block';
 			}
-      else if (dowhat == 'all'){
-				document.getElementById('browse').style.display = 'block';
-				document.getElementById('insert').style.display = 'block';
-				document.getElementById('update').style.display = 'block';
-				document.getElementById('delete').style.display = 'block';
-			}
 			else { //by default display browse
+        document.getElementById('search').style.display = 'block';
 				document.getElementById('browse').style.display = 'block';
 				document.getElementById('insert').style.display = 'none';
 				document.getElementById('update').style.display = 'none';
@@ -43,107 +43,126 @@
     function updateUser(pid) { showform('update'); }
     function deleteUser(pid) { showform ('delete'); }
     function browseUsers() { showform ('browse'); }
-    function showAll() { showform ('all'); }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </head>
 
 <body onload="browseUsers()">
 <h1>Users</h1>
 
-[ <a href="restaurants.html">Restaurants</a> | <a href="users.html">Users</a> | <a href="cities.html">Cities</a> | <a href="reviews.html">Reviews</a> ]
+[ <a href="index.html">Home</a> | <a href="restaurants.html">Restaurants</a> | <a href="users.html">Users</a> | <a href="cities.html">Cities</a> | <a href="review.html">Reviews</a> | <a href="restaurant_cuisines.html">Restaurant Cuisines</a>]
+
+<div id="search">
+  <form class="p-1 mb-1 bg-light border-bottom">
+    <input type="search" class="form-control" autocomplete="false" placeholder="Type to search by user name...">
+  </form>
+</div>  
 
 <div id="browse">
-<p><a href="#" onClick="showAll()">Display all forms</a> </p>
-<table border="1" cellpadding="5">
-  <tr>
-    <th><a href="#" onClick="newUser()">New</a></th>
-    <th></th>
-    <th>ID</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>City</th>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
-    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
-    <td align="center">1</td>
+<table class = table table-bordered>
+  <thead>
+    <tr>
+      <th scope="row"><a href="#" onClick="newUser()">New</a></th>
+      <th scope="col"></th>
+      <th scope="col">ID</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">City</th>
+    </tr>
+  </thead>    
+  <tbody><tr>
+    <th scope="row"><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <th scope="row"><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td>1</td>
     <td >Michael</td>
-    <td align="left" >Scott</td>
-    <td align="center">Los Angeles</td>
+    <td>Scott</td>
+    <td>Los Angeles</td>
   </tr>
   <tr>
-    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
-    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
-    <td align="center">2</td>
+    <th scope="row"><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <th scope="row"><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td>2</td>
     <td>Pamela</td>
-    <td align="left" >Beesly</td>
-    <td align="center">Los Angeles</td>
+    <td>Beesly</td>
+    <td>Los Angeles</td>
   </tr>
   <tr>
-    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
-    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
-    <td align="center">3</td>
+    <th scope="row"><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <th scope="row"><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td>3</td>
     <td>Jim</td>
-    <td align="left" >Halpert</td>
-    <td align="center">Los Angeles</td>
+    <td>Halpert</td>
+    <td>Los Angeles</td>
   </tr>
   <tr>
-    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
-    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
-    <td align="center">4</td>
+    <th scope="row"><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <th scope="row"><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td>4</td>
     <td>Dwight</td>
-    <td align="left" >Schrute</td>
-    <td align="center">Portland</td>
+    <td>Schrute</td>
+    <td>Portland</td>
   </tr>
   <tr>
-    <td><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
-    <td><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
-    <td align="center">5</td>
+    <th scope="row"><a href="#" onClick="updateUser('this.UserID')">Edit</a></td>
+    <th scope="row"><a href="#" onclick="deleteUser('this.UserID')">Delete</a></td>
+    <td>5</td>
     <td>Angela</td>
-    <td align="left" >Martin</td>
-    <td align="center">San Francisco</td>
+    <td>Martin</td>
+    <td>San Francisco</td>
   </tr>
+  </tbody>
 </table>
-<p>&nbsp;</p>
 </div> <!-- browse -->
+<p>&nbsp;</p>
+
 <div id="insert">
-    <form method="POST" id="addrestaurant">
-        <legend><strong>Add User</strong></legend>
-          <fieldset class="fields">
-            <label> First Name </label> <input type="text" name="fname">
-            <label> Last Name </label> <input type="text" name="lname">
-            <label> E-mail </label> <input type="text" name="email">
-            <label> City </label> <select name="city">
-            	<option value="0">&nbsp;</option>
-                <option value="1">San Francisco</option>
-                <option value="2">Portland</option>
-                <option value="3">Los Angeles</option>
-                </select>
-      </fieldset>
-          <input class="btn" type="submit" id="addUser" value="Add User">
-          <input class="btn" type="button" value="cancel" onClick="browseUsers()">
-	</form> 
+  <form method="POST" id="addUser">
+      <legend><strong>Add User</strong></legend>  
+        <fieldset class="fields">
+          <form class="p-1 mb-1 bg-light border-bottom">            
+              <input class="form-control form-control-lg" type="text" placeholder="First Name*" aria-label=".form-control-lg example">
+              <input class="form-control form-control-lg" type="text" placeholder="Last Name*" aria-label=".form-control-lg example">
+              <input class="form-control form-control-lg" type="text" placeholder="E-mail" aria-label=".form-control-lg example">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                City*
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#"></a>&nbsp;</li>
+                <li><a class="dropdown-item" href="#">San Francisco</a></li>
+                <li><a class="dropdown-item" href="#">Portland</a></li>
+                <li><a class="dropdown-item" href="#">Los Angeles</a></li>
+                <li><a class="dropdown-item" href="#">San Diego</a></li>
+                <li><a class="dropdown-item" href="#">Seattle</a></li>
+              </ul>
+    </fieldset>
+        <input class="btn btn-primary btn-sm" type="submit" id="addUser" value="Add User">
+        <input class="btn btn-primary btn-sm" type="button" value="Cancel" onClick="browseUsers()">
+</form> 
 </div><!-- insert -->
 <p>&nbsp;</p>
 <div id="update">
-    <form method="POST" id="UpdateUser">
-        <legend><strong>Update User</strong></legend>
-          <fieldset class="fields">
-          <input type="hidden" name="UserID" id="updateUserID" value="1">
-          <label> ID: </label> 1
-            <label> First Name </label> <input type="text" name="fname" value="Michael">
-            <label> Last Name </label> <input type="text" name="lname" value="Scott">
-            <label> E-mail </label> <input type="text" name="email" value="mscott@gmail.com">
-            <label> City </label> <select name="city">
-            	<option value="0">&nbsp;</option>
-                <option value="1" selected>San Francisco</option>
-                <option value="2">Portland</option>
-                <option value="3">Los Angeles</option>
-                </select>
-      </fieldset>
-          <input class="btn" type="submit" id="UpdateSaveUser" value="Save Update User">
-          <input class="btn" type="button" value="cancel" onClick="browseUsers()">
-	</form> 
+  <form method="POST" id="UpdateUser">
+      <legend><strong>Update User</strong></legend>
+      <fieldset class="fields">
+        <form class="p-1 mb-1 bg-light border-bottom">            
+            <input class="form-control form-control-lg" type="text" placeholder="First Name*" aria-label=".form-control-lg example">
+            <input class="form-control form-control-lg" type="text" placeholder="Last Name*" aria-label=".form-control-lg example">
+            <input class="form-control form-control-lg" type="text" placeholder="E-mail" aria-label=".form-control-lg example">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              City*
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#"></a>&nbsp;</li>
+              <li><a class="dropdown-item" href="#">San Francisco</a></li>
+              <li><a class="dropdown-item" href="#">Portland</a></li>
+              <li><a class="dropdown-item" href="#">Los Angeles</a></li>
+              <li><a class="dropdown-item" href="#">San Diego</a></li>
+              <li><a class="dropdown-item" href="#">Seattle</a></li>
+            </ul>
+  </fieldset>
+      <input class="btn btn-primary btn-sm" type="submit" id="addUser" value="Add User">
+      <input class="btn btn-primary btn-sm" type="button" value="Cancel" onClick="browseUsers()">
+</form> 
 </div><!-- update -->
 <p>&nbsp;</p>
 <div id="delete" style="display: block">
@@ -153,13 +172,11 @@
           <p>Are you sure you wish to delete the following?</p>
           <input type="hidden" name="UserID" id="deleteUserID" value="1">
           <label><strong>ID:</strong></label> 1
-            <label> <strong>Name</strong> </label> Michael Scott
-            
+            <label><strong>Name</strong></label> Michael Scott
     </fieldset>
-    <input class="btn" type="submit" id="DeleteUser" value="Delete User">
-          <input class="btn" type="button" value="cancel" onClick="browseUsers()">
+    <input class="btn btn-primary btn-sm" type="submit" id="deleteUser" value="Delete User">
+    <input class="btn btn-primary btn-sm" type="button" value="Cancel" onClick="browseUsers()">
   </form> 
 </div><!-- delete -->
-
 </body>
 </html>
