@@ -142,8 +142,9 @@
     <div id="insert" style="display: block">
         <form method="POST" id="addCuisine">
             <legend><strong>Add Cuisine</strong></legend>
+            <div><p>Labels with * are REQUIRED.</p></div>
                 <fieldset class="fields">
-                    <label>Name: </label> <input type="text" name="cuisine_name">
+                    <label>Name: </label> <input type="text" name="cuisine_name" placeholder="*Name">
                 </fieldset>
                     <input class="btn" type="submit" id="addCuisine" value="Add Cuisine">
                     <input class="btn" type="button" value="Cancel" onClick="browseCuisines()">
@@ -153,6 +154,7 @@
     <div id="update">
         <form method="POST" id="updateCuisine">
             <legend><strong>Update Cuisine</strong></legend>
+            <div><p>Labels with * are REQUIRED.</p></div>
                 <fieldset class="fields">
                     <input type="hidden" name="updateCuisineID" value="1">
                     <label>ID: </label>
@@ -165,26 +167,13 @@
                             <option value="6">6</option>
                             <option value="7">7</option>
                         </select>
-                    <label> Name: <input type="text" name="cuisine_name"></label>
+                    <label> Name: </label><input type="text" name="cuisine_name" placeholder="*Name">
                 </fieldset>
                     <input class="btn" type="submit" id="updateSaveCuisine" value="Save Update to Cuisine">
                     <input class="btn" type="button" value="Cancel" onClick="browseCuisines()">
         </form>
     </div>
     <p>&nbsp;</p>
-    <div id="delete" style="display: block">
-        <form method="POST" id="deleteCuisine">
-            <legend><strong>Delete Cuisine</strong></legend>
-                <fieldset class="fields">
-                    <p>Are you sure you wish to delete the following entry?</p>
-                    <input type="hidden" name="cuisine_id" id="deleteCuisineID" value="1">
-                    <label><strong> ID: </strong></label> 
-                    <label><strong> Name: </strong></label>
-                </fieldset>
-                <input class="btn" type="submit" id="deleteCuisine" value="Delete Cuisine">
-                <input class="btn" type="button" value="cancel" onClick="browseCuisines()">
-        </form>
-    </div> <!-- delete a cuisine -->
 
     <nav aria-label="Cuisines page navigation">
         <ul class="pagination">
