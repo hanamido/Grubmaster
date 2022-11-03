@@ -88,31 +88,26 @@
                 <td align="center" >1</td>
                 <td align="center">San Francisco</td>
                 <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
-                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
             </tr>
             <tr>
                 <td align="center" >2</td>
                 <td align="center">Portland</td>
                 <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
-                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
             </tr>
             <tr>
                 <td align="center" >3</td>
                 <td align="center">Los Angeles</td>
                 <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
-                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
             </tr>
             <tr>
                 <td align="center">4</td>
                 <td align="center">San Diego</td>
                 <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
-                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
             </tr>
             <tr>
                 <td align="center">5</td>
                 <td align="center">Seattle</td>
                 <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
-                <td><a href="#" onClick="deleteCity('this.city_id')">Delete</a></td>
             </tr>
             </tbody>
         </table>
@@ -121,8 +116,9 @@
     <div id="insert" style="display: block">
         <form method="POST" id="addCity">
             <legend><strong>Add City</strong></legend>
+            <div><p>Labels with * are REQUIRED.</p></div>
                 <fieldset class="fields">
-                    <label>Name</label> <input type="text" name="city_name">
+                    <label>Name</label> <input type="text" name="city_name" placeholder="*Name">
                 </fieldset>
                     <input class="btn" type="submit" id="addCity" value="Add City">
                     <input class="btn" type="button" value="Cancel" onClick="browseCities()">
@@ -133,6 +129,7 @@
     <div id="update">
         <form method="POST" id="updateCity">
             <legend><strong>Update City</strong></legend>
+            <div><p>Labels with * are REQUIRED.</p></div>
                 <fieldset class="fields">
                     <input type="hidden" name="cityID" id="updateCityID" value="1">
                     <label> ID: </label>
@@ -143,26 +140,12 @@
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select>
-                        <label> Name: </label> <input type="text" name="city_name">
+                        <label> Name: </label> <input type="text" name="city_name" placeholder="*Name">
                 </fieldset>
                     <input class="btn" type="submit" id="updateSaveCity" value="Save Update to City">
                     <input class="btn" type="button" value="Cancel" onClick="browseCities()">
         </form>
     </div>
-    <p>&nbsp;</p>
-    <div id="delete" style="display: block">
-        <form method="POST" id="deleteCity">
-            <legend><strong>Delete City</strong></legend>
-                <fieldset class="fields">
-                    <p>Are you sure you wish to delete the following entry?</p>
-                    <input type="hidden" name="city_id" id="deleteCityID" value="1">
-                    <label><strong> ID: </strong></label>
-                    <label><strong> Name: </strong></label>
-                </fieldset>
-                <input class="btn" type="submit" id="deleteCity" value="Delete City">
-                <input class="btn" type="button" value="cancel" onClick="browseCities()">
-        </form>
-    </div> <!-- delete a cuisine -->
 
     <nav aria-label="Cities page navigation">
         <ul class="pagination">
