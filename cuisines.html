@@ -142,8 +142,9 @@
     <div id="insert" style="display: block">
         <form method="POST" id="addCuisine">
             <legend><strong>Add Cuisine</strong></legend>
+            <div><p>Labels with * are REQUIRED.</p></div>
                 <fieldset class="fields">
-                    <label>Name: </label> <input type="text" name="cuisine_name">
+                    <label>Name: </label> <input type="text" name="cuisine_name" placeholder="*Name">
                 </fieldset>
                     <input class="btn" type="submit" id="addCuisine" value="Add Cuisine">
                     <input class="btn" type="button" value="Cancel" onClick="browseCuisines()">
@@ -153,6 +154,7 @@
     <div id="update">
         <form method="POST" id="updateCuisine">
             <legend><strong>Update Cuisine</strong></legend>
+            <div><p>Labels with * are REQUIRED.</p></div>
                 <fieldset class="fields">
                     <input type="hidden" name="updateCuisineID" value="1">
                     <label>ID: </label>
@@ -165,7 +167,7 @@
                             <option value="6">6</option>
                             <option value="7">7</option>
                         </select>
-                    <label> Name: <input type="text" name="cuisine_name"></label>
+                    <label> Name: </label><input type="text" name="cuisine_name" placeholder="*Name">
                 </fieldset>
                     <input class="btn" type="submit" id="updateSaveCuisine" value="Save Update to Cuisine">
                     <input class="btn" type="button" value="Cancel" onClick="browseCuisines()">
