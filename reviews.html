@@ -1,175 +1,173 @@
-
-
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reviews</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <script language="JavaScript">
-      function showform(dowhat) {
-        /*
-        * this function sets one visible the others not
-        */
-        if (dowhat == 'insert'){
-          document.getElementById('search').style.display = 'none';
-          document.getElementById('browse').style.display = 'none';
-          document.getElementById('insert').style.display = 'block';
-          document.getElementById('update').style.display = 'none';
-          document.getElementById('delete').style.display = 'none';
-        }
-        else if (dowhat == 'update'){
-          document.getElementById('search').style.display = 'none';
-          document.getElementById('browse').style.display = 'none';
-          document.getElementById('insert').style.display = 'none';
-          document.getElementById('update').style.display = 'block';
-          document.getElementById('delete').style.display = 'none';
-        }
-        else { //by default display browse
-          document.getElementById('search').style.display = 'block';
-          document.getElementById('browse').style.display = 'block';
-          document.getElementById('insert').style.display = 'none';
-          document.getElementById('update').style.display = 'none';
-          document.getElementById('delete').style.display = 'none';
-        }
-      }
-      function newReview() { showform('insert'); }
-      function updateReview(pid) { showform('update'); }
-      function browseReviews() { showform ('browse'); }
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  </head>
-  
-  <body onload="browseReviews()">
-  <h1>Reviews</h1>
-  
-  [ <a href="index.html">Home</a> | <a href="restaurants.html">Restaurants</a> | <a href="users.html">Users</a> | <a href="cities.html">Cities</a> | <a href="reviews.html">Reviews</a> | <a href="restaurant_cuisines.html">Restaurant Cuisines</a>]
-  
-  <div id="search">
-    <form class="p-1 mb-1 bg-light border-bottom">
-      <input type="search" class="form-control" autocomplete="false" placeholder="Type to search by restaurant name...">
-    </form>
-  </div>  
-  
-  <div id="browse">
-  <table class = table table-bordered">
-    <thead>
-      <tr>
-        <th scope="row"><a href="#" onClick="newReview()">New</a></th>
-        <th scope="col">ID</th>
-        <th scope="col">Restaurant</th>
-        <th scope="col">Review</th>
-        <th scope="col">Reviewer</th>
-        <th scope="col">Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
-        <td>1</td>
-        <td>Republique</td>
-        <td>3</td>
-        <td>Michael Scott</td>
-        <td>10-05-2022</td>
-      </tr>
-      <tr>
-        <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
-        <td>2</td>
-        <td >Screen Door Eastside</td>
-        <td>4</td>
-        <td>Dwight Schrute</td>
-        <td>02-10-2022</td>
-      </tr>
-      <tr>
-        <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
-        <td>3</td>
-        <td >Republique</td>
-        <td>5</td>
-        <td>Jim Halpert</td>
-        <td>04-20-2020</td>
-      </tr>
-      <tr>
-        <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
-        <td>4</td>
-        <td >Republique</td>
-        <td>4</td>
-        <td>Pamela Beesly</td>
-        <td>05-24-2021</td>
-      </tr>
-      <tr>
-        <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
-        <td>5</td>
-        <td >Marufuku Ramen</td>
-        <td>2</td>
-        <td>Angela Martin</td>
-        <td>03-23-2021</td>
-      </tr>
-    </tbody>
-  </table>
-  <p>&nbsp;</p>
-  </div> <!-- browse -->
-  
-  <div id="insert">
-      <form method="POST" id="addReview">
-          <legend><strong>Add Review</strong></legend>  
-            <fieldset class="fields">
-              <form class="p-1 mb-1 bg-light border-bottom">            
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Restaurant*
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Marufuku Ramen</a></li>
-                  <li><a class="dropdown-item" href="#">Republique</a></li>
-                  <li><a class="dropdown-item" href="#">Screen Door Eastside</a></li>
-                </ul>
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Rating*
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">1</a></li>
-                    <li><a class="dropdown-item" href="#">2</a></li>
-                    <li><a class="dropdown-item" href="#">3</a></li>
-                    <li><a class="dropdown-item" href="#">4</a></li>
-                    <li><a class="dropdown-item" href="#">5</a></li>
-                  </ul>
-                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    User
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#"></a>&nbsp;</li>
-                    <li><a class="dropdown-item" href="#">Michael Scott</a></li>
-                    <li><a class="dropdown-item" href="#">Pamela Beesly</a></li>
-                    <li><a class="dropdown-item" href="#">Jim Halpert</a></li>
-                    <li><a class="dropdown-item" href="#">Dwight Schrute</a></li>
-                    <li><a class="dropdown-item" href="#">Angela Martin</a></li>
-                  </ul>
-        </fieldset>
-            <input class="btn btn-primary btn-sm" type="submit" id="addReview" value="Add Review">
-            <input class="btn btn-primary btn-sm" type="button" value="Cancel" onClick="browseReviews()">
-    </form> 
-  </div><!-- insert -->
-  <p>&nbsp;</p>
-  <div id="update">
-      <form method="POST" id="UpdateReview">
-          <legend><strong>Update Review</strong></legend>
-            <fieldset class="fields">
-            <input type="hidden" name="ReviewID" id="updateReviewID" value="1"> 
-            <label> ID: </label> 1
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reviews</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+        document.getElementById('search').style.display = 'none';
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+        document.getElementById('search').style.display = 'none';
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else { //by default display browse
+        document.getElementById('search').style.display = 'block';
+        document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newReview() { showform('insert'); }
+    function updateReview(pid) { showform('update'); }
+    function browseReviews() { showform ('browse'); }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</head>
+
+<body onload="browseReviews()">
+<h1>Reviews</h1>
+
+[ <a href="index.html">Home</a> | <a href="restaurants.html">Restaurants</a> | <a href="users.html">Users</a> | <a href="cities.html">Cities</a> | <a href="reviews.html">Reviews</a> | <a href="restaurant_cuisines.html">Restaurant Cuisines</a>]
+
+<div id="search">
+  <form class="p-1 mb-1 bg-light border-bottom">
+    <input type="search" class="form-control" autocomplete="false" placeholder="Type to search by restaurant name...">
+  </form>
+</div>  
+
+<div id="browse">
+<table class = table table-bordered">
+  <thead>
+    <tr>
+      <th scope="row"><a href="#" onClick="newReview()">New</a></th>
+      <th scope="col">ID</th>
+      <th scope="col">Restaurant</th>
+      <th scope="col">Review</th>
+      <th scope="col">Reviewer</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+      <td>1</td>
+      <td>Republique</td>
+      <td>3</td>
+      <td>Michael Scott</td>
+      <td>10-05-2022</td>
+    </tr>
+    <tr>
+      <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+      <td>2</td>
+      <td >Screen Door Eastside</td>
+      <td>4</td>
+      <td>Dwight Schrute</td>
+      <td>02-10-2022</td>
+    </tr>
+    <tr>
+      <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+      <td>3</td>
+      <td >Republique</td>
+      <td>5</td>
+      <td>Jim Halpert</td>
+      <td>04-20-2020</td>
+    </tr>
+    <tr>
+      <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+      <td>4</td>
+      <td >Republique</td>
+      <td>4</td>
+      <td>Pamela Beesly</td>
+      <td>05-24-2021</td>
+    </tr>
+    <tr>
+      <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+      <td>5</td>
+      <td >Marufuku Ramen</td>
+      <td>2</td>
+      <td>Angela Martin</td>
+      <td>03-23-2021</td>
+    </tr>
+  </tbody>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+
+<div id="insert">
+    <form method="POST" id="addReview">
+        <legend><strong>Add Review</strong></legend>  
+          <fieldset class="fields">
+            <form class="p-1 mb-1 bg-light border-bottom">            
               <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Rating*
+                Restaurant*
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">1</a></li>
-                <li><a class="dropdown-item" href="#">2</a></li>
-                <li><a class="dropdown-item" href="#">3</a></li>
-                <li><a class="dropdown-item" href="#">4</a></li>
-                <li><a class="dropdown-item" href="#">5</a></li>
+                <li><a class="dropdown-item" href="#">Marufuku Ramen</a></li>
+                <li><a class="dropdown-item" href="#">Republique</a></li>
+                <li><a class="dropdown-item" href="#">Screen Door Eastside</a></li>
               </ul>
-        </fieldset>
-        <input class="btn btn-primary btn-sm" type="submit" id="UpdateSaveReview" value="Save Update Review">
-        <input class="btn btn-primary btn-sm" type="button" value="Cancel" onClick="browseReviews()">
-    </form> 
-  </div><!-- update -->
-  <p>&nbsp;</p>
-  </body>
-  </html>
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Rating*
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">1</a></li>
+                  <li><a class="dropdown-item" href="#">2</a></li>
+                  <li><a class="dropdown-item" href="#">3</a></li>
+                  <li><a class="dropdown-item" href="#">4</a></li>
+                  <li><a class="dropdown-item" href="#">5</a></li>
+                </ul>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  User
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#"></a>&nbsp;</li>
+                  <li><a class="dropdown-item" href="#">Michael Scott</a></li>
+                  <li><a class="dropdown-item" href="#">Pamela Beesly</a></li>
+                  <li><a class="dropdown-item" href="#">Jim Halpert</a></li>
+                  <li><a class="dropdown-item" href="#">Dwight Schrute</a></li>
+                  <li><a class="dropdown-item" href="#">Angela Martin</a></li>
+                </ul>
+      </fieldset>
+          <input class="btn btn-primary btn-sm" type="submit" id="addReview" value="Add Review">
+          <input class="btn btn-primary btn-sm" type="button" value="Cancel" onClick="browseReviews()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+    <form method="POST" id="UpdateReview">
+        <legend><strong>Update Review</strong></legend>
+          <fieldset class="fields">
+          <input type="hidden" name="ReviewID" id="updateReviewID" value="1"> 
+          <label> ID: </label> 1
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Rating*
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">1</a></li>
+              <li><a class="dropdown-item" href="#">2</a></li>
+              <li><a class="dropdown-item" href="#">3</a></li>
+              <li><a class="dropdown-item" href="#">4</a></li>
+              <li><a class="dropdown-item" href="#">5</a></li>
+            </ul>
+      </fieldset>
+      <input class="btn btn-primary btn-sm" type="submit" id="UpdateSaveReview" value="Save Update Review">
+      <input class="btn btn-primary btn-sm" type="button" value="Cancel" onClick="browseReviews()">
+	</form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+</body>
+</html>
