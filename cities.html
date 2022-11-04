@@ -1,0 +1,188 @@
+<!-- CRUD on available Cities -->
+<!-- READ Operation: display city name -->
+
+<html>
+<head>
+<title>Cities</title>
+<!-- Bootstrap CSS -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="Javascript">
+    function showform(dowhat) {
+        /*
+        * four DIVS: browse (Read), Insert, Update, Delete
+        */
+        if (dowhat == 'insert'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		}
+        else if (dowhat == 'update'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'block';
+			document.getElementById('delete').style.display = 'none';
+		}
+		else if (dowhat == 'delete'){
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'block';
+		}
+        else if (dowhat == 'all'){
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('update').style.display = 'block';
+			document.getElementById('delete').style.display = 'block';
+		}
+		else { //by default display browse
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('update').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		}
+    }
+    function newCity() { showform('insert'); }
+    function updateCity(city_id) { showform('update'); }
+    function deleteCity(city_id) { showform('delete'); }
+    function browseCities() { showform('browse'); }
+    function showAll() { showform('all'); }
+</script>
+</head>
+
+<body onload="browseCities()">
+    <h1>Cities</h1>
+
+    [ <a href="index.html">Home</a> | <a href="restaurants.html">Restaurants</a> | <a href="users.html">Users</a> | <a href="cities.html">Cities</a> | <a href="reviews.html">Reviews</a> | <a href="restaurant__has_cuisines.html">Restaurants' Cuisines</a>]
+    
+    <div id="search">
+        <form class="p-1 mb-1 bg-light border-bottom">
+          <input type="text" id="searchCityInput" class="form-control" autocomplete="false" placeholder="Search for a city...">
+        </form>
+    </div>  
+
+    <div id="browse">
+        <!-- <p><input type="text" id="searchCityInput" onkeyup="myFunction()" placeholder="Search for a city..."></p> -->
+        <p><button><a href="#" onClick="newCity()">Add New City</a></button></p>
+
+        <table id="cities" class="table table-striped table-bordered table-hover" border="1" cellpadding="5"
+            data-search="true"
+            data-filter-control="true"
+            data-show-columns="true"
+            data-visible="true">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col" colspan="2">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td align="center" >1</td>
+                <td align="center">San Francisco</td>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+            </tr>
+            <tr>
+                <td align="center" >2</td>
+                <td align="center">Portland</td>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+            </tr>
+            <tr>
+                <td align="center" >3</td>
+                <td align="center">Los Angeles</td>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+            </tr>
+            <tr>
+                <td align="center">4</td>
+                <td align="center">San Diego</td>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+            </tr>
+            <tr>
+                <td align="center">5</td>
+                <td align="center">Seattle</td>
+                <td><a href="#" onClick="updateCity('this.city_id')">Edit</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <p>&nbsp;</p>
+    </div>
+    <div id="insert" style="display: block">
+        <form method="POST" id="addCity">
+            <legend><strong>Add City</strong></legend>
+            <div><p>Labels with * are REQUIRED.</p></div>
+                <fieldset class="fields">
+                    <label>Name</label> <input type="text" name="city_name" placeholder="*Name">
+                </fieldset>
+                    <input class="btn" type="submit" id="addCity" value="Add City">
+                    <input class="btn" type="button" value="Cancel" onClick="browseCities()">
+        </form>
+    </div> <!-- inserts a new Cuisine -->
+    <p>&nbsp;</p>
+
+    <div id="update">
+        <form method="POST" id="updateCity">
+            <legend><strong>Update City</strong></legend>
+            <div><p>Labels with * are REQUIRED.</p></div>
+                <fieldset class="fields">
+                    <input type="hidden" name="cityID" id="updateCityID" value="1">
+                    <label> ID: </label>
+                        <select>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <label> Name: </label> <input type="text" name="city_name" placeholder="*Name">
+                </fieldset>
+                    <input class="btn" type="submit" id="updateSaveCity" value="Save Update to City">
+                    <input class="btn" type="button" value="Cancel" onClick="browseCities()">
+        </form>
+    </div>
+    <p>&nbsp;</p>
+
+    <nav aria-label="Cities page navigation">
+        <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Search function to search through cities -->
+<script>
+    $(document).ready(function(){
+      $("#searchCityInput").on("keyup", function() {
+        let value = $(this).val().toLowerCase();
+        $("columns")
+        $("#cities tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+</script>
+
+</body>
+</html>
+

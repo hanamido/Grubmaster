@@ -1,0 +1,190 @@
+<html>
+<head>
+  <title>Reviews</title>
+
+  <!-- Bootstrap CSS -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+        document.getElementById('search').style.display = 'none';
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+        document.getElementById('search').style.display = 'none';
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else { //by default display browse
+        document.getElementById('search').style.display = 'block';
+        document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newReview() { showform('insert'); }
+    function updateReview(pid) { showform('update'); }
+    function browseReviews() { showform ('browse'); }
+</script>
+</head>
+
+<body onload="browseReviews()">
+  <h1>Reviews</h1>
+
+  [ <a href="index.html">Home</a> | <a href="restaurants.html">Restaurants</a> | <a href="users.html">Users</a> | <a href="cities.html">Cities</a> | <a href="reviews.html">Reviews</a> | <a href="restaurant_has_cuisines.html">Restaurants' Cuisines</a>]
+
+  <div id="search">
+    <form class="p-1 mb-1 bg-light border-bottom">
+      <input type="text" id="searchReviewInput" class="form-control" autocomplete="false" placeholder="Search for a review by restaurant name...">
+    </form>
+  </div>  
+
+  <div id="browse">
+    <p><button><a href="#" onClick="newReview()">Add New Review</a></button></p>
+    <table id="reviews" class="table table-striped table-bordered table-hover" border="1" cellpadding="5"
+    data-search="true"
+    data-filter-control="true"
+    data-show-columns="true"
+    data-visible="true">
+    <thead class="table-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Restaurant</th>
+          <th scope="col">Review</th>
+          <th scope="col">Reviewer</th>
+          <th scope="col">Date</th>
+          <th scoe="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="center" >1</td>
+          <td>Republique</td>
+          <td align="center" >3</td>
+          <td>Michael Scott</td>
+          <td>10-05-2022</td>
+          <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+        </tr>
+        <tr>
+          <td align="center" >2</td>
+          <td >Screen Door Eastside</td>
+          <td align="center" >4</td>
+          <td>Dwight Schrute</td>
+          <td>02-10-2022</td>
+          <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+        </tr>
+        <tr>
+          <td align="center" >3</td>
+          <td >Republique</td>
+          <td align="center" >5</td>
+          <td>Jim Halpert</td>
+          <td>04-20-2020</td>
+          <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+        </tr>
+        <tr>
+          <td align="center" >4</td>
+          <td >Republique</td>
+          <td align="center" >4</td>
+          <td>Pamela Beesly</td>
+          <td>05-24-2021</td>
+          <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+        </tr>
+        <tr>
+          <td align="center" >5</td>
+          <td >Marufuku Ramen</td>
+          <td align="center" >2</td>
+          <td>Angela Martin</td>
+          <td>03-23-2021</td>
+          <th scope="row"><a href="#" onClick="updateReview('this.ReviewID')">Edit</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+  </div> <!-- browse -->
+
+  <div id="insert">
+      <form method="POST" id="addReview">
+        <legend><strong>Add Review</strong></legend>  
+        <fieldset class="fields">
+          <input type="hidden" name="restaurantName" id="addRestaurantName" value="1">
+          <label> Restaurant: </label>
+            <select>
+                <option value="1">Savor</option>
+                <option value="2">Marufuku Ramen</option>
+                <option value="3">Screen Door Eastside</option>
+                <option value="4">Republique</option>
+            </select>
+            <input type="hidden" name="restaurantRating" id="addRestaurantRating" value="1">
+            <label> Rating: </label>
+              <select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+              </select>
+            <input type="hidden" name="restaurantUser" id="addRestaurantUser" value="1">
+            <label> User: </label>
+              <select>
+                  <option value="1">Michael Scott</option>
+                  <option value="2">Pamela Beesly</option>
+                  <option value="3">Jim Halpert</option>
+                  <option value="4">Dwight Schrute</option>
+                  <option value="5">Angela Martin</option>
+              </select>
+      </fieldset>
+        <input class="btn" type="submit" id="addReview" value="Add Review">
+        <input class="btn" type="button" value="Cancel" onClick="browseReviews()">
+    </form> 
+  </div><!-- insert -->
+  <p>&nbsp;</p>
+  <div id="update">
+      <form method="POST" id="UpdateReview">
+          <legend><strong>Update Review</strong></legend>
+            <fieldset class="fields">
+            <input type="hidden" name="ReviewID" id="updateReviewID" value="1"> 
+            <label> Rating: </label>
+            <select>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+          </select>
+        </fieldset>
+        <input class="btn" type="submit" id="updateSaveReview" value="Save Update to Review">
+        <input class="btn" type="button" value="Cancel" onClick="browseReviews()">
+    </form> 
+  </div><!-- update -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Search function to search through reviews -->
+<script>
+    $(document).ready(function(){
+      $("#searchReviewInput").on("keyup", function() {
+        let value = $(this).val().toLowerCase();
+        $("columns")
+        $("#reviews tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+</script>
+</body>
+</html>
