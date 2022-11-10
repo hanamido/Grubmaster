@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <title>Restaurants List</title>
+    <meta name="viewport" content="initial-scale=1, shrink-to-fit=yes">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
+    {{!-- <link rel="stylesheet" type="text/css" href="extensions/filter-control/bootstrap-table-filter-control.css"/> --}}
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+</head>
+
+<body>
+<script src="./js/delete_restaurant.js"></script> 
+
+{{!-- The Data from our database --}}
+
+{{!-- Create a table --}}
+<div id="top">
+<h1 align="center">Restaurants</h1>
+
+<nav class="navbar navbar-inverse center"> 
+    <div class="container">
+        <div class="navbar-header">
+            <button class="btn btn-outline-primary" href="index.html">Homepage</button> | <button class="btn btn-outline-primary" href="restaurants.html">Restaurants</button> | <button class="btn btn-outline-primary" href="cuisines.html">Cuisines</button> | <button class="btn btn-outline-primary" href="cities.html">Cities</button> | <button class="btn btn-outline-primary" href="users.html">Users</button> | <button class="btn btn-outline-primary" href="reviews.html">Reviews</button> | <button class="btn btn-outline-primary" href="restaurant_has_cuisines.html">Restaurants' Cuisines</button>
+        </div>
+    </div>
+</nav>
+</div>
+<p>&nbsp;</p>
+
+{{!-- <div id="search">
+    <form class="p-1 mb-1 bg-light border-bottom">
+      <input type="text" id="searchRestaurantInput" class="form-control" autocomplete="false" placeholder="Search for a restaurant...">
+    </form>
+</div>   --}}
+
+<div id="browse-restaurants">
+    <table id="restaurants-table" 
+    class="table table-striped table-bordered table-hover" 
+    align="right"
+    data-search="true"
+    >
+
+    {{!-- Header section --}}
+    <thead class="justify-content-center" align="center">
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr id="headers">
+            <th class="header" scope="col">ID</th>
+            <th class="header" scope="col">Name</th>
+            <th class="header" scope="col">Website</th>
+            <th class="header" scope="col">Email</th>
+            <th class="header" scope="col">City</th>
+            <th class="header" scope="col" id="actions" colspan="2">Actions</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{#each data}}
+        <tr align="center" data-value={{this.restaurant_id}}>
+            <td>{{this.restaurant_id}}</td>
+            <td>{{this.restaurant_name}}</td>
+            {{#if this.restaurant_website}}
+                <td>{{this.restaurant_website}}</td>
+            {{else}}
+                <td>NULL</td>
+            {{/if}}
+            {{#if this.restaurant_email}}
+                <td>{{this.restaurant_email}}</td>
+            {{else}}
+                <td>NULL</td>
+            {{/if}}
+            <td>{{this.city}}</td>
+            <td><button onClick="/">Edit</button></td>
+            <td><button onClick="deleteRestaurant({{this.restaurant_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+    </table>
+{{!-- <script src="./js/update_restaurant.js"></script> --}}
+</div>
+<p>&nbsp;</p>
+
+<div id="search-restaurant">
+    <h2>Search for a Restaurant below.</h2>
+    <p>Search by restaurant name using the field below. Partial names are OK too!</p>
+    <form id="search-restaurant-form" method='GET' action='/'>
+        <label for="input-restaurant-name">Search by Restaurant Name: </label>
+        <input type="text" name="restaurant_name" id="input-restaurant-name-search">
+        
+        <input type="submit">
+        <a href="/"><button>Reset</button></a>
+    </form>
+</div>
+<p>&nbsp;</p>
+
+{{!-- Add data using AJAX --}}
+<div id="add-restaurant">
+    <h2>Add a new restaurant: </h2>
+    <p>To add a new restaurant, please enter the information below and click 'Submit'! </p> 
+    <form id="add-restaurant-form-ajax">
+        <p><label for="input-restaurant-name">Restaurant Name: </label>
+        <input type="text" name="input-restaurant-name" id="input-restaurant-name" placeholder="*Name"></p>
+
+        <p><label for="input-restaurant-website">Restaurant Website: </label>
+        <input type="text" name="input-restaurant-website" id="input-restaurant-website" placeholder="Website"></p>
+
+        <p><label for="input-restaurant-email">Restaurant Email: </label>
+        <input type="text" name="input-restaurant-email" id="input-restaurant-email" placeholder="Email"></p>
+
+        <p><label>City: </label><select name="input-restaurant-city" id="input-restaurant-city">
+            <option value="">Select a City</option>
+            {{#each cities}}
+            <option value="{{this.city_id}}">{{this.city_name}}</option>
+            {{/each}}
+        </select></p>
+        <input type="submit">
+
+    </form>
+
+    {{!-- <form id="add-restaurant-form" method="POST" action="/add-restaurant-form">
+        <label for="input-restaurant-name">Restaurant Name:</label>
+        <input type="text" name="input-restaurant-name" id="input-restaurant-name"> 
+
+        <label for="input-restaurant-website">Restaurant Website:</label>
+        <input type="text" name="input-restaurant-website" id="input-restaurant-website">
+
+        <label for="input-restaurant-email">Restaurant Email:</label>
+        <input type="text" name="input-restaurant-email" id="input-restaurant-email">
+
+        <p><label>City: </label><select name="input-restaurant-city" id="input-restaurant-city">
+            <option value="">Select a City</option>
+            {{#each cities}}
+            <option value="{{this.city_id}}">{{this.city_name}}</option>
+            {{/each}}
+        </select></p>
+
+        <input type="submit">
+        
+    </form> --}}
+</div>
+
+<script src="./js/add_restaurant.js"></script>
+
+<p>&nbsp;</p>
+
+<div id="update-restaurant">
+<h2>Update a Restaurant's Details:</h2>
+<p>To update a specific restaurant's details, select their ID from the dropdown menu on the left and enter the desired new name, website, email, or city from the dropdown menu on the right.</p>
+<form id="update-restaurant-form-ajax">
+
+    <select name="selectedRestaurant" id="selectedRestaurant">
+        <option value="test">Select a Restaurant ID</option>
+        {{#each data}}
+        <option value="{{this.restaurant_id}}">{{this.restaurant_id}}</option>
+        {{/each}}
+    </select>
+
+    <label for="update-restaurant-name" autocomplete="on">Restaurant Name: </label>
+    <input type="text" name="update-restaurant-name" id="update-restaurant-name">
+
+    <label for="update-restaurant-website" autocomplete="on">Restaurant Website: </label>
+    <input type="text" name="update-restaurant-website" id="update-restaurant-website" value="{{restaurant_website}}"> 
+
+    {{!-- <label for="update-restaurant-name" autocomplete="on">Restaurant Email: </label>
+    <input type="text" name="update-restaurant-email" id="update-restaurant-email" value="{{data.restaurant_email}}">  --}}
+
+    <label for="update-restaurant-city">Restaurant City: </label> 
+    <select name="update-restaurant-city" id="update-restaurant-city">
+        <option value="test">Select a City</option>
+        {{#each cities}}
+        <option value="{{this.city_id}}">{{this.city_name}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+
+</form>
+
+{{!-- <form method="POST" action="/{{this.restaurant_id}}?_method=PUT">
+    <fieldset>
+        <legend>Edit Restaurant Details</legend>
+        <p>
+            <label for="update-restaurant-name">Restaurant Name: </label><br>
+            <input id="update-restaurant-name" type="text" name="update-restaurant-name" value="{{this.restaurant_name}}" />
+
+            <label for="update-restaurant-website">Restaurant Website: </label></br>
+            <input id="update-restaurant-website" type="text" name="update-restaurant-website" value="{{this."
+        </p>
+    </fieldset>
+</form> --}}
+</div>
+
+<script src="./js/update_restaurant.js"></script> 
+
+</body> 
+</html>
