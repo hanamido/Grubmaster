@@ -31,19 +31,17 @@ if (typeof Handlebars !== 'undefined') {
     });
   }
 
-  app.get('/', function(req, res) {
-    res.render('home'); 
-  })
-
 
 /* 
     ROUTES
 */
 
+// Home Page
 app.get('/', function(req, res) {
+    res.render('home');
+}); 
 
-})
-
+// Restaurants ROUTES
 app.get('/restaurants', function(req, res) {   // Display all Restaurants and the details
     // Declare query1
     let showRestaurantsQuery; 
@@ -262,14 +260,70 @@ app.put('/restaurants/put-restaurant-ajax', function(req, res, next) {
     );
 }); 
 
-// update a restaurant
-// app.get('/restaurant/:restaurant_id/edit', (req, res) => {
-    
-// })
+
+// CUISINES ROUTES
+// Cuisine Search
+app.get('/cuisines', function(req, res) {   // Display all Cuisines and the details
+    // Declare query1
+    let showCuisinesQuery; 
+
+    // If there is no query string, perform a basic SELECT
+    if (req.query.cuisine_name === undefined) {
+        showCuisinesQuery = 'SELECT * from Cuisines;'
+    }
+    // If there is a query sring, we assume this is a search, and return desired results
+    else {
+        showCuisinesQuery = `SELECT * FROM Cuisines WHERE cuisine_name LIKE "${req.query.cuisine_name}%"`
+    };
+
+    // Run 1st query
+    db.pool.query(showCuisinesQuery, function(error, rows, fields){
+
+        // Save the restaurants
+        let cuisines = rows;
+
+            console.log({data: cuisines})
+            return res.render('cuisines', {data: cuisines});
+        }
+    )
+}); 
+
+// CITIES ROUTES
+app.get('/cities', function(req, res) {   // Display all Cities and the details
+    // Declare query1
+    let showCitiesQuery; 
+
+    // If there is no query string, perform a basic SELECT
+    if (req.query.city_name === undefined) {
+        showCitiesQuery = 'SELECT * from Cities;'
+    }
+    // If there is a query sring, we assume this is a search, and return desired results
+    else {
+        showCitiesQuery = `SELECT * FROM Cities WHERE city_name LIKE "${req.query.city_name}%"`
+    };
+
+    // Run 1st query
+    db.pool.query(showCitiesQuery, function(error, rows, fields){
+
+        // Save the restaurants
+        let cities = rows;
+
+            console.log({data: cities})
+            return res.render('cities', {data: cities});
+        }
+    )
+}); 
+
+
+// RESTAURANT-HAS-CUISINES ROUTES
+
+// USERS ROUTES
+
+// REVIEWS ROUTES
 
 /*
     LISTENER
 */
 app.listen(PORT, function() {
     console.log('Express started on http://localhost: ' + PORT + '; Press Ctrl-C to terminate.')
-})
+}); 
