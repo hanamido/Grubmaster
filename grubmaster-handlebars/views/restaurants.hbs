@@ -11,7 +11,6 @@
 </head>
 
 <body>
-<script src="./js/delete_restaurant.js"></script> 
 
 {{!-- The Data from our database --}}
 
@@ -22,10 +21,19 @@
 <nav class="navbar navbar-inverse center"> 
     <div class="container">
         <div class="navbar-header">
-            <button class="btn btn-outline-primary" href="index.html">Homepage</button> | <button class="btn btn-outline-primary" href="restaurants.html">Restaurants</button> | <button class="btn btn-outline-primary" href="cuisines.html">Cuisines</button> | <button class="btn btn-outline-primary" href="cities.html">Cities</button> | <button class="btn btn-outline-primary" href="users.html">Users</button> | <button class="btn btn-outline-primary" href="reviews.html">Reviews</button> | <button class="btn btn-outline-primary" href="restaurant_has_cuisines.html">Restaurants' Cuisines</button>
+            {{!-- <button class="btn btn-outline-primary" onClick="redirectHome()">Homepage</a></button> | <button class="nav-link btn btn-outline-primary" onClick="redirectRestaurants()">Restaurants</button> | <button class="btn btn-outline-primary" href="/cuisines">Cuisines</button> | <button class="btn btn-outline-primary" href="/cities">Cities</button> | <button class="btn btn-outline-primary" href="/users">Users</button> | <button class="btn btn-outline-primary" href="/reviews">Reviews</button> | <button class="btn btn-outline-primary" href="/restaurant_has_cuisines">Restaurants' Cuisines</button> --}}
+            [ <a href="/">Homepage</a> | <a href="restaurants">Restaurants</a> | <a href="/cuisines">Cuisines</a> | <a href="/cities">Cities</a> | <a href="/users">Users</a> | <a href="/reviews">Reviews</a> | <a href="/restaurant_has_cuisines">Restaurants' Cuisines</a> ]
         </div>
     </div>
 </nav>
+
+{{!-- <nav class="navbar navbar-inverse center"> 
+    <div class="container">
+        <div class="navbar-header">
+            <button class="btn btn-outline-primary" href="index.html">Homepage</button> | <button class="btn btn-outline-primary" href="restaurants.html">Restaurants</button> | <button class="btn btn-outline-primary" href="cuisines.html">Cuisines</button> | <button class="btn btn-outline-primary" href="cities.html">Cities</button> | <button class="btn btn-outline-primary" href="users.html">Users</button> | <button class="btn btn-outline-primary" href="reviews.html">Reviews</button> | <button class="btn btn-outline-primary" href="restaurant_has_cuisines.html">Restaurants' Cuisines</button>
+        </div>
+    </div>
+</nav> --}}
 </div>
 <p>&nbsp;</p>
 
@@ -80,7 +88,8 @@
         {{/each}}
     </tbody>
     </table>
-{{!-- <script src="./js/update_restaurant.js"></script> --}}
+<script src="./js/delete_restaurant.js"></script> 
+
 </div>
 <p>&nbsp;</p>
 
@@ -165,7 +174,7 @@
     <label for="update-restaurant-website" autocomplete="on">Restaurant Website: </label>
     <input type="text" name="update-restaurant-website" id="update-restaurant-website" value="{{restaurant_website}}"> 
 
-    <label for="update-restaurant-email" autocomplete="on">Restaurant Email: </label>
+    <label for="update-restaurant-name" autocomplete="on">Restaurant Email: </label>
     <input type="text" name="update-restaurant-email" id="update-restaurant-email" value="{{data.restaurant_email}}"> 
 
     <label for="update-restaurant-city">Restaurant City: </label> 
@@ -179,6 +188,7 @@
     <input type="submit">
 
 </form>
+<script src="./js/update_restaurant.js"></script> 
 
 {{!-- <form method="POST" action="/{{this.restaurant_id}}?_method=PUT">
     <fieldset>
@@ -193,8 +203,6 @@
     </fieldset>
 </form> --}}
 </div>
-
-<script src="./js/update_restaurant.js"></script> 
 
 </body> 
 </html>
