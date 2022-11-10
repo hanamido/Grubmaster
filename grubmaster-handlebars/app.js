@@ -31,11 +31,20 @@ if (typeof Handlebars !== 'undefined') {
     });
   }
 
+  app.get('/', function(req, res) {
+    res.render('home'); 
+  })
+
 
 /* 
     ROUTES
 */
-app.get('/', function(req, res) {   // Display all Restaurants and the details
+
+app.get('/', function(req, res) {
+
+})
+
+app.get('/restaurants', function(req, res) {   // Display all Restaurants and the details
     // Declare query1
     let showRestaurantsQuery; 
 
@@ -84,7 +93,7 @@ app.get('/', function(req, res) {   // Display all Restaurants and the details
 });
 
 // Add a new restaurant to database using AJAX
-app.post('/add-restaurant-ajax', function(req, res) {
+app.post('/restaurants/add-restaurant-ajax', function(req, res) {
     // Capture incoming data and parse them back to JSON
     let data = req.body;
     console.log(data);
@@ -163,7 +172,7 @@ app.post('/add-restaurant-ajax', function(req, res) {
 // });
 
 // Delete a Restaurant from the database
-app.delete('/delete-restaurant-ajax/', function(req, res, next) {
+app.delete('/restaurants/delete-restaurant-ajax/', function(req, res, next) {
     let data = req.body; 
     console.log(data);
     let restaurantID = parseInt(data.restaurant_id)
@@ -192,7 +201,7 @@ app.delete('/delete-restaurant-ajax/', function(req, res, next) {
 }); 
 
 // Update a restaurant's deta
-app.put('/put-restaurant-ajax', function(req, res, next) {
+app.put('/restaurants/put-restaurant-ajax', function(req, res, next) {
         let data = req.body; 
         console.log(data);
     
@@ -221,7 +230,7 @@ app.put('/put-restaurant-ajax', function(req, res, next) {
                     console.log(error); 
                     res.sendStatus(400);
                 } else{ 
-                    dp.pool.query(queryUpdateRestEmail, [restaurantEmail, restaurantID], function(error, rows, fields) {
+                    db.pool.query(queryUpdateRestEmail, [restaurantEmail, restaurantID], function(error, rows, fields) {
                         if (error) {
                             console.log(error);
                             res.sendStatus(400); 

@@ -1,5 +1,5 @@
 function deleteRestaurant(restaurantID) {
-    let link = '/delete-restaurant-ajax';
+    let link = '/restaurants/delete-restaurant-ajax';
     let data = {
         restaurant_id: restaurantID
     }; 

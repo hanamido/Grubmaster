@@ -27,7 +27,7 @@ addRestaurantForm.addEventListener("submit", function (e) {
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest(); 
-    xhttp.open('POST', '/add-restaurant-ajax', true); 
+    xhttp.open('POST', '/restaurants/add-restaurant-ajax', true); 
     xhttp.setRequestHeader('Content-type', 'application/json'); 
 
     // Tell our AJAX request how to resolve
