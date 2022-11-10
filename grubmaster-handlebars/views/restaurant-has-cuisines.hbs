@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <title>Restaurants' Cuisines List</title>
+    <meta name="viewport" content="initial-scale=1, shrink-to-fit=yes">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
+    {{!-- <link rel="stylesheet" type="text/css" href="extensions/filter-control/bootstrap-table-filter-control.css"/> --}}
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+</head>
+
+<body>
+
+{{!-- The Data from our database --}}
+
+{{!-- Create a table --}}
+<div id="top">
+<h1 align="center">Restaurants' Cuisines</h1>
+
+<nav class="navbar navbar-inverse center"> 
+    <div class="container">
+        <div class="navbar-header">
+            {{!-- <button class="btn btn-outline-primary" onClick="redirectHome()">Homepage</a></button> | <button class="nav-link btn btn-outline-primary" onClick="redirectRestaurants()">Restaurants</button> | <button class="btn btn-outline-primary" href="/cuisines">Cuisines</button> | <button class="btn btn-outline-primary" href="/cities">Cities</button> | <button class="btn btn-outline-primary" href="/users">Users</button> | <button class="btn btn-outline-primary" href="/reviews">Reviews</button> | <button class="btn btn-outline-primary" href="/restaurant_has_cuisines">Restaurants' Cuisines</button> --}}
+            [ <a href="/">Homepage</a> | <a href="restaurants">Restaurants</a> | <a href="/cuisines">Cuisines</a> | <a href="/cities">Cities</a> | <a href="/users">Users</a> | <a href="/reviews">Reviews</a> | <a href="/restaurant-has-cuisines">Restaurants' Cuisines</a> ]
+        </div>
+    </div>
+</nav>
+
+</div>
+<p>&nbsp;</p>
+
+<div id="browse-restaurants">
+    <table id="restaurants-table" 
+    class="table table-striped table-bordered table-hover" 
+    align="center"
+    data-search="true"
+    >
+
+    {{!-- Header section --}}
+    <thead class="justify-content-center" align="center">
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr id="headers">
+            <th class="header" scope="col">Restaurant Cuisine ID</th>
+            <th class="header" scope="col">Restaurant</th>
+            <th class="header" scope="col">Cuisine</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{#each data}}
+        <tr align="center" data-value={{this.restaurant_cuisine_id}}>
+            <td>{{this.restaurant_cuisine_id}}</td>
+            <td>{{this.restaurant}}</td>
+            <td>{{this.cuisine}}</td>
+            <td><button onClick="deleteRestaurantCuisine({{this.restaurant_cuisine_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+    </table>
+<script src="./js/delete_restaurantHasCuisines.js"></script> 
+
+</div>
+<p>&nbsp;</p>
+
+<div id="search-restaurant-cuisine">
+    <h2>Search for a Restaurants' Cuisine below.</h2>
+    <p>Search by restaurant or cuisine name using the field below. Partial names are OK too!</p>
+    <form id="search-restaurant-cuisine-form" method='GET' action='/restaurant-has-cuisines'>
+        <label for="input-restaurant-cuisine-search">Search by Restaurant or Cuisine Name: </label>
+        <input type="text" name="input-restaurant-cuisine-search" id="input-restaurant-cuisine-search">
+        
+        <input type="submit">
+        <a href="/"><button>Reset</button></a>
+    </form>
+</div>
+<p>&nbsp;</p>
+
+{{!-- Add data using AJAX --}}
+<div id="add-restaurant-cuisine">
+    <h2>Add a new restaurant and cuisine association: </h2>
+    <p>To add a new restaurant and cuisine association, please enter the information below and click 'Submit'! </p> 
+    <p><small>Note: * indicates a required field.</small></p>
+    <form id="add-restaurant-cuisine-form-ajax">
+        <p><label>Restaurant Name: </label><select name="input-rc-restaurant" id="input-rc-restaurant">
+            <option value="">Select a Restaurant</option>
+            {{#each restaurants}}
+            <option value="{{this.restaurant_id}}">{{this.restaurant_name}}</option>
+            {{/each}}
+        </select></p>
+
+        <p><label>Cuisine Name: </label><select name="input-rc-cuisine" id="input-rc-cuisine">
+            <option value="">Select a Cuisine</option>
+            {{#each cuisines}}
+            <option value="{{this.cuisine_id}}">{{this.cuisine_name}}</option>
+            {{/each}}
+        </select></p>
+        <input type="submit">
+
+    </form>
+</div>
+
+<script src="./js/add_restaurantHasCuisines.js"></script>
+
+<p>&nbsp;</p>
+
+<div id="update-restaurant-cuisine">
+<h2>Update a Restaurant's Cuisine Details:</h2>
+<p>To update a specific restaurant's cuisine details, select the restaurant ID from the dropdown menu on the left and enter the desired cuisine from the dropdown menu on the right.</p>
+<form id="update-restaurant-cuisine-form-ajax">
+
+    <select name="selectedRestaurant" id="selectedRestaurant">
+        <option value="test">Select a Restaurant ID</option>
+        {{#each data}}
+        <option value="{{this.restaurant_id}}">{{this.restaurant_id}}</option>
+        {{/each}}
+    </select>
+
+    <p><label>Cuisine Name: </label><select name="input-rc-cuisine" id="input-rc-cuisine">
+        <option value="">Select a Cuisine</option>
+        {{#each cuisines}}
+        <option value="{{this.cuisine_id}}">{{this.cuisine_name}}</option>
+        {{/each}}
+    </select></p>
+    <input type="submit">
+
+</form>
+<script src="./js/update_restaurantHasCuisines.js"></script> 
+
+</div>
+
+</body> 
+</html>
