@@ -2,5 +2,4 @@ app.js
 db-connector.js
 reviews.html
 users.html
-node-modules
-database
+node_modules
