@@ -1,0 +1,332 @@
+<!-- users.hbs -->
+
+[ <a href="/">Home</a> | <a href="/restaurants">Restaurants</a> | <a href="/users">Users</a> | <a href="/cities">Cities</a> | <a href="/reviews">Reviews</a> | <a href="/restaurant_has_cuisines">Restaurants' Cuisines</a>]
+
+<head>
+    <meta charset="utf-8">
+    <title>Users</title>
+    <meta name="viewport" content="initial-scale=1, shrink-to-fit=yes">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
+    {{!-- <link rel="stylesheet" type="text/css" href="extensions/filter-control/bootstrap-table-filter-control.css"/> --}}
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+</head>
+
+<h2>Search Users</h2>
+<form id="search-person-html" method='GET' action='/users'>
+    <label for="input-lname">Search by Last Name: </label>
+    <input type="text" name="user_last_name" id="input-lname-html-search">
+    <input type="submit">
+    <a href='/users'><button>Reset</button></a>
+</form>
+<p>&nbsp;</p>
+
+{{!-- Create a table --}}
+<table id="users-table">
+
+    {{!-- Header section --}}
+    <thead>
+        <tr id="headers">
+            <th class="header" scope="col">ID</th>
+            <th class="header" scope="col">First Name</th>
+            <th class="header" scope="col">Last Name</th>
+            <th class="header" scope="col">E-mail Address</th>
+            <th class="header" scope="col">City</th>
+            <th class="header" scope="col" colspan="2">Actions</th>
+
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{!-- For each row, print the id, name, website, email and city --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.user_id}}</td>
+            <td>{{this.user_first_name}}</td>
+            <td>{{this.user_last_name}}</td>
+            {{#if this.user_email}}
+                <td>{{this.user_email}}</td>
+                    {{else}}
+                <td>NULL</td>
+            {{/if}}
+            <td>{{this.user_city_id}}</td>
+            <td><button onclick="deleteUser({{this.user_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h2>Add a User</h2>
+<p>Add a new user to the database.</p>
+<div id="insert" style="display: block">
+<form method="POST" id="add-user-form-ajax">
+        <fieldset class="fields">
+          <form class="p-1 mb-1 bg-light border-bottom">            
+            <label>First Name*</label> <input type="text" name="first_name" id="first_name">
+            <label>Last Name*</label> <input type="text" name="last_name" id="last_name">
+            <label>E-mail Address</label> <input type="text" name="email_address" id="email_address">
+            <label>City*</label> 
+                <select name="city" id="city">
+                    <option value="">Select a City</option>
+                    {{#each cities}}
+                    <option value="{{this.city_id}}">{{this.city_name}}</option>
+                    {{/each}}
+                </select>
+    </fieldset>
+        <input class="btn" type="submit" id="add-user-form-ajax" value="Add User">
+        <input class="btn" type="button" value="Cancel" onClick="browseUsers()">
+</form> 
+</div><!-- Add New User -->
+
+<p>&nbsp;</p>
+<h2>Update A User's Information</h2>
+<p>User the search function to locate the correct ID, then update a User's information using this form.</p>
+<form id="update-user-form-ajax">
+    <fieldset class="fields">
+        <form class="p-1 mb-1 bg-light border-bottom">
+        <label>User ID*</label> 
+            <select name="user_id" id="selected_user_id">
+                <option value="">Select a User ID</option>
+                {{#each data}}
+                <option value="{{this.user_id}}">{{this.user_id}}</option>
+                {{/each}}
+            </select>             
+        <label>First Name*</label> <input type="text" name="first_name" id="update_first_name">
+        <label>Last Name*</label> <input type="text" name="last_name" id="update_last_name">
+        <label>E-mail Address*</label> <input type="text" name="email_address" id="update_email_address">
+        <label>City*</label> 
+            <select name="city" id="update_city">
+                <option value="">Select a City</option>
+                {{#each cities}}
+                <option value="{{this.city_id}}">{{this.city_name}}</option>
+                {{/each}}
+            </select>
+    </fieldset>
+    <input class="btn" type="submit" id="add-user-form-ajax" value="Update User">
+</form><!-- Update User -->
+
+<script>
+// Add user
+// Get the objects we need to modify
+let addUserForm = document.getElementById('add-user-form-ajax');
+
+// Modify the objects we need
+addUserForm.addEventListener("submit", function (e) {
+    
+    // Prevent the form from submitting
+    e.preventDefault();
+
+    // Get form fields we need to get data from
+    let inputFirstName = document.getElementById("first_name");
+    let inputLastName = document.getElementById("last_name");
+    let inputEmailAddress = document.getElementById("email_address");
+    let inputCity = document.getElementById("city");
+
+    // Get the values from the form fields
+    let firstNameValue = inputFirstName.value;
+    let lastNameValue = inputLastName.value;
+    let emailAddressValue = inputEmailAddress.value;
+    let cityValue = inputCity.value;
+
+    // Put our data we want to send in a javascript object
+    let data = {
+        user_first_name: firstNameValue,
+        user_last_name: lastNameValue,
+        user_email: emailAddressValue,
+        user_city_id: cityValue
+    }
+    
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/add-user-ajax", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+            // Add the new data to the table
+            addRowToTable(xhttp.response);
+
+            // Clear the input fields for another transaction
+            inputFirstName.value = '';
+            inputLastName.value = '';
+            inputEmailAddress.value = '';
+            inputCity.value = '';
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    }
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+
+})
+
+// Creates a single row from an Object representing a single record from 
+// Users
+addRowToTable = (data) => {
+
+    // Get a reference to the current table on the page and clear it out.
+    let currentTable = document.getElementById("users-table");
+
+    // Get the location where we should insert the new row (end of table)
+    let newRowIndex = currentTable.rows.length;
+
+    // Get a reference to the new row from the database query (last object)
+    let parsedData = JSON.parse(data);
+    let newRow = parsedData[parsedData.length - 1]
+
+    // Create a row
+    let row = document.createElement("TR");
+    let idCell = document.createElement("TD");
+    let firstNameCell = document.createElement("TD");
+    let lastNameCell = document.createElement("TD");
+    let emailAddressCell = document.createElement("TD");
+    let cityCell = document.createElement("TD");
+
+    // Fill the cells with correct data
+    idCell.innerText = newRow.user_id;
+    firstNameCell.innerText = newRow.user_first_name;
+    lastNameCell.innerText = newRow.user_last_name;
+    emailAddressCell.innerText = newRow.user_email;
+    cityCell.innerText = newRow.address_city;
+
+    // Add the cells to the row 
+    row.appendChild(idCell);
+    row.appendChild(firstNameCell);
+    row.appendChild(lastNameCell);
+    row.appendChild(emailAddressCell);
+    row.appendChild(cityCell);
+    
+    // Add the row to the table
+    currentTable.appendChild(row);
+}
+
+// delete a user
+function deleteUser(user_id) {
+    // Put our data we want to send in a javascript object
+    let data = {
+        id: user_id
+    };
+
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("DELETE", "/delete-user-ajax", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 204) {
+
+            // Add the new data to the table
+            deleteRow(user_id);
+
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 204) {
+            console.log("There was an error with the input.")
+        }
+    }
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+}
+
+function deleteRow(user_id){
+
+    let table = document.getElementById("users-table");
+    for (let i = 0, row; row = table.rows[i]; i++) {
+       //iterate through rows
+       //rows would be accessed using the "row" variable assigned in the for loop
+       if (table.rows[i].getAttribute("data-value") == user_id) {
+            table.deleteRow(i);
+            break;
+       }
+    }
+}
+
+// Update User
+// Get the objects we need to modify
+let updateUserForm = document.getElementById('update-user-form-ajax');
+
+// Modify the objects we need
+updateUserForm.addEventListener("submit", function (e) {
+   
+    // Prevent the form from submitting
+    e.preventDefault();
+
+    // Get form fields we need to get data from
+    let selectedUserId = document.getElementById("selected_user_id");
+    let updateFirstName = document.getElementById("update_first_name");
+    let updateLastName = document.getElementById("update_last_name");
+    let updateEmailAddress = document.getElementById("update_email_address");
+    let updateCity = document.getElementById("update_city");
+
+    // Get the values from the form fields
+    let userIdValue = selectedUserId.value;
+    let firstNameValue = updateFirstName.value;
+    let lastNameValue = updateLastName.value;
+    let emailAddressValue = updateEmailAddress.value;
+    let cityValue = updateCity.value;
+
+    // currently the database table for Users does not allow updating values to NULL
+    // so we must abort if being passed NULL for Cities -- check on other values
+
+
+
+    // Put our data we want to send in a javascript object
+    let data = {
+        user_id: userIdValue,
+        user_first_name: firstNameValue,
+        user_last_name: lastNameValue,
+        user_email: emailAddressValue,
+        user_city_id: cityValue,
+    }
+    
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", "/put-user-ajax", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+            // Add the new data to the table
+            updateRow(xhttp.response, userIdValue);
+
+        }
+        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
+    }
+
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+
+})
+
+function updateRow(data, selected_user_id){
+    let parsedData = JSON.parse(data);
+    
+    let table = document.getElementById("users-table");
+
+    for (let i = 0, row; row = table.rows[i]; i++) {
+       //iterate through rows
+       //rows would be accessed using the "row" variable assigned in the for loop
+       if (table.rows[i].getAttribute("data-value") == selected_user_id) {
+
+            // Get the location of the row where we found the matching person ID
+            let updateRowIndex = table.getElementsByTagName("tr")[i];
+
+            // Get td of homeworld value
+            let td = updateRowIndex.getElementsByTagName("td")[4];
+
+            // Reassign homeworld to our value we updated to
+            td.innerHTML = parsedData[0].city_name; 
+       }
+    }
+}
+</script>
+
+
