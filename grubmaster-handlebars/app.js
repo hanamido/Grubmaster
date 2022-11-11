@@ -6,6 +6,7 @@
 const path = require('path');
 const express = require('express'); 
 const app = express(); 
+hostname = 'localhost'; 
 PORT = 12345; 
 app.use(express.static(path.join(__dirname, '/public'))); 
 app.use(express.json())
@@ -316,6 +317,40 @@ app.get('/cities', function(req, res) {   // Display all Cities and the details
 
 
 // RESTAURANT-HAS-CUISINES ROUTES
+app.get('/restaurant-has-cuisines', function(req, res) {   // Display all Restaurants' Cuisines and the details
+    // Declare query1
+    let showRestaurantCuisinesQuery; 
+
+    // If there is no query string, perform a basic SELECT
+    if (req.query.restaurant_name === undefined && req.query.cuisine_name === undefined) {
+        showRestaurantCuisinesQuery = `SELECT restaurant_cuisine_id, Restaurants.restaurant_name as restaurants, Cuisines.cuisine_name as cuisines FROM Restaurant_has_cuisines 
+        INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
+        INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id;`; 
+    }
+    // If there is a query sring, we assume this is a search, and return desired results
+    else if (req.query.restaurant_name !== undefined) {
+        showRestaurantCuisinesQuery = `SELECT restaurant_cuisine_id, Restaurants.restaurant_nameas restaurants, Cuisines.cuisine_name as cuisines FROM Restaurant_has_cuisines 
+        INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
+        INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id
+        WHERE Restaurants.restaurant_name LIKE "${req.query.restaurant_name}";`; 
+    } else {
+        showRestaurantCuisinesQuery = `SELECT restaurant_cuisine_id, Restaurants.restaurant_name, Cuisines.cuisine_name FROM Restaurant_has_cuisines 
+        INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
+        INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id
+        WHERE Restaurants.restaurant_name LIKE "${req.query.cuisine_name}";`; 
+    }
+
+    // Run 1st query
+    db.pool.query(showRestaurantCuisinesQuery, function(error, rows, fields){
+
+        // Save the restaurantsCuisines
+        let restaurantCuisines = rows;
+
+            console.log({data: restaurantCuisines})
+            return res.render('restaurant-has-cuisines', {data: restaurantCuisines});
+        }
+    )
+}); 
 
 // USERS ROUTES
 
@@ -326,4 +361,4 @@ app.get('/cities', function(req, res) {   // Display all Cities and the details
 */
 app.listen(PORT, function() {
     console.log('Express started on http://localhost: ' + PORT + '; Press Ctrl-C to terminate.')
-}); 
+})

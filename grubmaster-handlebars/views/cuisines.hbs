@@ -98,8 +98,30 @@
 </div>
 
 <script src="./js/add_cuisine.js"></script>
-
 <p>&nbsp;</p>
+
+<div id="update-cuisine">
+<h2>Update a Cuisine's Details:</h2>
+<p>To update a specific cuisine's details, select their ID from the dropdown menu on the left and enter the desired name.</p>
+<p><small>Note: * indicates a required field.</small></p>
+<form id="update-cuisine-form-ajax">
+
+    <label for="selectedCuisine">* Select a Cuisine ID</label>
+    <select name="selectedCuisine" id="selectedCuisine">
+        <option value="">Cuisine ID</option>
+        {{#each data}}
+        <option value="{{this.cuisine_id}}">{{this.cuisine_id}}</option>
+        {{/each}}
+    </select>
+
+    <p><label for="update-cuisine-name" autocomplete="on">* Cuisine Name: </label>
+    <input type="text" name="update-cuisine-name" id="update-cuisine-name"></p>
+
+    <input type="submit">
+
+</form>
+
+</div>
 
 </div>
 

@@ -61,12 +61,10 @@
             <td>{{this.city_id}}</td>
             <td>{{this.city_name}}</td>
             {{!-- <td><button onClick="/">Edit</button></td> --}}
-            <td><button onClick="deleteCity({{this.city_id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
     </table>
-<script src="./js/delete_city.js"></script> 
 
 </div>
 <p>&nbsp;</p>
@@ -100,6 +98,29 @@
 <script src="./js/add_city.js"></script>
 
 <p>&nbsp;</p>
+
+<div id="update-city">
+<h2>Update a City's Details:</h2>
+<p>To update a specific city's details, select their ID from the dropdown menu on the left and enter the desired new name.</p>
+<p><small>Note: * indicates a required field.</small></p>
+<form id="update-city-form-ajax">
+
+    <label for="selectedCity">* Select a City ID</label>
+    <select name="selectedCity" id="selectedCity">
+        <option value="">City ID</option>
+        {{#each data}}
+        <option value="{{this.city_id}}">{{this.city_id}}</option>
+        {{/each}}
+    </select>
+
+    <p><label for="update-city-name" autocomplete="on">* City Name: </label>
+    <input type="text" name="update-city-name" id="update-city-name"></p>
+
+    <input type="submit">
+
+</form>
+</div>
+
 </div>
 
 </body> 
