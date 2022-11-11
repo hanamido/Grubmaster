@@ -61,12 +61,11 @@
             <td>{{this.cuisine_id}}</td>
             <td>{{this.cuisine_name}}</td>
             {{!-- <td><button onClick="/">Edit</button></td> --}}
-            <td><button onClick="deleteCuisine({{this.cuisine_id}})">Delete</button></td>
+            
         </tr>
         {{/each}}
     </tbody>
     </table>
-<script src="./js/delete_cuisine.js"></script> 
 
 </div>
 <p>&nbsp;</p>
@@ -79,7 +78,7 @@
         <input type="text" name="cuisine_name" id="input-cuisine-name-search">
         
         <input type="submit">
-        <a href="/"><button>Reset</button></a>
+        <a href="/cuisines"><button>Reset</button></a>
     </form>
 </div>
 <p>&nbsp;</p>

@@ -101,7 +101,7 @@
         <input type="text" name="restaurant_name" id="input-restaurant-name-search">
         
         <input type="submit">
-        <a href="/"><button>Reset</button></a>
+        <a href="/restaurants"><button>Reset</button></a>
     </form>
 </div>
 <p>&nbsp;</p>
@@ -131,6 +131,27 @@
         <input type="submit">
 
     </form>
+
+    {{!-- <form id="add-restaurant-form" method="POST" action="/add-restaurant-form">
+        <label for="input-restaurant-name">Restaurant Name:</label>
+        <input type="text" name="input-restaurant-name" id="input-restaurant-name"> 
+
+        <label for="input-restaurant-website">Restaurant Website:</label>
+        <input type="text" name="input-restaurant-website" id="input-restaurant-website">
+
+        <label for="input-restaurant-email">Restaurant Email:</label>
+        <input type="text" name="input-restaurant-email" id="input-restaurant-email">
+
+        <p><label>City: </label><select name="input-restaurant-city" id="input-restaurant-city">
+            <option value="">Select a City</option>
+            {{#each cities}}
+            <option value="{{this.city_id}}">{{this.city_name}}</option>
+            {{/each}}
+        </select></p>
+
+        <input type="submit">
+        
+    </form> --}}
 </div>
 
 <script src="./js/add_restaurant.js"></script>
@@ -172,6 +193,18 @@
 
 </form>
 
+{{!-- <form method="POST" action="/{{this.restaurant_id}}?_method=PUT">
+    <fieldset>
+        <legend>Edit Restaurant Details</legend>
+        <p>
+            <label for="update-restaurant-name">Restaurant Name: </label><br>
+            <input id="update-restaurant-name" type="text" name="update-restaurant-name" value="{{this.restaurant_name}}" />
+
+            <label for="update-restaurant-website">Restaurant Website: </label></br>
+            <input id="update-restaurant-website" type="text" name="update-restaurant-website" value="{{this."
+        </p>
+    </fieldset>
+</form> --}}
 </div>
 
 <script src="./js/update_restaurant.js"></script> 
