@@ -316,7 +316,7 @@ app.get('/cities', function(req, res) {   // Display all Cities and the details
 
 
 // RESTAURANT-HAS-CUISINES ROUTES
-app.get('/restaurant-has-cuisines', function(req, res) {   // Display all Restaurants' Cuisines and the details
+app.get('/restaurant_has_cuisines', function(req, res) {   // Display all Restaurants' Cuisines and the details
     // Declare query1
     let showRestaurantCuisinesQuery; 
     console.log(req.query.rc_restaurantSearch)
@@ -350,7 +350,7 @@ app.get('/restaurant-has-cuisines', function(req, res) {   // Display all Restau
         console.log(restaurantCuisines)
 
             console.log({data: restaurantCuisines})
-            return res.render('restaurant-has-cuisines', {data: restaurantCuisines});
+            return res.render('restaurant_has_cuisines', {data: restaurantCuisines});
         }
     )
 }); 
