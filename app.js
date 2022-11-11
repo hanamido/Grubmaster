@@ -1,4 +1,5 @@
 // app.js
+// Written baesd on the github guide for the course
 
 /*
     SETUP
