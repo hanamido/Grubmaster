@@ -29,7 +29,8 @@ if (typeof Handlebars !== 'undefined') {
     Handlebars.registerHelper('afterBody', function(name, options) {
       $('body').append('AFTER BODY');
     });
-  }
+}; 
+
 
 
 /* 
@@ -108,7 +109,7 @@ app.post('/restaurants/add-restaurant-ajax', function(req, res) {
     }; 
 
     // Create the query and run it on the database
-    addRestaurantQuery = `INSERT INTO Restaurants (restaurant_name, restaurant_website, restaurant_email, city_id) VALUES ('${data.restaurant_name}', '${restaurant_website}', '${restaurant_email}', '${data.city_id}');`
+    addRestaurantQuery = `INSERT INTO Restaurants (restaurant_name, restaurant_website, restaurant_email, city_id) VALUES ('${data.restaurant_name}', '${restaurant_website}', '${restaurant_email}', '${data.city}');`
     db.pool.query(addRestaurantQuery, function(error, rows, fields){
         // check if there was an error
         if (error) {
@@ -132,7 +133,7 @@ app.post('/restaurants/add-restaurant-ajax', function(req, res) {
 }); 
 
 // Add a new restaurant to db using HTML
-// app.post('/add-restaurant-form', function(req, res){
+// app.post('/restaurants/add-restaurant-form', function(req, res){
 //     // Capture the incoming data and parse it back to a JS object
 //     let data = req.body;
 //     console.log(data)
@@ -147,6 +148,16 @@ app.post('/restaurants/add-restaurant-ajax', function(req, res) {
 //     if (restaurant_email.length === 0) { 
 //         restaurant_email = 'NULL';
 //     }; 
+
+//     let restaurant_name = data['input-restaurant-name']; 
+//     if (restaurant_name.length === 0 ) { 
+//         return;
+//     }; 
+
+//     let restaurant_city = parseInt(data['input-restaurant-city']); 
+//     if (isNaN(restaurant_city)) {
+//         return; 
+//     };
 
 //     // Create the query and run it on the database
 //     query1 =`INSERT INTO Restaurants (restaurant_name, restaurant_website, restaurant_email, city_id) VALUES ('${data['input-restaurant-name']}', '${restaurant_website}', '${restaurant_email}', '${data['input-restaurant-city']}');`;
@@ -164,7 +175,7 @@ app.post('/restaurants/add-restaurant-ajax', function(req, res) {
 //         // presents it on the screen
 //         else
 //         {
-//             res.redirect('/');
+//             res.redirect('/restaurants');
 //         }
 //     })
 // });
@@ -262,7 +273,7 @@ app.put('/restaurants/put-restaurant-ajax', function(req, res, next) {
 
 
 // CUISINES ROUTES
-// Cuisine Search
+// Display all cities or search result
 app.get('/cuisines', function(req, res) {   // Display all Cuisines and the details
     // Declare query1
     let showCuisinesQuery; 
@@ -288,7 +299,68 @@ app.get('/cuisines', function(req, res) {   // Display all Cuisines and the deta
     )
 }); 
 
+// Add new Cuisine to db
+app.post('/cuisines/add-cuisine-ajax', function(req, res) {
+    // Capture incoming data and parse them back to JSON
+    let data = req.body;
+    console.log(data);
+
+    // Create the query and run it on the database
+    const addCuisineQuery = `INSERT INTO Cuisines (cuisine_name) VALUES ('${data.cuisine_name}');`;
+    db.pool.query(addCuisineQuery, function(error, rows, fields){
+        // check if there was an error
+        if (error) {
+            console.log(error)
+            res.sendStatus(400); 
+        }
+        else {
+            query2 = 'SELECT * FROM Cuisines';
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error) {
+                    console.log(error); 
+                    res.sendStatus(400);
+                }
+                else {
+                    console.log(rows); 
+                    res.send(rows)
+                }
+            })
+        }
+    })
+}); 
+
+// Update a cuisine's data
+app.put('/cuisines/put-cuisine-ajax', function(req, res, next) {
+    let data = req.body; 
+    console.log(data);
+
+    let cuisineID = parseInt(data.cuisine_id); 
+    let cuisineName = data.cuisine_name;
+
+    let queryUpdateCuisine = `UPDATE Cuisines SET cuisine_name = ? WHERE Cuisines.cuisine_id = ?`; 
+    let queryGetCuisine = `SELECT * FROM Cuisines WHERE Cuisines.cuisine_id = ?`;
+    
+    // Run the 1st query
+    db.pool.query(queryGetCuisine, [cuisineID], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400); 
+        }
+        else {
+            db.pool.query(queryUpdateCuisine, [cuisineName, cuisineID], function(error, rows, fields) {
+                if (error) {
+                    console.log(error); 
+                } 
+                else {
+                    res.send(rows)
+                }
+            })
+        }
+    })
+}); 
+
 // CITIES ROUTES
+// Display all cities or search result
 app.get('/cities', function(req, res) {   // Display all Cities and the details
     // Declare query1
     let showCitiesQuery; 
@@ -314,13 +386,75 @@ app.get('/cities', function(req, res) {   // Display all Cities and the details
     )
 }); 
 
+// Add new City to db
+app.post('/cities/add-city-ajax', function(req, res) {
+    // Capture incoming data and parse them back to JSON
+    let data = req.body;
+    console.log(data);
+
+    // Create the query and run it on the database
+    addCityQuery = `INSERT INTO Cities (city_name) VALUES ('${data.city_name}');`;
+    db.pool.query(addCityQuery, function(error, rows, fields){
+        // check if there was an error
+        if (error) {
+            console.log(error)
+            res.sendStatus(400); 
+        }
+        else {
+            query2 = 'SELECT * FROM Cities';
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error) {
+                    console.log(error); 
+                    res.sendStatus(400);
+                }
+                else {
+                    console.log(rows); 
+                    res.send(rows)
+                }
+            })
+        }
+    })
+}); 
+
+// Update a city's data
+app.put('/cities/put-city-ajax', function(req, res, next) {
+    let data = req.body; 
+    console.log(data);
+
+    let cityID = parseInt(data.city_id); 
+    let cityName = data.city_name;
+
+    let queryUpdateCity = `UPDATE Cities SET city_name = ? WHERE Cities.city_id = ?`; 
+    let queryGetCities = `SELECT * FROM Cities WHERE Cities.city_id = ?`;
+    
+    // Run the 1st query
+    db.pool.query(queryGetCities, [cityID], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400); 
+        }
+        else {
+            db.pool.query(queryUpdateCity, [cityName, cityID], function(error, rows, fields) {
+                if (error) {
+                    console.log(error); 
+                } 
+                else {
+                    res.send(rows)
+                }
+            })
+        }
+    })
+}); 
+
 
 // RESTAURANT-HAS-CUISINES ROUTES
+// Display all Restaurant-Cuisines Associations or search result
 app.get('/restaurant_has_cuisines', function(req, res) {   // Display all Restaurants' Cuisines and the details
     // Declare query1
     let showRestaurantCuisinesQuery; 
-    console.log(req.query.rc_restaurantSearch)
-    console.log(req.query.rc_cuisineSearch)
+    let showSearchQuery; 
+    showRestaurantsQuery = `SELECT * FROM Restaurants;`;
+    showCuisinesQuery = `SELECT * FROM Cuisines;`;
 
     // If there is no query string, perform a basic SELECT
     if (req.query.rc_restaurantSearch === undefined && req.query.rc_cuisineSearch === undefined) {
@@ -328,34 +462,211 @@ app.get('/restaurant_has_cuisines', function(req, res) {   // Display all Restau
         INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
         INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id;`; 
     }
-    // If there is a query sring, we assume this is a search, and return desired results
-    else if (req.query.rc_restaurantSearch !== undefined && req.query.rc_cuisineSearch === undefined) {
+    // If there is a query string, we assume this is a search, and return desired results
+    if (req.query.rc_restaurantSearch !== undefined) {
         showRestaurantCuisinesQuery = `SELECT restaurant_cuisine_id, Restaurants.restaurant_name as restaurants, Cuisines.cuisine_name as cuisines FROM Restaurant_has_cuisines 
         INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
         INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id
         WHERE Restaurants.restaurant_name LIKE "${req.query.rc_restaurantSearch}%";`; 
     } 
-    // else {
+    // if (req.query.rc_cuisineSearch !== undefined && req.query.rc_restaurantSearch === undefined) {
     //     showRestaurantCuisinesQuery = `SELECT restaurant_cuisine_id, Restaurants.restaurant_name as restaurants, Cuisines.cuisine_name as cuisines FROM Restaurant_has_cuisines 
     //     INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
     //     INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id
     //     WHERE Cuisines.cuisine_name LIKE "${req.query.rc_cuisineSearch}%";`; 
     // }
 
-    // Run 1st query
-    db.pool.query(showRestaurantCuisinesQuery, function(error, rows, fields){
+    db.pool.query(showRestaurantCuisinesQuery, function(error, rows, fields){    // Execute the query
 
-        // Save the restaurantsCuisines
         let restaurantCuisines = rows;
         console.log(restaurantCuisines)
 
-            console.log({data: restaurantCuisines})
-            return res.render('restaurant_has_cuisines', {data: restaurantCuisines});
-        }
-    )
+        db.pool.query(showRestaurantsQuery, function(error, rows, fields){ // Run the second query
+
+            let restaurants = rows;
+        
+            db.pool.query(showCuisinesQuery, (error, rows, fields) => {    // Run the third query
+
+                let cuisines = rows; 
+
+                let cuisinemap = {};
+                cuisines.map(cuisine => {
+                    let cuisine_id = parseInt(cuisine.cuisine_id, 10);
+    
+                    cuisinemap[cuisine_id] = cuisine["cuisine_name"];
+                })
+
+                // Overwrite the restaurantCuisine ID with the name of the cuisine in the review object
+                restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
+                    return Object.assign(restaurantCuisine, {cuisine_id: cuisinemap[restaurantCuisine.cuisine_id]})
+                })
+
+                let restaurantmap = {};
+                restaurants.map(restaurant => {
+                    let restaurant_id = parseInt(restaurant.restaurant_id, 10);
+    
+                    restaurantmap[restaurant_id] = restaurant["restaurant_name"];
+                })
+
+                // Overwrite the restaurant ID with the name of the restaurant in the restaurantCuisine object
+                restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
+                    return Object.assign(restaurantCuisine, {restaurant_id: restaurantmap[restaurantCuisine.restaurant_id]})
+                })        
+
+                return res.render('restaurant_has_cuisines', {data: restaurantCuisines, restaurants: restaurants, cuisines: cuisines});                  // Render the index.hbs file, and also send the renderer
+            })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
+        })
+    })
 }); 
 
-// USERS ROUTES
+// Add a new Restaurant-Cuisine Association
+app.post('/restaurant_has_cuisines/add-restaurant-cuisine-ajax', function(req, res) {
+    // Capture incoming data and parse them back to JSON
+    let data = req.body;
+    console.log(data);
+
+    // Create the query and run it on the database
+    addRestaurantCuisinesQuery = `INSERT INTO Restaurant_has_cuisines (restaurant_id, cuisine_id) VALUES ('${data.restaurant}', '${data.cuisine}');`
+    db.pool.query(addRestaurantCuisinesQuery, function(error, rows, fields){
+        // check if there was an error
+        if (error) {
+            console.log(error)
+            res.sendStatus(400); 
+        }
+        else {
+            query2 = 'SELECT restaurant_cuisine_id, Restaurants.restaurant_name as restaurants, Cuisines.cuisine_name as cuisines \
+            FROM Restaurant_has_cuisines INNER JOIN Restaurants ON Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id \
+            INNER JOIN Cuisines ON Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id'; 
+            db.pool.query(query2, function(error, rows, fields) {
+                if (error) {
+                    console.log(error); 
+                    res.sendStatus(400);
+                }
+                else {
+                    console.log(rows); 
+                    res.send(rows)
+                }
+            })
+        }
+    })
+}); 
+
+// Delete a Restaurant-Cuisine Association
+app.delete('/restaurant_has_cuisines/delete-restaurant-cuisine-ajax/', function(req, res, next) {
+    let data = req.body; 
+    console.log(data);
+    let restaurantCuisineID = parseInt(data.restaurant_cuisine_id)
+    console.log(data);
+    // let deleteRestaurantHasCuisinesQuery = `DELETE FROM Restaurant_has_cuisines WHERE restaurant_id = ?`;  
+    let deleteRestCuisineQuery = `DELETE FROM Restaurant_has_cuisines WHERE restaurant_cuisine_id = ?`; 
+            // Run 2nd query
+            db.pool.query(deleteRestCuisineQuery, [restaurantCuisineID], function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400); 
+                } else {
+                    res.sendStatus(204); 
+                }
+            })
+}); 
+
+// Update a Restaurant-Cuisine Association
+app.put('/restaurant_has_cuisines/put-restaurant-cuisine-ajax', function(req, res, next) {
+    let data = req.body; 
+    console.log(data);
+
+    let restaurantCuisineID = parseInt(data.restaurant_cuisine_id); 
+    let restaurant = data.restaurant;
+    let cuisine = data.cuisine; 
+
+    let query1 = `UPDATE Restaurant_has_cuisines SET restaurant_id = ? WHERE Restaurant_has_cuisines.restaurant_cuisine_id = ?`; 
+    let query2 = `UPDATE Restaurant_has_cuisines SET cuisine_id = ? WHERE Restaurant_has_cuisines.restaurant_cuisine_id = ?`; 
+    
+    // Run the 1st query
+    db.pool.query(query1, [restaurant, restaurantCuisineID], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400); 
+        }
+        else { 
+            db.pool.query(query2, [cuisine, restaurantCuisineID], function(error, rows, fields) {
+            if (error) {
+                console.log(error); 
+                res.sendStatus(400);
+            } else{ 
+                res.send(rows)
+            } 
+        })
+        }
+    }
+);
+}); 
+
+
+/// REVIEWS ROUTES
+app.get('/reviews', function(req, res)
+{  
+    let query1;
+
+    // If there is no query string, we just perform a basic SELECT
+    if (req.query.review_restaurant_name === undefined)
+    {
+        query1 = "SELECT * FROM Reviews;";              
+    }
+
+    // If there is a query string, we assume this is a search, and return desired results
+    else
+    {
+        query1 = `SELECT * FROM Reviews WHERE review_restaurant_name LIKE "${req.query.review_restaurant_name}%"`
+    }
+
+    let query2 = "SELECT * FROM Users;";
+    let query3 = "SELECT * FROM Restaurants;";
+
+
+    db.pool.query(query1, function(error, rows, fields){    // Execute the query
+
+        let reviews = rows;
+
+        db.pool.query(query2, function(error, rows, fields){ // Run the second query
+
+            let users = rows;
+        
+            db.pool.query(query3, (error, rows, fields) => {    // Run the third query
+
+                let restaurants = rows; 
+
+                let restaurantmap = {};
+                restaurants.map(restaurant => {
+                    let restaurant_id = parseInt(restaurant.restaurant_id, 10);
+    
+                    restaurantmap[restaurant_id] = restaurant["restaurant_name"];
+                })
+
+                // Overwrite the review ID with the name of the restaurant in the review object
+                reviews = reviews.map(review => {
+                    return Object.assign(review, {review_restaurant_id: restaurantmap[review.review_restaurant_id]})
+                })
+
+                let usermap = {};
+                users.map(user => {
+                    let user_id = parseInt(user.user_id, 10);
+    
+                    usermap[user_id] = user["user_first_name"] + " " + user["user_last_name"];
+                })
+
+                // Overwrite the city ID with the name of the city in the review object
+                reviews = reviews.map(review => {
+                    return Object.assign(review, {review_user_id: usermap[review.review_user_id]})
+                })        
+
+                return res.render('reviews', {data: reviews, restaurants: restaurants, users:users});                  // Render the index.hbs file, and also send the renderer
+            })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
+        })
+    })
+}); 
+
+// Reviews Routes
 app.get('/reviews', function(req, res)
     {  
         let query1;

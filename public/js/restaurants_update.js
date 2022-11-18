@@ -7,6 +7,18 @@ updateRestaurantForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault(); 
 
+    var error = document.getElementById("edit-rest-error")
+    if (document.getElementById("update-restaurant-name").value === "") {
+        error.textContent = "Please enter all required fields."
+        error.style.color = "red"
+    }  if (isNaN(document.getElementById("update-restaurant-city").value)) {
+        error.textContent = "Please enter all required fields."
+        error.style.color = "red"
+    }
+    else {
+        error.textContent = "";
+    }
+
     // Get form fields we need to get data from
     let restaurantID = document.getElementById("selectedRestaurant")
     let newRestaurantName = document.getElementById("update-restaurant-name");
@@ -25,9 +37,13 @@ updateRestaurantForm.addEventListener("submit", function (e) {
     if (restaurantNameValue.length === 0) {
         return; 
     }
+    if (isNaN(restaurantCityValue)) {
+        return;
+    }
     if (restaurantWebsiteValue.length === 0) {
         restaurantWebsiteValue = 'NULL'; 
-    } else if (restaurantEmailValue.length === 0) {
+    } 
+    if (restaurantEmailValue.length === 0) {
         restaurantEmailValue = 'NULL'; 
     }; 
 
@@ -52,6 +68,8 @@ updateRestaurantForm.addEventListener("submit", function (e) {
             console.log(xhttp.response)
             updateRow(xhttp.response, restaurantIdValue); 
             updateRows(data, restaurantIdValue);
+            alert(`Successfully Updated Restaurant ID #${restaurantIdValue}`)
+            location.reload();
 
             // Clear input fields for another entry
             restaurantID.value='';

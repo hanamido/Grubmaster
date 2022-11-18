@@ -11,6 +11,7 @@ function deleteRestaurant(restaurantID) {
         contentType: "application/json; charset=utf-8",
         success: function(result) {
             deleteRow(restaurantID); 
+            alert(`Successfully Deleted Restaurant ID# ${restaurantID}`)
         }
     }); 
 };
