@@ -1,3 +1,4 @@
+// Add user
 // Get the objects we need to modify
 let addUserForm = document.getElementById('add-user-form-ajax');
 
@@ -19,11 +20,16 @@ addUserForm.addEventListener("submit", function (e) {
     let emailAddressValue = inputEmailAddress.value;
     let cityValue = inputCity.value;
 
+    // Capture allowed null value
+    if (emailAddressValue.length === 0) {
+        emailAddressValue = 'NULL'; 
+    }
+
     // Put our data we want to send in a javascript object
     let data = {
         user_first_name: firstNameValue,
         user_last_name: lastNameValue,
-        user_email_address: emailAddressValue,
+        user_email: emailAddressValue,
         user_city_id: cityValue
     }
     
@@ -38,6 +44,8 @@ addUserForm.addEventListener("submit", function (e) {
 
             // Add the new data to the table
             addRowToTable(xhttp.response);
+            location.reload();
+            alert("Succesfully Added User!");
 
             // Clear the input fields for another transaction
             inputFirstName.value = '';
@@ -56,7 +64,7 @@ addUserForm.addEventListener("submit", function (e) {
 })
 
 // Creates a single row from an Object representing a single record from 
-// bsg_people
+// Users
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
@@ -69,7 +77,7 @@ addRowToTable = (data) => {
     let parsedData = JSON.parse(data);
     let newRow = parsedData[parsedData.length - 1]
 
-    // Create a row and 4 cells
+    // Create a row
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
     let firstNameCell = document.createElement("TD");
@@ -77,20 +85,12 @@ addRowToTable = (data) => {
     let emailAddressCell = document.createElement("TD");
     let cityCell = document.createElement("TD");
 
-    let deleteCell = document.createElement("TD");
-
     // Fill the cells with correct data
-    idCell.innerText = newRow.id;
+    idCell.innerText = newRow.user_id;
     firstNameCell.innerText = newRow.user_first_name;
     lastNameCell.innerText = newRow.user_last_name;
-    emailAddressCell.innerText = newRow.user_email_address;
+    emailAddressCell.innerText = newRow.user_email;
     cityCell.innerText = newRow.address_city;
-
-    deleteCell = document.createElement("button");
-    deleteCell.innerHTML = "Delete";
-    deleteCell.onclick = function(){
-        deleteUser(newRow.user_id);
-    };
 
     // Add the cells to the row 
     row.appendChild(idCell);
@@ -98,10 +98,6 @@ addRowToTable = (data) => {
     row.appendChild(lastNameCell);
     row.appendChild(emailAddressCell);
     row.appendChild(cityCell);
-    row.appendChild(deleteCell);
-    
-    // Add a row attribute so the deleteRow function can find a newly added row
-    row.setAttribute('data-value', newRow.id);
     
     // Add the row to the table
     currentTable.appendChild(row);
