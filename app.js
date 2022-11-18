@@ -6,7 +6,7 @@
 const path = require('path');
 const express = require('express'); 
 const app = express(); 
-PORT = 9097; 
+PORT = 9009; 
 app.use(express.static(path.join(__dirname, '/public'))); 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -384,7 +384,7 @@ app.get('/reviews', function(req, res)
 
                 let users = rows;
             
-                db.pool.query(query3, (error, rows, fields) => {    // Run the third query
+                db.pool.query(query3, function(error, rows, fields){    // Run the third query
 
                     let restaurants = rows; 
 
@@ -509,7 +509,61 @@ app.post('/add-user-ajax', function(req, res)
     })
 });
 
-app.delete('/delete-user-ajax/', function(req,res,next){
+app.post('/add-review-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    /* Capture NULL values
+    let review_user_id = data.review_user_id; 
+    if (review_user_id.length === 0) { 
+        review_user_id = 'NULL'
+    };  */
+
+    // Get today's date
+    // from https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    today = yyyy + '/' + mm + '/' + dd;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Reviews (review_rating, review_date, review_restaurant_id, review_user_id) VALUES (${data.review_restaurant_rating}, '${today}',  ${data.review_restaurant_id}, ${data.review_user_id})`;
+    db.pool.query(query1, function(error, rows, fields){
+        
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            // If there was no error, perform a SELECT * on Users
+            query2 = `SELECT * FROM Reviews;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+app.delete('/delete-user-ajax', function(req,res,next){
         let data = req.body;
         let user_id = parseInt(data.id);
         let deleteUser= `DELETE FROM Users WHERE user_id = ?`;
@@ -539,7 +593,7 @@ app.put('/put-user-ajax', function(req,res,next){
     let selectUser = `SELECT * FROM Users WHERE Users.user_id = ?`;
   
         // Run the 1st query
-        db.pool.query(queryUpdateUser, [user_first_name, user_last_name, user_email, user_city_id, user_id], function(error, rows, fields){
+        db.pool.query(queryUpdateUser, [user_first_name, user_last_name, user_email, user_city_id, user_id], function(error, rows, fields) {
             if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
@@ -558,6 +612,41 @@ app.put('/put-user-ajax', function(req,res,next){
                         res.sendStatus(400);
                     } else {
                         res.send(rows);
+                    }
+                })
+            }          
+  })});
+
+  app.put('/put-review-ajax', function(req,res,next){
+    let data = req.body;
+    console.log(data);
+  
+    let review_id = parseInt(data.review_id);
+    let updated_restaurant_rating = parseInt(data.updated_restaurant_rating);
+  
+    let queryUpdateReview = `UPDATE Reviews SET review_rating = ? WHERE review_id = ?`; 
+    let selectReview = `SELECT * FROM Reviews WHERE Reviews.review_id = ?`;
+  
+        // Run the 1st query
+        db.pool.query(queryUpdateReview, [updated_restaurant_rating, review_id], function(error, rows, fields) {
+            if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+
+            // If there was no error, we run our second query and return that data so we can use it to update the people's
+            // table on the front-end
+            else
+            {
+                db.pool.query(selectReview, [review_id], function(error, rows, fields) {
+
+                    if (error) {
+                        console.log(error);
+                        res.sendStatus(400);
+                    } else {
+                        res.redirect(rows);
                     }
                 })
             }          
