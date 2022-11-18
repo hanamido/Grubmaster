@@ -28,11 +28,10 @@
         know what each column means when the page renders --}}
         <tr id="headers">
             <th class="header" scope="col">ID</th>
+            <th class="header" scope="col">Restaurant</th>
             <th class="header" scope="col">Rating</th>
             <th class="header" scope="col">Date</th>
-            <th class="header" scope="col">Restaurant</th>
             <th class="header" scope="col">User</th>
-            <th class="header" scope="col" colspan="2">Actions</th>
         </tr>
     </thead>
 
@@ -42,15 +41,14 @@
         {{#each data}}
         <tr>
             <td>{{this.review_id}}</td>
+            <td>{{this.review_restaurant_id}}</td>
             <td>{{this.review_rating}}</td>
             <td>{{this.review_date}}</td>
-            <td>{{this.review_restaurant_id}}</td>
             {{#if this.review_user_id}}
                 <td>{{this.review_user_id}}</td>
                     {{else}}
                 <td>NULL</td>
             {{/if}}
-            <td><button onclick="deleteReview({{this.review_id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
@@ -63,30 +61,35 @@
   <form method="POST" id="add-review-form-ajax">
         <fieldset class="fields">
           <form class="p-1 mb-1 bg-light border-bottom">
-            <label>Restaurant</label> 
-                <select name="restaurant" id="restaurant">
+            <label>Restaurant: </label> 
+                <select name="review_restaurant_id" id="review_restaurant_id">
                     <option value="">Select a Restaurant</option>
                     {{#each restaurants}}
                     <option value="{{this.restaurant_id}}">{{this.restaurant_name}}</option>
                     {{/each}}
                 </select>
-            <input type="hidden" name="restaurantRating" id="addRestaurantRating" value="1">
-            <label> Rating: </label>
-              <select>
+            <label>Rating: </label>
+              <select name="review_restaurant_rating" id="review_restaurant_rating">
+                  <option value="">Select a Rating</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>
               </select>
-            <label>First Name*</label> <input type="text" name="first_name" id="first_name">
-            <label>Last Name*</label> <input type="text" name="last_name" id="first_name">
-
+            <label>User: </label> 
+                <select name="use_id" id="review_user_id">
+                    <option value="">Select a User</option>
+                    {{#each users}}
+                    <option value="{{this.user_id}}">{{this.user_first_name}} {{this.user_last_name}}</option>
+                    {{/each}}
+                </select>
     </fieldset>
-        <input class="btn" type="submit" id="add-review-form-ajax" value="Add Review">
-        <input class="btn" type="button" value="Cancel" onClick="browseReviews()">
+        <input type="submit" id="add-review-form-ajax" value="Add Review">
 </form> 
 </div><!-- Add New Review -->
+
+<script src="./js/add_review.js"></script>
 
 <p>&nbsp;</p>
 <h2>Update A Review's Information</h2>
@@ -94,68 +97,24 @@
 <form id="update-review-form-ajax">
     <fieldset class="fields">
         <form class="p-1 mb-1 bg-light border-bottom">
-        <label>Review ID*</label> 
+        <label>Review ID</label> 
             <select name="review_id" id="selected_review_id">
                 <option value="">Select a Review ID</option>
                 {{#each data}}
                 <option value="{{this.review_id}}">{{this.review_id}}</option>
                 {{/each}}
             </select>  
-        <input type="hidden" name="restaurantRating" id="updateRestaurantRating" value="1">
-            <label> Rating: </label>
-              <select>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-              </select>             
+        <label> Rating: </label>
+            <select name="review_restaurant_rating" id="updated_restaurant_rating">
+                <option value="">Select a Rating</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>             
     </fieldset>
-    <input class="btn" type="submit" id="add-user-form-ajax" value="Update User">
-</form><!-- Update User -->
+    <input type="submit" id="update-review-form-ajax" value="Update Review">
+</form><!-- Update Review -->
 
-<script>
-
-// Creates a single row from an Object representing a single record from 
-// Reviews
-addRowToTable = (data) => {
-
-    // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("Reviews-table");
-
-    // Get the location where we should insert the new row (end of table)
-    let newRowIndex = currentTable.rows.length;
-
-    // Get a reference to the new row from the database query (last object)
-    let parsedData = JSON.parse(data);
-    let newRow = parsedData[parsedData.length - 1]
-
-    // Create a row
-    let row = document.createElement("TR");
-    let idCell = document.createElement("TD");
-    let firstNameCell = document.createElement("TD");
-    let lastNameCell = document.createElement("TD");
-    let emailAddressCell = document.createElement("TD");
-    let cityCell = document.createElement("TD");
-
-    // Fill the cells with correct data
-    idCell.innerText = newRow.review_id;
-    firstNameCell.innerText = newRow.review_first_name;
-    lastNameCell.innerText = newRow.review_last_name;
-    emailAddressCell.innerText = newRow.review_email;
-    cityCell.innerText = newRow.address_city;
-
-    // Add the cells to the row 
-    row.appendChild(idCell);
-    row.appendChild(firstNameCell);
-    row.appendChild(lastNameCell);
-    row.appendChild(emailAddressCell);
-    row.appendChild(cityCell);
-    
-    // Add the row to the table
-    currentTable.appendChild(row);
-}
-
-</script>
-
-
+<script src="./js/update_review.js"></script>
