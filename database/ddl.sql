@@ -140,7 +140,6 @@ CREATE TABLE `Users` (
   `user_city_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id` (`user_id`),
-  UNIQUE KEY `user_email` (`user_email`),
   KEY `user_city_id` (`user_city_id`),
   CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`user_city_id`) REFERENCES `Cities` (`city_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
