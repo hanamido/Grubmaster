@@ -1,33 +1,27 @@
 // Get objects we need to modify
-let addRestaurantForm = document.getElementById('add-restaurant-form-ajax'); 
+let addRestCuisineForm = document.getElementById('add-restaurant-cuisine-form-ajax'); 
 
 // Modify the objects we need
-addRestaurantForm.addEventListener("submit", function (e) {
+addRestCuisineForm.addEventListener("submit", function (e) {
     e.preventDefault(); 
 
     // Get form fields we need data from
-    let inputRestaurantName = document.getElementById("input-restaurant-name");
-    let inputRestaurantWebsite = document.getElementById("input-restaurant-website");
-    let inputRestaurantEmail = document.getElementById("input-restaurant-email");
-    let inputRestaurantCity = document.getElementById("input-restaurant-city");
+    let inputRestaurant = document.getElementById("input-rc-restaurant");
+    let inputCuisine = document.getElementById("input-rc-cuisine");
 
     // Get values from inside the form fields
-    let restaurantNameValue = inputRestaurantName.value;
-    let restaurantWebsiteValue = inputRestaurantWebsite.value; 
-    let restaurantEmailValue = inputRestaurantEmail.value; 
-    let restaurantCityValue = inputRestaurantCity.value; 
+    let restaurantValue = inputRestaurant.value;
+    let cuisineValue = inputCuisine.value; 
 
     // Encapsulate data in JS object
     let data = {
-        restaurant_name: restaurantNameValue, 
-        restaurant_website: restaurantWebsiteValue, 
-        restaurant_email: restaurantEmailValue, 
-        city_id: restaurantCityValue
+        restaurant: restaurantValue, 
+        cuisine: cuisineValue
     }
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest(); 
-    xhttp.open('POST', '/restaurants/add-restaurant-ajax', true); 
+    xhttp.open('POST', '/restaurant_has_cuisines/add-restaurant-cuisine-ajax', true); 
     xhttp.setRequestHeader('Content-type', 'application/json'); 
 
     // Tell our AJAX request how to resolve
@@ -36,12 +30,9 @@ addRestaurantForm.addEventListener("submit", function (e) {
 
             // Add the new data to the table
             addRowToTable(xhttp.response); 
+            alert("Successfully Added Restaurant-Cuisine Association!")
+            location.reload();
 
-            // Clear input fields for another entry
-            inputRestaurantName.value=''; 
-            inputRestaurantWebsite.value=''; 
-            inputRestaurantEmail.value='';
-            inputRestaurantCity.value=''; 
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
         }
@@ -53,7 +44,7 @@ addRestaurantForm.addEventListener("submit", function (e) {
 // Creates a single row from an Object representing a single record
 addRowToTable = (data) => {
     // Get a reference to the current table on the page and clear it out. 
-    let currentTable = document.getElementById("restaurants-table"); 
+    let currentTable = document.getElementById("restaurant-cuisines-table"); 
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -65,35 +56,29 @@ addRowToTable = (data) => {
     // Create a new row and new cells for remaining data
     let row = document.createElement("TR"); 
     let idCell = document.createElement("TD");
-    let restaurantNameCell = document.createElement("TD"); 
-    let restaurantWebsiteCell = document.createElement("TD"); 
-    let restaurantEmailCell = document.createElement("TD"); 
-    let restaurantCityCell = document.createElement("TD"); 
+    let restaurantCell = document.createElement("TD"); 
+    let cuisineCell = document.createElement("TD"); 
 
     let deleteCell = document.createElement("TD")
 
     // Fill the cells with the correct data
-    idCell.innerText = newRow.restaurant_id; 
-    restaurantNameCell.innerText = newRow.restaurant_name;
-    restaurantWebsiteCell.innerText = newRow.restaurant_website; 
-    restaurantEmailCell.innerText = newRow.restaurant_email;
-    restaurantCityCell.innerText = newRow.city;  
+    idCell.innerText = newRow.restaurant_cuisine_id; 
+    restaurantCell.innerText = newRow.restaurant;
+    cuisineCell.innerText = newRow.cuisine; 
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete"; 
     deleteCell.onClick = function() {
-        deleteRestaurant(newRow.restaurant_id); 
+        deleteRestaurantCuisine(newRow.restaurant_cuisine_id); 
     }; 
 
     // Add the cells to the row
     row.appendChild(idCell); 
-    row.appendChild(restaurantNameCell); 
-    row.appendChild(restaurantWebsiteCell);
-    row.appendChild(restaurantEmailCell);
-    row.appendChild(restaurantCityCell); 
+    row.appendChild(restaurantCell); 
+    row.appendChild(cuisineCell);
 
     // Add a row attribute so the deleteRow function can find a newly added row
-    row.setAttribute('data-value', newRow.restaurant_id); 
+    row.setAttribute('data-value', newRow.restaurant__cuisine_id); 
 
     // Add the row to the table 
     currentTable.appendChild(row); 
