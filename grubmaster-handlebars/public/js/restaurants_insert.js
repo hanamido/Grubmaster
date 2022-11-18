@@ -1,15 +1,35 @@
 // Get objects we need to modify
-let addRestaurantForm = document.getElementById('add-restaurant-form-ajax'); 
+let addRestaurantCuisineForm = document.getElementById('add-restaurant-cuisine-form-ajax'); 
 
 // Modify the objects we need
 addRestaurantForm.addEventListener("submit", function (e) {
     e.preventDefault(); 
+
+    var error = document.getElementById("add-rest-error")
+    if (document.getElementById("input-restaurant-name").value === "") {
+        error.textContent = "Please enter all required fields."
+        error.style.color = "red"
+    }  if (isNaN(document.getElementById("input-restaurant-city").value)) {
+        error.textContent = "Please enter all required fields."
+        error.style.color = "red"
+    }
+    else {
+        error.textContent = "";
+    }
 
     // Get form fields we need data from
     let inputRestaurantName = document.getElementById("input-restaurant-name");
     let inputRestaurantWebsite = document.getElementById("input-restaurant-website");
     let inputRestaurantEmail = document.getElementById("input-restaurant-email");
     let inputRestaurantCity = document.getElementById("input-restaurant-city");
+
+    // Data validation
+    if (inputRestaurantName.value == "") {
+        return;
+    }
+    if (isNaN(inputRestaurantCity.value)) {
+        return;
+    }
 
     // Get values from inside the form fields
     let restaurantNameValue = inputRestaurantName.value;
@@ -22,7 +42,7 @@ addRestaurantForm.addEventListener("submit", function (e) {
         restaurant_name: restaurantNameValue, 
         restaurant_website: restaurantWebsiteValue, 
         restaurant_email: restaurantEmailValue, 
-        city_id: restaurantCityValue
+        city: restaurantCityValue
     }
 
     // Setup our AJAX request
@@ -36,12 +56,15 @@ addRestaurantForm.addEventListener("submit", function (e) {
 
             // Add the new data to the table
             addRowToTable(xhttp.response); 
+            alert("Successfully Added Restaurant!")
+            location.reload();
 
             // Clear input fields for another entry
             inputRestaurantName.value=''; 
             inputRestaurantWebsite.value=''; 
             inputRestaurantEmail.value='';
             inputRestaurantCity.value=''; 
+
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
         }
