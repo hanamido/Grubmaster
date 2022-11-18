@@ -11,6 +11,8 @@ updateCuisineForm.addEventListener("submit", function (e) {
     if (document.getElementById("update-cuisine-name").value === "") {
         error.textContent = "Please enter all required fields."
         error.style.color = "red"
+        alert("Please enter all required fields.");
+        location.reload();
     }  
     else {
         error.textContent = "";

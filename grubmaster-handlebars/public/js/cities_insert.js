@@ -9,6 +9,8 @@ addCityForm.addEventListener("submit", function (e) {
     if (document.getElementById("input-city-name").value === "") {
         error.textContent = "Please enter all required fields."
         error.style.color = "red"
+        alert("Please enter all required fields.");
+        location.reload();
     }  
     else {
         error.textContent = "";

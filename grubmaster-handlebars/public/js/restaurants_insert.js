@@ -1,27 +1,29 @@
 // Get objects we need to modify
-let addRestaurantCuisineForm = document.getElementById('add-restaurant-cuisine-form-ajax'); 
+let addRestaurantForm = document.getElementById('add-restaurant-form-ajax'); 
 
 // Modify the objects we need
 addRestaurantForm.addEventListener("submit", function (e) {
     e.preventDefault(); 
-
-    var error = document.getElementById("add-rest-error")
-    if (document.getElementById("input-restaurant-name").value === "") {
-        error.textContent = "Please enter all required fields."
-        error.style.color = "red"
-    }  if (isNaN(document.getElementById("input-restaurant-city").value)) {
-        error.textContent = "Please enter all required fields."
-        error.style.color = "red"
-    }
-    else {
-        error.textContent = "";
-    }
 
     // Get form fields we need data from
     let inputRestaurantName = document.getElementById("input-restaurant-name");
     let inputRestaurantWebsite = document.getElementById("input-restaurant-website");
     let inputRestaurantEmail = document.getElementById("input-restaurant-email");
     let inputRestaurantCity = document.getElementById("input-restaurant-city");
+
+    var error = document.getElementById("add-rest-error")
+    if (document.getElementById("input-restaurant-name").value === "") {
+        error.textContent = "Please enter all required fields."
+        error.style.color = "red"
+        alert("Please enter all required fields.");
+        location.reload();
+    }  if (isNaN(document.getElementById("input-restaurant-city").value)) {
+        error.textContent = "Please enter all required fields."
+        error.style.color = "red"
+    }
+    else {
+        error.textContent = "";
+    };
 
     // Data validation
     if (inputRestaurantName.value == "") {
