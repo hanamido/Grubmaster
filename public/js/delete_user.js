@@ -16,6 +16,7 @@ function deleteUser(user_id) {
 
             // Add the new data to the table
             deleteRow(user_id);
+            location.reload();
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 204) {
