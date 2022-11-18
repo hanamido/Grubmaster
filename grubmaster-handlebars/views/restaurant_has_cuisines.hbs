@@ -75,14 +75,14 @@
 
 <div id="search-restaurant-cuisine">
     <h2>Search for a Restaurants' Cuisine below.</h2>
-    <p>Search by restaurant or cuisine name using the fields below. Partial names are OK too!</p>
+    <p>Search by restaurant name using the fields below. Partial names are OK too!</p>
     <form id="search-restaurant-cuisine-form" method='GET' action='/restaurant_has_cuisines'>
         <label for="input-rc-restaurant-search">Search by Restaurant Name: </label>
         <input type="text" name="rc_restaurantSearch" id="input-rc-restaurant-search">
 
-        <label for="input-rc-cuisine-search">Search by Cuisine Name: </label>
+        {{!-- <label for="input-rc-cuisine-search">Search by Cuisine Name: </label>
         <input type="text" name="rc_cuisineSearch" id="input-rc-cuisine-search">
-        
+         --}}
         <input type="submit">
         <a href="/restaurant_has_cuisines"><button>Reset</button></a>
     </form>
