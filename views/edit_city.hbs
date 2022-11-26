@@ -31,7 +31,7 @@
 
 <p>&nbsp;</p>
 
-<div class="form-fields" id="update-city-html" style="display: block">
+<div class="form-fields" id="update-city-form" style="display: block">
 
 <h2>Update a City's Details:</h2>
 <p>Please enter the new name for the city.</p>
@@ -51,13 +51,31 @@
     
                 </fieldset>
     
-                <input type="submit" value="Edit City" name="editCity" id="edit-city-button" class="btn btn-primary" onClick="
-                    alert(`Successfully updated City ID #{{data.0.city_id}}`);">
+                <input type="submit" value="Edit City" name="editCity" id="edit-city-button" class="btn btn-primary" 
+                    onClick="if (validateForm()) {alert(`Successfully updated City ID #{{data.0.city_id}}`)};">
     
                 <input type="reset" class="btn btn-secondary">
     
                 <a href='/cities'><input class="btn btn-secondary" type="button" value="Cancel"></a>
     
             </form>
+
+<script>
+    function validateForm() {
+        let requiredFields = document.getElementById('update-city-form')
+            .querySelectorAll('[required]')
+        let valid = []; 
+        requiredFields.forEach((element) => {
+            if (element.value !== "") {
+                valid.push(true)
+            } else {valid.push(false)}
+        })
+        let checker = arr => arr.every(v => v === true); 
+        if (checker(valid)) {
+            return true;
+        }
+    }
+</script>
+
 </body>
 </html>

@@ -31,7 +31,7 @@
 
 <p>&nbsp;</p>
 
-<div class="form-fields" id="update-restaurant-html" style="display: block">
+<div class="form-fields" id="update-restaurant-form" style="display: block">
 
 <h2>Update a Restaurant's Details:</h2>
 <p>Please enter the desired new name, website, email, or city from the dropdown menu.</p>
@@ -64,12 +64,30 @@
                 </fieldset>
     
                 <input type="submit" value="Edit Restaurant" name="editRestaurantButton" id="edit-restaurant-button" class="btn btn-primary"
-                onClick="alert(`Successfully updated Restaurant ID #{{data.0.restaurant_id}}`);">
+                onClick="if (validateForm()) {alert(`Successfully updated Restaurant ID #{{data.0.restaurant_id}}`)};">
     
                 <input type="reset" class="btn btn-secondary">
     
                 <a href='/restaurants'><input class="btn btn-secondary" type="button" value="Cancel"></a>
     
             </form>
+
+<script>
+    function validateForm() {
+        let requiredFields = document.getElementById('update-restaurant-form')
+            .querySelectorAll('[required]')
+        let valid = []; 
+        requiredFields.forEach((element) => {
+            if (element.value !== "") {
+                valid.push(true)
+            } else {valid.push(false)}
+        })
+        let checker = arr => arr.every(v => v === true); 
+        if (checker(valid)) {
+            return true;
+        }
+    }
+</script>
+
 </body>
 </html>
