@@ -10,8 +10,8 @@ function deleteRestaurant(restaurantID) {
         data: JSON.stringify(data), 
         contentType: "application/json; charset=utf-8",
         success: function(result) {
-            deleteRow(restaurantID); 
-            alert(`Successfully Deleted Restaurant ID# ${restaurantID}`)
+            deleteRow(restaurantID);
+            alert(`Successfully Deleted Restaurant ID# ${restaurantID}`); 
         }
     }); 
 };
@@ -21,18 +21,7 @@ function deleteRow(restaurantID) {
     for (let i=0, row; row = table.rows[i]; i++) {
         if (table.rows[i].getAttribute("data-value") == restaurantID) {
             table.deleteRow(i);
-            deleteDropDownMenu(restaurantID)
             break; 
         }
     }
 }; 
-
-function deleteDropDownMenu(restaurantID) {
-    let selectMenu = document.getElementById("selectedRestaurant"); 
-    for (let i = 0; i < selectMenu.length; i++) {
-        if (Number(selectMenu.options[i].value) === Number(restaurantID)) {
-            selectMenu[i].remove(); 
-            break; 
-        }
-    }
-};

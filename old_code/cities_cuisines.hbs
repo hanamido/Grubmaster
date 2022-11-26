@@ -1,0 +1,91 @@
+{{!-- Update a city using AJAX --}}
+<div id="update-city" style="display: block">
+<h2>Update a City's Details:</h2>
+<p>To update a specific city's details, select their ID from the dropdown menu then entire the desired new name.</p>
+<p><small>Note: * indicates a required field.</small></p>
+<form id="update-city-form-ajax">
+
+    <label for="selectedCity">* Select a City ID</label>
+    <select name="selectedCity" id="selectedCity">
+        <option value="">City ID</option>
+        {{#each data}}
+        <option value="{{this.city_id}}" required>{{this.city_id}}</option>
+        {{/each}}
+    </select>
+
+    <p><label for="update-city-name" autocomplete="on">* City Name: </label>
+    <input type="text" name="update-city-name" id="update-city-name" required></p>
+    <span id="edit-city-error"></span>
+
+    <p><input type="submit">
+    <input type="button" value="Cancel" onClick="browseCities()"></p>
+
+</form>
+</div>
+
+<script src="./js/cities_update.js"></script>
+
+{{!-- Add city using AJAX --}}
+<div id="add-city" style="display: block">
+    <h2>Add a new city: </h2>
+    <p>To add a new city, please enter the information below and click 'Submit'! </p> 
+    <p><small>Note: * indicates a required field.</small></p>
+
+    <form id="add-city-form-ajax">
+        <p><label for="input-city-name">* City Name: </label>
+        <input type="text" name="input-city-name" id="input-city-name" placeholder="Los Angeles" required></p>
+
+        <input type="submit">
+        <input type="button" value="Cancel" onClick="browseCities()"></p>
+
+    </form>
+</div>
+
+<script src="./js/cities_insert.js"></script>
+
+{{!-- Add data using AJAX --}}
+<div id="add-cuisine" style="display: block">
+    <h2>Add a new cuisine: </h2>
+    <p>To add a new cuisine, please enter the information below and click 'Submit'! </p> 
+    <p><small>Note: * indicates a required field.</small></p>
+
+    <form id="add-cuisine-form-ajax">
+        <p><label for="input-cuisine-name">* Cuisine Name: </label>
+        <input type="text" name="input-cuisine-name" id="input-cuisine-name" placeholder="*Name"></p>
+
+        <span id="add-cuisine-error"><span>
+        <input type="submit">
+        <input type="button" value="Cancel" onClick="browseCuisines()"></p>
+
+    </form>
+</div>
+
+<script src="./js/cuisines_insert.js"></script>
+
+<p>&nbsp;</p>
+
+<div id="update-cuisine" style="display: block">
+<h2>Update a Cuisine's Details:</h2>
+<p>To update a specific cuisine's details, select their ID from the dropdown menu then entire the desired new name.</p>
+<p><small>Note: * indicates a required field.</small></p>
+<form id="update-cuisine-form-ajax">
+
+    <label for="selectedCuisine">* Select a Cuisine ID</label>
+    <select name="selectedCuisine" id="selectedCuisine">
+        <option value="">Cuisine ID</option>
+        {{#each data}}
+        <option value="{{this.cuisine_id}}">{{this.cuisine_id}}</option>
+        {{/each}}
+    </select>
+
+    <p><label for="update-cuisine-name" autocomplete="on">* Cuisine Name: </label>
+    <input type="text" name="update-cuisine-name" id="update-cuisine-name"></p>
+    <span id="edit-cuisine-error"></span>
+
+    <p><input type="submit">
+    <input type="button" value="Cancel" onClick="browseCuisines()"></p>
+
+</form>
+</div>
+
+<script src="./js/cuisines_update.js"></script>

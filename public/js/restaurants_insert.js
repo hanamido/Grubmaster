@@ -15,7 +15,7 @@ addRestaurantForm.addEventListener("submit", function (e) {
     if (document.getElementById("input-restaurant-name").value === "") {
         error.textContent = "Please enter all required fields."
         error.style.color = "red"
-        alert("Please enter all required fields.");
+        alert("Please enter all required fields.")
         location.reload();
     }  if (isNaN(document.getElementById("input-restaurant-city").value)) {
         error.textContent = "Please enter all required fields."

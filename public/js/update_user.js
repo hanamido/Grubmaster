@@ -15,7 +15,7 @@ updateUserForm.addEventListener("submit", function (e) {
     let updateEmailAddress = document.getElementById("update_email_address");
     let updateCity = document.getElementById("update_city");
 
-    let test = document.getElementById()
+    //let test = document.getElementById()
 
     // Get the values from the form fields
     let userIdValue = selectedUserId.value;
@@ -24,10 +24,10 @@ updateUserForm.addEventListener("submit", function (e) {
     let emailAddressValue = updateEmailAddress.value;
     let cityValue = updateCity.value;
 
-    // Capture NULL values when possible
+    /* Capture NULL values when possible
     if (firstNameValue.length === 0) {
         // set firstNameValue equal to current name for the this userId 
-    }
+    } */
 
     // currently the database table for Users does not allow updating values to NULL
     // so we must abort if being passed NULL for Cities -- check on other values
