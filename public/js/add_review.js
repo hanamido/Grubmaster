@@ -79,7 +79,7 @@ addRowToTable = (data) => {
     // Fill the cells with correct data
     idCell.innerText = newRow.review_id;
     restaurantCell.innerText = newRow.review_restaurant_name;
-    ratingCell.innerText = review_rating;
+    ratingCell.innerText = newRow.review_rating;
     dateCell.innerText = newRow.review_date;
     userCell.innerText = newRow.review_user;
 
