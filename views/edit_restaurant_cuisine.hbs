@@ -61,7 +61,7 @@
         </select></p>
 
         <input type="submit" value="Edit Restaurant-Cuisine" name="editRestaurantCuisine" id="edit-restaurant-cuisine-button" class="btn btn-primary"
-            onClick="if (validateForm()) {alert(`Successfully updated Restaurant-Cuisine ID #{{data.0.restaurant_cuisine_id}}`)};">
+            onClick="validateForm({{data.0.restaurant_cuisine_id}});">
 
         <input type="reset" class="btn btn-secondary">
 
@@ -72,7 +72,7 @@
 <script>
     // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
     // Checks if every required field is filled out before sending alert
-    function validateForm() {
+    function validateForm(rowID) {
         let requiredFields = document.getElementById('update-restaurant-cuisine')
             .querySelectorAll('[required]')
         let valid = []; 
@@ -83,10 +83,9 @@
         })
         let checker = arr => arr.every(v => v === true); 
         if (checker(valid)) {
-            return true;
+            alert(`Successfully Updated Restaurant-Cuisine ID #${rowID}! Refreshing page...`)
         }
     }
 </script>
-
 </body>
 </html>

@@ -7,12 +7,12 @@ const path = require('path');
 const express = require('express'); 
 const app = express(); 
 PORT = 10500; 
-app.use(express.static(path.join(__dirname, '/public'))); 
+app.use(express.static('public'));
+// app.use(express.static(path.join(__dirname, '/public'))); 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 const multer = require('multer'); 
 const upload = multer(); 
-let alert = require('alert'); 
 
 // Database
 const db = require('./database/db-connector'); 

@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
 </head>
 
-<script language="Javascript" src='./js/cities_ShowHideCRUD.js'></script>
-
 <body onload='browseCities()'>
+<script language="Javascript" src='./js/cities_ShowHideCRUD.js'></script>
+<script src="./js/scrollToForm.js"></script>
+<script src="./js/validateForms.js"></script>
 
 {{!-- The Data from our database --}}
 
@@ -42,7 +43,7 @@
 <p>&nbsp;</p>
 
 <div id="browse-cities">
-   <p><button type="button" class="btn btn-primary" href="cities/add-city" onClick="newCity()">Add a New City</button></p>
+   <p><button type="button" class="btn btn-primary" href="cities/add-city" onClick="newCity(); scrollToForm('add-city');">Add a New City</button></p>
     
     <table id="cities-table" 
     class="table table-striped table-bordered table-hover" 
@@ -99,32 +100,13 @@
         <p><label for="input-restaurant-city">* City Name:</label>
         <input type="text" name="input-city-name" id="input-city-name" required></p> 
 
-        <p><input type="submit" id="addCity" value="Submit" onClick="return validateForm();" class="btn btn-primary"> 
+        <p><input type="submit" id="addCity" value="Submit" onClick="validateAddForm('add-city-form');" class="btn btn-primary"> 
         <input type="button" value="Cancel" onClick="browseCities()" class="btn btn-secondary"></p>
         
     </form>
 </div>
 
 <p>&nbsp;</p>
-
-<script>
-    // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
-    // Checks if every required field is filled out before sending alert
-    function validateForm() {
-        let requiredFields = document.getElementById('add-city-form')
-            .querySelectorAll('[required]')
-        let valid = []; 
-        requiredFields.forEach((element) => {
-            if (element.value !== "") {
-                valid.push(true)
-            } else {valid.push(false)}
-        })
-        let checker = arr => arr.every(v => v === true); 
-        if (checker(valid)) {
-            alert('Successfully added new city!')
-        }
-    }
-</script>
 
 </body> 
 </html>

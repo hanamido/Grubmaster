@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
 </head>
 
-<script language="Javascript" src='./js/cuisines_ShowHideCRUD.js'></script>
-
 <body onload='browseCuisines()'>
+<script language="Javascript" src='./js/cuisines_ShowHideCRUD.js'></script>
+<script src="./js/scrollToForm.js"></script>
+<script src="./js/validateForms.js"></script>
 
 {{!-- The Data from our database --}}
 
@@ -42,7 +43,7 @@
 <p>&nbsp;</p>
 
 <div id="browse-cuisines">
-    <p><button type="button" class="btn btn-primary" onClick="newCuisine()">Add a New Cuisine</button></p>
+    <p><button type="button" class="btn btn-primary" onClick="newCuisine(); scrollToForm('add-cuisine');">Add a New Cuisine</button></p>
     
     <table id="cuisines-table" 
     class="table table-striped table-bordered table-hover" 
@@ -99,32 +100,13 @@
         <p><label for="input-cuisine">* Cuisine Name:</label>
         <input type="text" name="input-cuisine-name" id="input-cuisine-name" required></p> 
 
-        <p><input type="submit" id="addCuisine" value="Submit" onClick="return validateForm();" class="btn btn-primary"> 
+        <p><input type="submit" id="addCuisine" value="Submit" onClick="validateAddForm('add-cuisine-form');" class="btn btn-primary"> 
         <input type="button" value="Cancel" onClick="browseCuisines()" class="btn btn-secondary"></p>
         
     </form>
 </div>
 
 <p>&nbsp;</p>
-
-<script>
-    // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
-    // Checks if every required field is filled out before sending alert
-    function validateForm() {
-        let requiredFields = document.getElementById('add-cuisine-form')
-            .querySelectorAll('[required]')
-        let valid = []; 
-        requiredFields.forEach((element) => {
-            if (element.value !== "") {
-                valid.push(true)
-            } else {valid.push(false)}
-        })
-        let checker = arr => arr.every(v => v === true); 
-        if (checker(valid)) {
-            alert('Successfully added new cuisine!')
-        }
-    }
-</script>
 
 </body> 
 </html>

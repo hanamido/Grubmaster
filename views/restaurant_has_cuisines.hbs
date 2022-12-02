@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
 </head>
 
-<script language="Javascript" src="./js/restaurantHasCuisines_ShowHideCRUD.js"></script>
-
 <body onload='browseRestaurantCuisines()'>
+<script language="Javascript" src="./js/restaurantHasCuisines_ShowHideCRUD.js"></script>
+<script src="./js/restaurantHasCuisines_delete.js"></script> 
+<script src="./js/scrollToForm.js"></script>
+<script src="./js/validateForms.js"></script>
+
 
 {{!-- The Data from our database --}}
 
@@ -43,7 +46,7 @@
 <p>&nbsp;</p>
 
 <div id="browse-restaurant-cuisines">
-    <p><button type="button" class="btn btn-primary" href="restaurants/add-restaurant-cuisine" onClick="newRestaurantCuisine()">Add a New Restaurant-Cuisine Pair</button></p>
+    <p><button type="button" class="btn btn-primary" href="restaurants/add-restaurant-cuisine" onClick="newRestaurantCuisine(); scrollToForm('add-restaurant-cuisine');">Add a New Restaurant-Cuisine Pair</button></p>
 
     <table id="restaurant-cuisines-table" 
     class="table table-striped table-bordered table-hover" 
@@ -78,7 +81,6 @@
         {{/each}}
     </tbody>
     </table>
-<script src="./js/restaurantHasCuisines_delete.js"></script> 
 
 </div>
 <p>&nbsp;</p>
@@ -123,32 +125,13 @@
             {{/each}}
         </select></p>
 
-        <p><input type="submit" id="addRestaurantCuisine" value="Submit" onClick="return validateForm();" class="btn btn-primary"> 
+        <p><input type="submit" id="addRestaurantCuisine" value="Submit" onClick="validateAddForm('add-restaurant-cuisine-form');" class="btn btn-primary"> 
         <input type="button" value="Cancel" onClick="browseRestaurantCuisines()" class="btn btn-secondary"></p>
         
     </form>
 </div>
 
 <p>&nbsp;</p>
-
-<script>
-    // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
-    // Checks if every required field is filled out before sending alert
-    function validateForm() {
-        let requiredFields = document.getElementById('add-restaurant-cuisine-form')
-            .querySelectorAll('[required]')
-        let valid = []; 
-        requiredFields.forEach((element) => {
-            if (element.value !== "") {
-                valid.push(true)
-            } else {valid.push(false)}
-        })
-        let checker = arr => arr.every(v => v === true); 
-        if (checker(valid)) {
-            alert('Successfully added new restaurant-cuisine association!')
-        }
-    }
-</script>
 
 </body> 
 </html>

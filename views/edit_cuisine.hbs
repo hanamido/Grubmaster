@@ -9,6 +9,7 @@
 </head>
 
 <body>
+<script src="./js/validateForms.js"></script>
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <a class="navbar-brand" href="/">Grubmaster</a>
@@ -44,7 +45,7 @@
       <input type="text" id="cuisine_name" name="cuisine_name" value="{{data.0.cuisine_name}}" required></p>
       
       <input type="submit" value="Edit Cuisine" name="editCuisine" id="edit-cuisine-button" class="btn btn-primary" 
-        onClick="if (validateForm()) {alert(`Successfully updated Cuisine ID #{{data.0.cuisine_id}}`)};">
+        onClick="validateForm({{data.0.cuisine_id}});">
 
       <input type="reset" class="btn btn-secondary">
 
@@ -55,7 +56,7 @@
 <script>
     // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
     // Checks if every required field is filled out before sending alert
-    function validateForm() {
+    function validateForm(rowID) {
         let requiredFields = document.getElementById('update-cuisine-form')
             .querySelectorAll('[required]')
         let valid = []; 
@@ -66,7 +67,7 @@
         })
         let checker = arr => arr.every(v => v === true); 
         if (checker(valid)) {
-            return true;
+            alert(`Successfully Updated Cuisine ID #${rowID}! Refreshing page...`)
         }
     }
 </script>
