@@ -34,9 +34,9 @@
 <div class="form-fields" id="update-restaurant-form" style="display: block">
 
 <h2>Update a Restaurant's Details:</h2>
-<p>Please enter all values to be updated.</p>
-<p><small>Note: * indicates a required field.</small></p>
-<h4>Please Complete All Fields</h4>
+<p>Please enter all required fields to be updated.<br>
+<small>Note: * indicates a required field.</small></p>
+
     <form action="/restaurants/edit_restaurant.html/{{data.0.restaurant_id}}" id="edit_restaurant_form" method="POST">
             <input type="hidden" value="{{data.0.restaurant_id}}" class="form-control" id="restaurant_id" name="restaurant_id" required>
 
