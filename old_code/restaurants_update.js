@@ -7,18 +7,6 @@ updateRestaurantForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault(); 
 
-    var error = document.getElementById("edit-rest-error")
-    if (document.getElementById("update-restaurant-name").value === "") {
-        error.textContent = "Please enter all required fields."
-        error.style.color = "red"
-    }  if (isNaN(document.getElementById("update-restaurant-city").value)) {
-        error.textContent = "Please enter all required fields."
-        error.style.color = "red"
-    }
-    else {
-        error.textContent = "";
-    }
-
     // Get form fields we need to get data from
     let restaurantID = document.getElementById("selectedRestaurant")
     let newRestaurantName = document.getElementById("update-restaurant-name");
