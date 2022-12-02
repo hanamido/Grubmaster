@@ -961,7 +961,7 @@ app.put('/put-user-ajax', function(req,res,next){
                         console.log(error);
                         res.sendStatus(400);
                     } else {
-                        res.redirect(rows);
+                        res.send(rows);
                     }
                 })
             }          

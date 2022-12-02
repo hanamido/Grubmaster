@@ -62,7 +62,7 @@ function updateRow(data, reviewIdValue) {
             let updateRowIndex = currentTable.getElementsByTagName("tr")[counter]; 
 
             let reviewRatingTd = updateRowIndex.getElementsByTagName("td")[2]; 
-            reviewRatingTd.innerHTML = parsedData[0].review_rating;
+            reviewRatingTd.innerHTML = data.updated_restaurant_rating;
         }
     }
 }; 
