@@ -12,6 +12,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 const multer = require('multer'); 
 const upload = multer(); 
+let alert = require('alert'); 
 
 // Database
 const db = require('./database/db-connector'); 
