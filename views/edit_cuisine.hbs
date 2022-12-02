@@ -36,30 +36,25 @@
 <h2>Update a Cuisine's Details:</h2>
 <p>Please enter the new name for the cuisine.</p>
 <p><small>Note: * indicates a required field.</small></p>
+  <h4>Please Complete All Fields</h4>
+    <form action="/cuisines/edit_cuisine.html/{{data.0.cuisine_id}}" id="edit_cuisine_form" method="POST">
+        <input type="hidden" value="{{data.0.cuisine_id}}" class="form-control" id="cuisine_id" name="cuisine_id" required>
 
-    <h4>Please Complete All Fields</h4>
-    
-            <form action="/cuisines/edit_cuisine.html/{{data.0.cuisine_id}}" id="edit_cuisine_form" method="POST">
-    
-                <fieldset>
-                    <input type="hidden" value="{{data.0.cuisine_id}}" class="form-control" id="cuisine_id" name="cuisine_id" required>
-    
-                    <label for="cuisine_name">* Name:</label><br>
-                    <input type="text" id="cuisine_name" name="cuisine_name" value="{{data.0.cuisine_name}}" required><br>
-    
-                </fieldset>
+        <p><label for="cuisine_name">* Cuisine Name:</label>
+        <input type="text" id="cuisine_name" name="cuisine_name" value="{{data.0.cuisine_name}}" required></p>
+        
+        <input type="submit" value="Edit Cuisine" name="editCuisine" id="edit-cuisine-button" class="btn btn-primary" 
+          onClick="if (validateForm()) {alert(`Successfully updated Cuisine ID #{{data.0.cuisine_id}}`)};">
 
-                <p>&nbsp;</p>
-                <input type="submit" value="Edit Cuisine" name="editCuisine" id="edit-cuisine-button" class="btn btn-primary" 
-                  onClick="if (validateForm()) {alert(`Successfully updated Cuisine ID #{{data.0.cuisine_id}}`)};">
-    
-                <input type="reset" class="btn btn-secondary">
-    
-                <a href='/cuisines'><input class="btn btn-secondary" type="button" value="Cancel"></a>
-    
-            </form>
+        <input type="reset" class="btn btn-secondary">
+
+        <a href='/cuisines'><input class="btn btn-secondary" type="button" value="Cancel"></a>
+
+    </form>
 
 <script>
+    // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
+    // Checks if every required field is filled out before sending alert
     function validateForm() {
         let requiredFields = document.getElementById('update-cuisine-form')
             .querySelectorAll('[required]')
