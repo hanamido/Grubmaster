@@ -6,7 +6,7 @@
 const path = require('path');
 const express = require('express'); 
 const app = express(); 
-PORT = 9097; 
+PORT = 9198; 
 app.use(express.static(path.join(__dirname, '/public'))); 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -607,17 +607,16 @@ app.put('/restaurant_has_cuisines/put-restaurant-cuisine-ajax', function(req, re
 app.get('/reviews', function(req, res)
 {  
     let query1;
-
     // If there is no query string, we just perform a basic SELECT
     if (req.query.review_restaurant_name === undefined)
     {
         query1 = "SELECT * FROM Reviews;";              
     }
-
     // If there is a query string, we assume this is a search, and return desired results
     else
     {
-        query1 = `SELECT * FROM Reviews WHERE review_restaurant_name LIKE "${req.query.review_restaurant_name}%"`
+        //query1 = "SELECT * FROM Reviews;";// WHERE review_restaurant_id = 1;";     
+        query1 = `Select * FROM Reviews INNER JOIN Restaurants ON Reviews.review_restaurant_id = Restaurants.restaurant_id WHERE restaurant_name LIKE "${req.query.review_restaurant_name}%";`;         
     }
 
     let query2 = "SELECT * FROM Users;";
@@ -627,106 +626,44 @@ app.get('/reviews', function(req, res)
     db.pool.query(query1, function(error, rows, fields){    // Execute the query
 
         let reviews = rows;
+        console.log(reviews);
 
         db.pool.query(query2, function(error, rows, fields){ // Run the second query
 
             let users = rows;
         
-            db.pool.query(query3, (error, rows, fields) => {    // Run the third query
+            db.pool.query(query3, function(error, rows, fields){    // Run the third query
 
                 let restaurants = rows; 
 
                 let restaurantmap = {};
                 restaurants.map(restaurant => {
                     let restaurant_id = parseInt(restaurant.restaurant_id, 10);
-    
                     restaurantmap[restaurant_id] = restaurant["restaurant_name"];
                 })
 
                 // Overwrite the review ID with the name of the restaurant in the review object
                 reviews = reviews.map(review => {
                     return Object.assign(review, {review_restaurant_id: restaurantmap[review.review_restaurant_id]})
-                })
-
+                }) 
+                //  console.log(reviews); 
+                
                 let usermap = {};
                 users.map(user => {
                     let user_id = parseInt(user.user_id, 10);
     
                     usermap[user_id] = user["user_first_name"] + " " + user["user_last_name"];
-                })
+                }) 
 
                 // Overwrite the city ID with the name of the city in the review object
                 reviews = reviews.map(review => {
                     return Object.assign(review, {review_user_id: usermap[review.review_user_id]})
-                })        
+                })  
 
                 return res.render('reviews', {data: reviews, restaurants: restaurants, users:users});                  // Render the index.hbs file, and also send the renderer
             })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
         })
     })
-}); 
-
-// Reviews Routes
-app.get('/reviews', function(req, res)
-    {  
-        let query1;
-
-        // If there is no query string, we just perform a basic SELECT
-        if (req.query.review_restaurant_name === undefined)
-        {
-            query1 = "SELECT * FROM Reviews;";              
-        }
-
-        // If there is a query string, we assume this is a search, and return desired results
-        else
-        {
-            query1 = `SELECT * FROM Reviews WHERE review_restaurant_name LIKE "${req.query.review_restaurant_name}%"`
-        }
-
-        let query2 = "SELECT * FROM Users;";
-        let query3 = "SELECT * FROM Restaurants;";
-
-
-        db.pool.query(query1, function(error, rows, fields){    // Execute the query
-
-            let reviews = rows;
-
-            db.pool.query(query2, function(error, rows, fields){ // Run the second query
-
-                let users = rows;
-            
-                db.pool.query(query3, function(error, rows, fields){    // Run the third query
-
-                    let restaurants = rows; 
-
-                    let restaurantmap = {};
-                    restaurants.map(restaurant => {
-                        let restaurant_id = parseInt(restaurant.restaurant_id, 10);
-        
-                        restaurantmap[restaurant_id] = restaurant["restaurant_name"];
-                    })
-
-                    // Overwrite the review ID with the name of the restaurant in the review object
-                    reviews = reviews.map(review => {
-                        return Object.assign(review, {review_restaurant_id: restaurantmap[review.review_restaurant_id]})
-                    })
-
-                    let usermap = {};
-                    users.map(user => {
-                        let user_id = parseInt(user.user_id, 10);
-        
-                        usermap[user_id] = user["user_first_name"] + " " + user["user_last_name"];
-                    })
-
-                    // Overwrite the city ID with the name of the city in the review object
-                    reviews = reviews.map(review => {
-                        return Object.assign(review, {review_user_id: usermap[review.review_user_id]})
-                    })        
-
-                    return res.render('reviews', {data: reviews, restaurants: restaurants, users:users});                  // Render the index.hbs file, and also send the renderer
-                })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
-            })
-        })
 }); 
 
 app.get('/users', function(req, res)
@@ -747,7 +684,7 @@ app.get('/users', function(req, res)
 
 
         let query2 = "SELECT * FROM Cities;";
-        let query0 = "SELECT user_id, CONCAT_WS(' ', user_first_name, user_last_name) AS User, user_email AS EfMail Address, city_name AS `City FROM Users INNER JOIN Cities ON user_city_id = city_id";
+        //let query0 = "SELECT user_id, CONCAT_WS(' ', user_first_name, user_last_name) AS User, user_email AS EfMail Address, city_name AS `City FROM Users INNER JOIN Cities ON user_city_id = city_id";
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
 
@@ -890,7 +827,44 @@ app.delete('/delete-user-ajax', function(req,res,next){
     })
 });
 
-app.put('/put-user-ajax', function(req,res,next){
+app.get('/users/edit_user.html/:id', function(req, res) {
+    data = req.params.id; 
+    console.log(data)
+    let userID = data; 
+
+    query1 = `SELECT * FROM Users WHERE user_id = ?`; 
+    query2 = `SELECT * FROM Cities;`;
+
+    // Run 1st query
+    db.pool.query(query1, [userID], function(error, rows, fields){
+
+        // Save the users
+        let users = rows;
+
+        // Run 2nd query
+        db.pool.query(query2, (error, rows, fields) => {
+            // Save cities
+            let cities = rows;
+
+            // Construct an object for reference in the table -- USE Array.map 
+            let citiesMap = {};
+            cities.map(city => {
+                city_id = parseInt(city.city_id, 10)
+                citiesMap[city_id] = city["city_name"]; 
+            })
+
+            // Overwrite the Cities ID with the city name in the Restaurants object
+            users = users.map(user => {
+                return Object.assign(user, {city: citiesMap[user.city_id]}); 
+            })
+
+            console.log({data: users})
+            return res.render('edit_user', {data: users, cities: cities});
+        })
+    })
+});
+
+app.post('/users/edit_user.html/:id', function(req,res,next){
     let data = req.body;
     console.log(data);
   
@@ -930,7 +904,6 @@ app.put('/put-user-ajax', function(req,res,next){
 
   app.put('/put-review-ajax', function(req,res,next){
     let data = req.body;
-    console.log(data);
   
     let review_id = parseInt(data.review_id);
     let updated_restaurant_rating = parseInt(data.updated_restaurant_rating);
