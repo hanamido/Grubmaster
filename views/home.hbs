@@ -3,18 +3,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1", shrink-to-fit="yes">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
     {{!-- <link rel="stylesheet" type="text/css" href="extensions/filter-control/bootstrap-table-filter-control.css"/> --}}
-    <script type="text/javascript" src="jquery-3.5.1.min.js"> </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+    <title>Grubmaster</title>
 </head>
+
+<body>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 <h1 align="center"><strong>Grubmaster</strong></h1>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Grubmaster</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="/">Home<span class="sr-only"></span></a>
       <a class="nav-item nav-link" href="/restaurants">Restaurants</a>
@@ -24,16 +23,17 @@
       <a class="nav-item nav-link" href="/reviews">Reviews</a>
       <a class="nav-item nav-link" href="/restaurant_has_cuisines">Restaurants' Cuisines</a>
     </div>
-
-  </div>
-
 </nav>
 
-<h6>Grubmaster is a new web application that strives to connect consumers/foodies with local restaurants throughout the United States. Through the Grubmaster application, Users can search for Restaurants by their City, Cuisine, rating, and leave Reviews for restaurants, and Restaurants can request to list their details on the platform. Grubmaster currently has 50 restaurants listed in each of the following cities: Portland, Seattle, San Francisco, and Los Angeles that currently serves 100 users. A database-driven website will allow Grubmaster to more efficiently track restaurant details and user engagement. Specifically, user engagement will be tracked by the number of reviews currently on the platform and the number of reviews associated with each user, with the goal of each user leaving at least one review for a restaurant of their choice. </h6>
+&nbsp;
 
-<button type="button" class="btn btn-outline-success" id="toggle" onClick="displayInstructions()">Click to view descriptions of each page & instructions on how to use this database.</button>
+<div class="app-desc">
+  Grubmaster is a new web application that strives to connect consumers/foodies with local restaurants throughout the United States. Through the Grubmaster application, Users can search for Restaurants by their City, Cuisine, rating, and leave Reviews for restaurants, and Restaurants can request to list their details on the platform. Grubmaster currently has 50 restaurants listed in each of the following cities: Portland, Seattle, San Francisco, and Los Angeles that currently serves 100 users. A database-driven website will allow Grubmaster to more efficiently track restaurant details and user engagement. Specifically, user engagement will be tracked by the number of reviews currently on the platform and the number of reviews associated with each user, with the goal of each user leaving at least one review for a restaurant of their choice.
+<p><p>
+<button type="button" class="btn btn-primary" id="toggle" onClick="displayInstructions();">Click to view descriptions of each page & instructions on how to use this database.</button>
+</div>
 
-<p>&nbsp; </p>
+&nbsp;
 <div class="form-fields" id="db-instructions" style="display: none">
 <h5>Restaurants: </h5>
 <li>Records details about available restaurants, including their name, website, email, and city.</li>
@@ -66,7 +66,12 @@
 <li>Operations: Insert (Create), Browse (Read), Update, and Delete.</li>
 <hr>
 
+</div>
+&nbsp;
+
 <script>
+  // show or hide instructions based on whether button db-instructions was clicked
+  // Source: https://sebhastian.com/javascript-show-hide-div-onclick-toggle/#:~:text=To%20display%20or%20hide%20a,which%20is%20block%20)%20to%20none%20.
   const targetDiv = document.getElementById("db-instructions"); 
   const btn = document.getElementById("toggle");
   function displayInstructions() {
@@ -79,5 +84,4 @@
 </script>
 
 </body>
-</div>
 

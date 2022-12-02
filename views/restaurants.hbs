@@ -6,8 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1", shrink-to-fit="yes">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
     {{!-- <link rel="stylesheet" type="text/css" href="extensions/filter-control/bootstrap-table-filter-control.css"/> --}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
 </head>
+
+{{!-- 
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script> --}}
 
 <body onload='browseRestaurants()'>
 <script language="Javascript" src='./js/restaurants_ShowHideCRUD.js'></script>
@@ -15,18 +23,19 @@
 <script src="./js/scrollToForm.js"></script>
 <script src="./js/validateForms.js"></script>
 
+<script>
+$(document).ready(function () {
+    $('#restaurants-table').DataTable();
+});
+</script>
+
 {{!-- The Data from our database --}}
 
 {{!-- Create a table --}}
 <div id="top">
 <h1 align="center">Restaurants</h1>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Grubmaster</a>
-  {{!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button> --}}
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
     <div class="navbar-nav">
       <a class="nav-item nav-link" href="/">Home<span class="sr-only"></span></a>
       <a class="nav-item nav-link active" href="/restaurants">Restaurants</a>
@@ -36,28 +45,19 @@
       <a class="nav-item nav-link" href="/reviews">Reviews</a>
       <a class="nav-item nav-link" href="/restaurant_has_cuisines">Restaurants' Cuisines</a>
     </div>
-
-  </div>
-
 </nav>
 
 </div>
 
-<p>&nbsp;</p>
+<p></p>
 
 <div id="browse-restaurants">
     <div class="add-search">
     <p><button type="button" class="btn btn-primary" href="restaurants/add-restaurant" onClick="newRestaurant(); scrollToForm('add-restaurant');">Add a New Restaurant</button></p>
-    <form class="form-inline" id="search-bar">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button type="button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
     </div>
 
     <table id="restaurants-table" 
     class="table table-striped table-bordered table-hover" 
-    align="center"
-    data-search="true"
     >
 
     {{!-- Header section --}}
@@ -76,7 +76,7 @@
     {{!-- Body section --}}
     <tbody>
         {{#each data}}
-        <tr align="center" data-value={{this.restaurant_id}}>
+        <tr data-value={{this.restaurant_id}} scope="row">
             <td>{{this.restaurant_id}}</td>
             <td>{{this.restaurant_name}}</td>
             {{#if this.restaurant_website}}
@@ -90,9 +90,9 @@
                 <td>NULL</td>
             {{/if}}
             <td>{{this.city}}</td>
-            <td><a href="/restaurants/edit_restaurant.html/{{this.restaurant_id}}" class="btn btn-warning active" role="button" aria-pressed="true">Edit</a></td>
+            <td><a class="btn btn-warning" href="/restaurants/edit_restaurant.html/{{this.restaurant_id}}" role="button">Edit</a></td>
 
-            <td><button onClick="if (confirm('Are you sure you wish to delete this entry?') === true) {deleteRestaurant({{this.restaurant_id}}); }"class="btn btn-danger active" role="button" aria-pressed="true">Delete</button></td>
+            <td><button onClick="if (confirm('Are you sure you wish to delete this entry?') === true) {deleteRestaurant({{this.restaurant_id}}); }"class="btn btn-danger" role="button">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
@@ -141,7 +141,7 @@
         </select></p>
 
         <p><input type="submit" id="addRestaurant" value="Submit" class="btn btn-primary" onClick="validateAddForm('add-restaurant-form');"> 
-        <input type="button" value="Cancel" onClick="browseRestaurants()" class="btn btn-secondary"></p>
+        <a href="/restaurants"><input type="button" value="Cancel" class="btn btn-secondary"></a></p>
     </form>
 </div>
 

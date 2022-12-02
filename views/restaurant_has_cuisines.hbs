@@ -23,12 +23,7 @@
 <div id="top">
 <h1 align="center">Restaurants' Cuisines</h1>
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Grubmaster</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
     <div class="navbar-nav">
       <a class="nav-item nav-link" href="/">Home<span class="sr-only"></span></a>
       <a class="nav-item nav-link" href="/restaurants">Restaurants</a>
@@ -38,8 +33,6 @@
       <a class="nav-item nav-link" href="/reviews">Reviews</a>
       <a class="nav-item nav-link active" href="/restaurant_has_cuisines">Restaurants' Cuisines</a>
     </div>
-
-  </div>
 </nav>
 
 </div>
@@ -71,12 +64,12 @@
     {{!-- Body section --}}
     <tbody>
         {{#each data}}
-        <tr align="center" data-value={{this.restaurant_cuisine_id}}>
+        <tr scope="row" data-value={{this.restaurant_cuisine_id}}>
             <td>{{this.restaurant_cuisine_id}}</td>
             <td id="restaurant">{{this.restaurants}}</td>
             <td id="cuisine">{{this.cuisines}}</td>
-            <td><a href="/restaurant_has_cuisines/edit_restaurant_cuisine.html/{{this.restaurant_cuisine_id}}" class="btn btn-warning active" role="button" aria-pressed="true">Edit</a></td>
-            <td><button onClick="if (confirm('Are you sure you wish to delete this entry?') === true) {deleteRestaurantCuisine({{this.restaurant_cuisine_id}})}"class="btn btn-danger active" role="button" aria-pressed="true">Delete</button></td>
+            <td><a href="/restaurant_has_cuisines/edit_restaurant_cuisine.html/{{this.restaurant_cuisine_id}}" class="btn btn-warning" role="button">Edit</a></td>
+            <td><button onClick="if (confirm('Are you sure you wish to delete this entry?') === true) {deleteRestaurantCuisine({{this.restaurant_cuisine_id}})}"class="btn btn-danger" role="button">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
@@ -126,7 +119,7 @@
         </select></p>
 
         <p><input type="submit" id="addRestaurantCuisine" value="Submit" onClick="validateAddForm('add-restaurant-cuisine-form');" class="btn btn-primary"> 
-        <input type="button" value="Cancel" onClick="browseRestaurantCuisines()" class="btn btn-secondary"></p>
+        <a href="/restaurant_has_cuisines"><input type="button" value="Cancel" class="btn btn-secondary"></a></p>
         
     </form>
 </div>
