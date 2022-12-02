@@ -95,7 +95,7 @@
     <p>To add a new cuisine, please enter the information below and click 'Submit'! </p> 
     <p><small>Note: * indicates a required field.</small></p>
 
-    <form id="add-cuisine-form" method="POST" action="/cities/add-cuisine-form">
+    <form id="add-cuisine-form" method="POST" action="/cuisines/add-cuisine-form">
         <p><label for="input-cuisine">* Cuisine Name:</label>
         <input type="text" name="input-cuisine-name" id="input-cuisine-name" required></p> 
 
@@ -108,6 +108,8 @@
 <p>&nbsp;</p>
 
 <script>
+    // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
+    // Checks if every required field is filled out before sending alert
     function validateForm() {
         let requiredFields = document.getElementById('add-cuisine-form')
             .querySelectorAll('[required]')

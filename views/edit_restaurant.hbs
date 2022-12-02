@@ -36,39 +36,43 @@
 <h2>Update a Restaurant's Details:</h2>
 <p>Please enter all values to be updated.</p>
 <p><small>Note: * indicates a required field.</small></p>
-<h4>Please Complete All Fields</h4>
-    <form action="/restaurants/edit_restaurant.html/{{data.0.restaurant_id}}" id="edit_restaurant_form" method="POST">
-            <input type="hidden" value="{{data.0.restaurant_id}}" class="form-control" id="restaurant_id" name="restaurant_id" required>
 
-            <p><label for="restaurant_name">* Restaurant Name:</label>
-            <input type="text" id="restaurant_name" name="restaurant_name" value="{{data.0.restaurant_name}}" required></p>
-
-            <p><label for="restaurant_website">Restaurant Website:</label>
-            <input type="text" id="restaurant_website" name="restaurant_website" value="{{data.0.restaurant_website}}"></p>
-
-            <p><label for="restaurant_email">Restaurant Email:</label>
-            <input type="text" id="restaurant_email" name="restaurant_email" value="{{data.0.restaurant_email}}"></p>
-
-            <p><label for="update-restaurant-city">* Restaurant City: </label> 
-            <select name="restaurant_city" id="restaurant_city" required>
-                <option value="">Select a City</option>
-                {{#each cities}}
-                    <option value="{{this.city_id}}">{{this.city_name}}</option>
-                {{/each}}
-            </select></p>
-
-        <input type="submit" value="Edit Restaurant" name="editRestaurantButton" id="edit-restaurant-button" class="btn btn-primary"
-            onClick="if (validateForm()) {alert(`Successfully updated Restaurant ID #{{data.0.restaurant_id}}`)};">
-
-        <input type="reset" class="btn btn-secondary">
-
-        <a href='/restaurants'><input class="btn btn-secondary" type="button" value="Cancel"></a>
-
-    </form>
+    <h4>Please Complete All Fields</h4>
+    
+            <form action="/restaurants/edit_restaurant.html/{{data.0.restaurant_id}}" id="edit_restaurant_form" method="POST">
+    
+                <fieldset>
+                    <input type="hidden" value="{{data.0.restaurant_id}}" class="form-control" id="restaurant_id" name="restaurant_id" required>
+    
+                    <label for="restaurant_name">* Name:</label><br>
+                    <input type="text" id="restaurant_name" name="restaurant_name" value="{{data.0.restaurant_name}}" required><br>
+    
+                    <label for="restaurant_website">Website:</label><br>
+                    <input type="text" id="restaurant_website" name="restaurant_website" value="{{data.0.restaurant_website}}"><br>
+    
+                    <label for="restaurant_email">Email:</label><br>
+                    <input type="text" id="restaurant_email" name="restaurant_email" value="{{data.0.restaurant_email}}"><br>
+    
+                    <p><label for="update-restaurant-city">* Restaurant City: </label> 
+                    <select name="restaurant_city" id="restaurant_city" required>
+                        <option value="">Select a City</option>
+                        {{#each cities}}
+                        <option value="{{this.city_id}}">{{this.city_name}}</option>
+                        {{/each}}
+                    </select></p>
+    
+                </fieldset>
+    
+                <input type="submit" value="Edit Restaurant" name="editRestaurantButton" id="edit-restaurant-button" class="btn btn-primary"
+                onClick="if (validateForm()) {alert(`Successfully updated Restaurant ID #{{data.0.restaurant_id}}`)};">
+    
+                <input type="reset" class="btn btn-secondary">
+    
+                <a href='/restaurants'><input class="btn btn-secondary" type="button" value="Cancel"></a>
+    
+            </form>
 
 <script>
-    // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
-    // Checks if every required field is filled out before sending alert
     function validateForm() {
         let requiredFields = document.getElementById('update-restaurant-form')
             .querySelectorAll('[required]')
