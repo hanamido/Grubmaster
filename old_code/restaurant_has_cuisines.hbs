@@ -1,0 +1,67 @@
+{{!-- Update restaurant using AJAX --}}
+<div id="update-restaurant-cuisine">
+<h2>Update a Restaurant's Cuisine Details:</h2>
+<p>To update a specific restaurant's cuisine details, select the restaurant cuisine ID from the dropdown menu and enter the desired restaurant and cuisine from the dropdown menu on the right.</p>
+<form id="update-restaurant-cuisine-form-ajax">
+
+    <p><label>Restaurant-Cuisine ID: </label> <select name="selectedRestaurantCuisine" id="selectedRestaurantCuisine">
+        <option value="">Select a Restaurant-Cuisine ID</option>
+        {{#each data}}
+        <option value="{{this.restaurant_cuisine_id}}">{{this.restaurant_cuisine_id}}</option>
+        {{/each}}
+    </select></p>
+
+    <p><label>Restaurant Name: </label> <select name="update-rc-restaurant" id="update-rc-restaurant">
+        <option value="">Select a Restaurant</option>
+        {{#each restaurants}}
+        <option value="{{this.restaurant_id}}">{{this.restaurant_name}}</option>
+        {{/each}}
+    </select></p>
+
+    <p><label>Cuisine Name: </label><select name="update-rc-cuisine" id="update-rc-cuisine">
+        <option value="">Select a Cuisine</option>
+        {{#each cuisines}}
+        <option value="{{this.cuisine_id}}">{{this.cuisine_name}}</option>
+        {{/each}}
+    </select></p>
+
+    <input type="submit">
+    <input type="button" value="Cancel" onClick="browseRestaurantCuisines()"></p>
+
+</form>
+<script src="./js/restaurantHasCuisines_update.js"></script> 
+
+</div>
+
+{{!-- Add a new restaurant cuisine using AJAX --}}
+{{!-- Add data using AJAX --}}
+<div id="add-restaurant-cuisine">
+    <h2>Add a new restaurant and cuisine association: </h2>
+    <p>To add a new restaurant and cuisine association, please enter the information below and click 'Submit'! </p> 
+    <p><small>Note: * indicates a required field.</small></p>
+
+    {{!-- Add restaurant's cuisine using HTML --}}
+
+    <form id="add-restaurant-cuisine-form-ajax">
+        <p><label>Restaurant Name: </label><select name="input-rc-restaurant" id="input-rc-restaurant">
+            <option value="">Select a Restaurant</option>
+            {{#each restaurants}}
+            <option value="{{this.restaurant_id}}">{{this.restaurant_name}}</option>
+            {{/each}}
+        </select></p>
+
+        <p><label>Cuisine Name: </label><select name="input-rc-cuisine" id="input-rc-cuisine">
+            <option value="">Select a Cuisine</option>
+            {{#each cuisines}}
+            <option value="{{this.cuisine_id}}">{{this.cuisine_name}}</option>
+            {{/each}}
+        </select></p>
+
+        <span id="error"></span>
+        <p><input type="submit">
+        <input type="button" value="Cancel" onClick="browseRestaurantCuisines()"></p>
+
+    </form>
+</div>
+
+<script src="./js/restaurantHasCuisines_insert.js"></script>

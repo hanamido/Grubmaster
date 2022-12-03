@@ -11,7 +11,7 @@ function deleteRestaurantCuisine(restaurantCuisineID) {
         contentType: "application/json; charset=utf-8",
         success: function(result) {
             deleteRow(restaurantCuisineID); 
-            alert(`Successfully Deleted Restaurant-Cuisine ID# ${restaurantCuisineID}`)
+            alert(`Successfully Deleted Restaurant-Cuisine ID# ${restaurantCuisineID}`); 
         }
     }); 
 };

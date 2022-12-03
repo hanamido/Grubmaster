@@ -1,0 +1,43 @@
+{{!-- Update a restaurant using AJAX --}}
+<div id="update-restaurant" style="display: block">
+<h2>Update a Restaurant's Details:</h2>
+<p>To update a specific restaurant's details, select their ID from the dropdown menu on the left and enter the desired new name, website, email, or city from the dropdown menu on the right.</p>
+<p><small>Note: * indicates a required field.</small></p>
+<form id="update-restaurant-form-ajax">
+
+    <label for="selectedRestaurant">* Select a Restaurant ID</label>
+    <select name="selectedRestaurant" id="selectedRestaurant">
+        <option value="">Restaurant ID</option>
+        {{#each data}}
+        <option value="{{this.restaurant_id}}" onChange="updateRestaurantEntry({{this.restaurant_id}})">{{this.restaurant_id}}</option>
+        {{/each}}
+    </select>
+
+    {{!-- <p><label for="selectedRestaurant">Restaurant ID: &nbsp;</label> 
+    <input type="text" id="selectedRestaurant"> --}}
+
+    <p><label for="update-restaurant-name" autocomplete="on">* Restaurant Name: </label>
+    <input type="text" name="update-restaurant-name" id="update-restaurant-name" value="{{this.restaurant_id.0.restaurant_name}}" required></p>
+
+    <p><label for="update-restaurant-website" autocomplete="on">Restaurant Website: </label>
+    <input type="text" name="update-restaurant-website" id="update-restaurant-website" value="{{this.restaurant_id.0.restaurant_website}}"></p>
+
+    <p><label for="update-restaurant-name" autocomplete="on">Restaurant Email: </label>
+    <input type="text" name="update-restaurant-email" id="update-restaurant-email"></p>
+
+    <p><label for="update-restaurant-city">* Restaurant City: </label> 
+    <select name="update-restaurant-city" id="update-restaurant-city">
+        <option value="test">Select a City</option>
+        {{#each cities}}
+        <option value="{{this.city_id}}" required>{{this.city_name}}</option>
+        {{/each}}
+    </select></p>
+
+    <p><input type="submit">
+    <input type="button" value="Cancel" onClick="browseRestaurants()"></p>
+
+</form>
+
+</div>
+
+<script src="./js/restaurants_update.js"></script> 

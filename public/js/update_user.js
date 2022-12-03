@@ -15,8 +15,6 @@ updateUserForm.addEventListener("submit", function (e) {
     let updateEmailAddress = document.getElementById("update_email_address");
     let updateCity = document.getElementById("update_city");
 
-    //let test = document.getElementById()
-
     // Get the values from the form fields
     let userIdValue = selectedUserId.value;
     let firstNameValue = updateFirstName.value;
@@ -50,6 +48,7 @@ updateUserForm.addEventListener("submit", function (e) {
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
+            console.log("this is running");
             // Add the new data to the table
             updateRow(xhttp.response, userIdValue);
             location.reload();
@@ -79,7 +78,7 @@ function updateRow(data, selected_user_id){
             // Get the location of the row where we found the matching person ID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
-            // Get td of homeworld value
+            // Get td of row
             let td = updateRowIndex.getElementsByTagName("td")[4];
 
             // Reassign homeworld to our value we updated to

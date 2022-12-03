@@ -29,14 +29,15 @@ updateReviewForm.addEventListener("submit", function (e) {
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
+            console.log('test');
             // Add the new data to the table
-            updateRow(data, reviewIdValue);
-            location.reload();
+            updateRow(xhttp.response, reviewIdValue);
+            location.reload(forcedReload);
             alert("Succesfully Updated Review!");
 
             // Clear input fields for another entry
-            reviewId.value='';
-            updatedRestaurantRating.value=''; 
+            //reviewId.value='';
+            //updatedRestaurantRating.value=''; 
 
         } else if (xhttp.readyState == 4 && xhttp.status !== 200) {
             console.log("There was an error with the input.")
@@ -48,7 +49,8 @@ updateReviewForm.addEventListener("submit", function (e) {
 }); 
 
 function updateRow(data, reviewIdValue) {
-    //let parsedData = JSON.parse(data); 
+    let parsedData = JSON.parse(data); 
+
     let table = document.getElementById("reviews-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {

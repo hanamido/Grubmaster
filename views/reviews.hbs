@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
 </head>
 
+<<<<<<< HEAD
 <script language="Javascript" src='./js/reviews_ShowHideCRUD.js'></script>
 <body onload='browseReviews()'>
 
@@ -19,6 +20,16 @@
 
     <p><button href="/add-review" onClick="newReview()">Add a New Review</button></p>
     <p><button href="/update-review" onClick="updateReview()">Update a Review</button></p>
+=======
+{{!-- <h2>Search Reviews</h2>
+<form id="search-review-html" method='GET' action='/reviews'>
+    <label for="input-lname">Search by Restaurant Name: </label>
+    <input type="text" name="review_restaurant_name" id="input-restaurant-name-html-search">
+    <input type="submit">
+    <a href='/reviews'><button>Reset</button></a>
+</form>
+<p>&nbsp;</p> --}}
+>>>>>>> feef77c0667adbd7f2652a47356566aa1dd570fb
 
 {{!-- Create a table --}}
 <table id="reviews-table" class="table table-striped table-bordered table-hover" align="center" data-search="true">
