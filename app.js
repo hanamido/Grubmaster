@@ -1,7 +1,46 @@
+// Citation Scope: All modules on the Github
+// Date: 11/05/2022
+// Adapted from modules for setting up Express & Routes for each page
+// Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
+// Citation Scope: Lines to alert user and get confirmation before deleting an entry
+// Date: 11/15/2022
+// Adapted from: 
+// Source: https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete
+
+// Citation Scope: Line to reload entire doc
+// Date: 11/16/2022
+// Copied from:
+// Source: https://www.w3schools.com/jsref/met_loc_reload.asp
+
+// Citation Scope: Function to implement Data Validation for required fields 
+// Date: 11/23/2022
+// Adapted from User Cuong Le Ngoc's response
+// Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
+
+// Citation Scope: Path and routing functions for each page
+// Date: 12/01/2022
+// Adapted from modules for adding Routes for each page
+// Source: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes 
+
+// Citation Scope: DataTables script/initialization module
+// Date: 12/01/2022
+// Copied from DataTables official docs
+// Source: https://datatables.net/examples/styling/bootstrap5.html 
+
+// Citation Scope: Navigation bar module
+// Date: 12/01/2022
+// Code adapted from official Bootstraps official docs
+// Source: https://getbootstrap.com/docs/4.0/components/navbar/
+
+// Citation Scope: Lines to update a form using HTML
+// Date: 12/01/2022
+// Adapted from:
+// Source: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/forms 
+
 /* 
     SETUP 
 */
-
 // Express
 const path = require('path');
 const express = require('express'); 
@@ -9,6 +48,7 @@ const app = express();
 PORT = 9097; 
 app.use(express.static('public'));
 app.use(express.json())
+
 // Citation for using multer to parse request body (for update functions)
 // Date: 11/21/2022
 // Adapted from code to get body from HTML request
