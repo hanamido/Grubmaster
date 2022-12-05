@@ -475,12 +475,6 @@ app.get('/restaurant_has_cuisines', function(req, res) {   // Display all Restau
         INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id
         WHERE Restaurants.restaurant_name LIKE "${req.query.rc_restaurantSearch}%";`; 
     } 
-    // if (req.query.rc_cuisineSearch !== undefined && req.query.rc_restaurantSearch === undefined) {
-    //     showRestaurantCuisinesQuery = `SELECT restaurant_cuisine_id, Restaurants.restaurant_name as restaurants, Cuisines.cuisine_name as cuisines FROM Restaurant_has_cuisines 
-    //     INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
-    //     INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id
-    //     WHERE Cuisines.cuisine_name LIKE "${req.query.rc_cuisineSearch}%";`; 
-    // }
 
     db.pool.query(showRestaurantCuisinesQuery, function(error, rows, fields){    // Execute the query
 
