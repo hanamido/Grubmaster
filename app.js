@@ -18,6 +18,11 @@
 // Adapted from User Cuong Le Ngoc's response
 // Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
 
+// Citation Scope: Line (adding required option for each field of HTML form)
+// Date: 11/23/2022
+// Copied from official docs
+// Source: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
+
 // Citation Scope: Path and routing functions for each page
 // Date: 12/01/2022
 // Adapted from modules for adding Routes for each page
