@@ -29,11 +29,11 @@ updateReviewForm.addEventListener("submit", function (e) {
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-            console.log('test');
+            console.log(data);
             // Add the new data to the table
             updateRow(xhttp.response, reviewIdValue);
-            location.reload(forcedReload);
-            alert("Succesfully Updated Review!");
+            location.reload();
+            alert(`Succesfully Updated Review ID #${data.review_id}! Refreshing page...`);
 
             // Clear input fields for another entry
             //reviewId.value='';
@@ -49,7 +49,6 @@ updateReviewForm.addEventListener("submit", function (e) {
 }); 
 
 function updateRow(data, reviewIdValue) {
-    let parsedData = JSON.parse(data); 
 
     let table = document.getElementById("reviews-table");
 

@@ -7,30 +7,25 @@
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
 </head>
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Grubmaster</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/">Home<span class="sr-only"></span></a>
-        <a class="nav-item nav-link active" href="/restaurants">Restaurants</a>
-        <a class="nav-item nav-link" href="/cuisines">Cuisines</a>
-        <a class="nav-item nav-link" href="/cities">Cities</a>
-        <a class="nav-item nav-link" href="/users">Users</a>
-        <a class="nav-item nav-link" href="/reviews">Reviews</a>
-        <a class="nav-item nav-link" href="/restaurant_has_cuisines">Restaurants' Cuisines</a>
-      </div>
-  
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/">Home<span class="sr-only"></span></a>
+            <a class="nav-item nav-link" href="/restaurants">Restaurants</a>
+            <a class="nav-item nav-link" href="/cuisines">Cuisines</a>
+            <a class="nav-item nav-link" href="/cities">Cities</a>
+            <a class="nav-item nav-link active" href="/users">Users</a>
+            <a class="nav-item nav-link" href="/reviews">Reviews</a>
+            <a class="nav-item nav-link" href="/restaurant_has_cuisines">Restaurants' Cuisines</a>  
+        </div>
+    </nav>
+
+<p></p>
 
   <div class="form-fields" id="update-user-form" style="display: block">
 
     <h2>Update a User's Details:</h2>
-    <p>Please enter the desired new name, website, email, or city from the dropdown menu.</p>
-    <p><small>Note: * indicates a required field.</small></p>
+    <p>Please enter all required fields to be updated.<br>
+    <small>Note: * indicates a required field.</small></p>
     
         <h4>Please Complete All Fields</h4>
         
@@ -39,14 +34,14 @@
                     <fieldset>
                         <input type="hidden" value="{{data.0.user_id}}" class="form-control" id="user_id" name="user_id" required>
         
-                        <label for="user_first_name">*First Name:</label><br>
-                        <input type="text" id="user_first" name="user_first_name" value="{{data.0.user_first_name}}" required><br>
+                        <p><label for="user_first_name">*First Name:</label>
+                        <input type="text" id="user_first" name="user_first_name" value="{{data.0.user_first_name}}" required></p>
         
-                        <label for="user_last_name">*Last Name:</label><br>
-                        <input type="text" id="user_last_name" name="user_last_name" value="{{data.0.user_last_name}}" required><br>
+                        <p><label for="user_last_name">*Last Name:</label>
+                        <input type="text" id="user_last_name" name="user_last_name" value="{{data.0.user_last_name}}" required></p>
         
-                        <label for="user_email_address">Email:</label><br>
-                        <input type="text" id="user_email" name="user_email" value="{{data.0.user_email}}"><br>
+                        <p><label for="user_email_address">Email:</label>
+                        <input type="text" id="user_email" name="user_email" value="{{data.0.user_email}}"></p>
         
                         <p><label for="update-user-city">*City: </label> 
                         <select name="user_city" id="user_city" required>
@@ -59,13 +54,16 @@
                     </fieldset>
         
                     <input type="submit" value="Edit User" name="editUserButton" id="edit-user-button" class="btn btn-primary"
-                    onClick="if (validateForm()) {alert(`Successfully updated User !`)};">
+                    onClick="validateForm({{data.0.user_id}});">
         
                     <a href='/users'><input class="btn btn-secondary" type="button" value="Cancel"></a>    
                 </form>
 
     <script>
-    // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
+    // Citation for function to implement Data Validation for required fields 
+    // Date: 11/23/2022
+    // Adapted from User Cuong Le Ngoc's response
+    // Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
     // Checks if every required field is filled out before sending alert
        function validateForm(rowID) {
         let requiredFields = document.getElementById('update-user-form')

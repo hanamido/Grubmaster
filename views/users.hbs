@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
 </head>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <body onload='browseUsers()'>
 <script language="Javascript" src='./js/users_ShowHideCRUD.js'></script>
 <script src="./js/validateForms.js"></script>  
@@ -89,23 +87,25 @@ $(document).ready(function () {
     </form>
 </div>
 
+<p>&nbsp;</p>
+
 {{!-- Add user --}}
 <div id="add-user" style="display: block">
-    <form method="POST" id="add-user-form-ajax">
+    <form method="POST" id="add-user-form-ajax" class="form-fields">
         <h2>Add a User</h2>
         <p>Add a new user to the database.</p> 
         <fieldset class="fields">
         <form class="p-1 mb-1 bg-light border-bottom">            
-            <label>First Name*</label> <input type="text" name="first_name" id="first_name" required>
-            <label>Last Name*</label> <input type="text" name="last_name" id="last_name" required>
-            <label>E-mail Address</label> <input type="text" name="email_address" id="email_address">
-            <label>City*</label> 
+            <p><label>First Name*</label> <input type="text" name="first_name" id="first_name" required></p>
+            <p><label>Last Name*</label> <input type="text" name="last_name" id="last_name" required></p>
+            <p><label>E-mail Address</label> <input type="text" name="email_address" id="email_address"></p>
+            <p><label>City*</label> 
                 <select name="city" id="city" required>
                     <option value="">Select a City</option>
                     {{#each cities}}
                     <option value="{{this.city_id}}">{{this.city_name}}</option>
                     {{/each}}
-                </select>
+                </select></p>
         </fieldset>
         <p><input type="submit" id="addUser" value="Submit" class="btn btn-primary" onClick="validateAddForm('add-user-form');"> 
         <a href="/users"><input type="button" value="Cancel" class="btn btn-secondary"></a></p>

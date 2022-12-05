@@ -24,8 +24,6 @@
 
 <p></p>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script language="Javascript" src='./js/reviews_ShowHideCRUD.js'></script>
 <script src="./js/validateForms.js"></script>  
 <script src="./js/scrollToForm.js"></script>
@@ -92,36 +90,35 @@ $(document).ready(function () {
     </form>
 </div>
 
+<p>&nbsp;</p>
+
 <div id="add-review" style="display: block">
-<form method="POST" id="add-review-form-ajax">
+<form method="POST" id="add-review-form-ajax" class="form-fields">
 <h2>Add a Review</h2>
 <p>Add a new review to the database.</p>
-    <fieldset class="fields">
-        <form class="p-1 mb-1 bg-light border-bottom">
-        <label>Restaurant: </label> 
-            <select name="review_restaurant_id" id="review_restaurant_id">
+        <p><label>Restaurant: </label> 
+            <select name="review_restaurant_id" id="review_restaurant_id" required>
                 <option value="">Select a Restaurant</option>
                 {{#each restaurants}}
                 <option value="{{this.restaurant_id}}">{{this.restaurant_name}}</option>
                 {{/each}}
-            </select>
-        <label>Rating: </label>
-            <select name="review_restaurant_rating" id="review_restaurant_rating">
+            </select></p>
+        <p><label>* Rating: </label>
+            <select name="review_restaurant_rating" id="review_restaurant_rating" required>
                 <option value="">Select a Rating</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
-            </select>
-        <label>User: </label> 
-            <select name="use_id" id="review_user_id">
+            </select></p>
+        <p><label>User: </label> 
+            <select name="user_id" id="review_user_id">
                 <option value="">Select a User</option>
                 {{#each users}}
                 <option value="{{this.user_id}}">{{this.user_first_name}} {{this.user_last_name}}</option>
                 {{/each}}
-            </select>
-        </fieldset>
+            </select></p>
         <p><input type="submit" id="addReview" value="Submit" class="btn btn-primary"> 
         <a href="/reviews"><input type="button" value="Cancel" class="btn btn-secondary"></a></p>
     </form> 
@@ -129,32 +126,34 @@ $(document).ready(function () {
 
 <script src="./js/add_review.js"></script>
 
-<div id="update-review" style="display: bock">
-<form method="POST" id="update-review-form-ajax">
+<div id="update-review" style="display: block">
+<form method="POST" id="update-review-form-ajax" class="form-fields">
 <h2>Update A Review's Information</h2>
 <p>Use the search function to locate the correct ID, then update its rating information using this form.</p>
     <fieldset class="fields">
         <form class="p-1 mb-1 bg-light border-bottom">
-        <label>Review ID</label> 
-            <select name="review_id" id="selected_review_id">
+        <p><label>Review ID</label> 
+            <select name="review_id" id="selected_review_id" required>
                 <option value="">Select a Review ID</option>
                 {{#each data}}
                 <option value="{{this.review_id}}">{{this.review_id}}</option>
                 {{/each}}
-            </select>  
-        <label> Rating: </label>
-            <select name="review_restaurant_rating" id="updated_restaurant_rating">
+            </select></p>
+        <p><label> Rating: </label>
+            <select name="review_restaurant_rating" id="updated_restaurant_rating" required>
                 <option value="">Select a Rating</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
-            </select>             
+            </select></p>             
     </fieldset>
     <input type="submit" id="update-review-form-ajax" value="Update Review" class="btn btn-primary">
     <a href="/reviews"><input type="button" value="Cancel" class="btn btn-secondary"></a></p>
     </form><!-- Update Review -->
 </div>
+
+<p>&nbsp;</p>
 
 <script src="./js/update_review.js"></script>

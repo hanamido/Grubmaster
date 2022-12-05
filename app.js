@@ -37,8 +37,6 @@ if (typeof Handlebars !== 'undefined') {
     });
 }; 
 
-
-
 /* 
     ROUTES
 */
@@ -541,37 +539,44 @@ app.get('/restaurant_has_cuisines/edit_restaurant_cuisine.html/:id', function(re
     // Run 1st query
     db.pool.query(query1, [restaurantCuisineID], function(error, rows, fields){    // Execute the query
 
-    let restaurantCuisines = rows;
-    console.log(restaurantCuisines)
+        let restaurantCuisines = rows;
+        console.log(restaurantCuisines)
 
-    db.pool.query(query2, function(error, rows, fields){ // Run the second query
+        db.pool.query(query2, function(error, rows, fields){ // Run the second query
 
-            let cuisinemap = {};
-            cuisines.map(cuisine => {
-                let cuisine_id = parseInt(cuisine.cuisine_id, 10);
+            let restaurants = rows;
+        
+            db.pool.query(query3, (error, rows, fields) => {    // Run the third query
 
-                cuisinemap[cuisine_id] = cuisine["cuisine_name"];
-            })
+                let cuisines = rows; 
 
-            // Overwrite the restaurantCuisine ID with the name of the cuisine in the review object
-            restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
-                return Object.assign(restaurantCuisine, {cuisine_id: cuisinemap[restaurantCuisine.cuisine_id]})
-            })
+                let cuisinemap = {};
+                cuisines.map(cuisine => {
+                    let cuisine_id = parseInt(cuisine.cuisine_id, 10);
+    
+                    cuisinemap[cuisine_id] = cuisine["cuisine_name"];
+                })
 
-            let restaurantmap = {};
-            restaurants.map(restaurant => {
-                let restaurant_id = parseInt(restaurant.restaurant_id, 10);
+                // Overwrite the restaurantCuisine ID with the name of the cuisine in the review object
+                restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
+                    return Object.assign(restaurantCuisine, {cuisine_id: cuisinemap[restaurantCuisine.cuisine_id]})
+                })
 
-                restaurantmap[restaurant_id] = restaurant["restaurant_name"];
-            })
+                let restaurantmap = {};
+                restaurants.map(restaurant => {
+                    let restaurant_id = parseInt(restaurant.restaurant_id, 10);
+    
+                    restaurantmap[restaurant_id] = restaurant["restaurant_name"];
+                })
 
-            // Overwrite the restaurant ID with the name of the restaurant in the restaurantCuisine object
-            restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
-                return Object.assign(restaurantCuisine, {restaurant_id: restaurantmap[restaurantCuisine.restaurant_id]})
-            })        
+                // Overwrite the restaurant ID with the name of the restaurant in the restaurantCuisine object
+                restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
+                    return Object.assign(restaurantCuisine, {restaurant_id: restaurantmap[restaurantCuisine.restaurant_id]})
+                })        
 
-            return res.render('edit_restaurant_cuisine', {data: restaurantCuisines, restaurants: restaurants, cuisines: cuisines});                  // Render the index.hbs file, and also send the renderer
-        })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
+                return res.render('edit_restaurant_cuisine', {data: restaurantCuisines, restaurants: restaurants, cuisines: cuisines});                  // Render the index.hbs file, and also send the renderer
+            })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
+        })
     })
 });
 
@@ -593,7 +598,7 @@ app.post('/restaurant_has_cuisines/edit_restaurant_cuisine.html/:id', function(r
             res.sendStatus(400); 
         }
         else { 
-            res.render('/restaurant_has_cuisines')
+            res.redirect('/restaurant_has_cuisines')
         }
     })
 }); 
@@ -820,11 +825,12 @@ app.post('/add-review-ajax', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    /* Capture NULL values
+    // *** We need this to capture NULL values
     let review_user_id = data.review_user_id; 
     if (review_user_id.length === 0) { 
         review_user_id = 'NULL'
-    };  */
+    }
+    else {review_user_id = data.review_user_id};
 
     // Get today's date
     // from https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
@@ -835,7 +841,7 @@ app.post('/add-review-ajax', function(req, res)
     today = yyyy + '/' + mm + '/' + dd;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Reviews (review_rating, review_date, review_restaurant_id, review_user_id) VALUES (${data.review_restaurant_rating}, '${today}',  ${data.review_restaurant_id}, ${data.review_user_id})`;
+    query1 = `INSERT INTO Reviews (review_rating, review_date, review_restaurant_id, review_user_id) VALUES (${data.review_restaurant_rating}, '${today}',  ${data.review_restaurant_id}, ${review_user_id})`;
     db.pool.query(query1, function(error, rows, fields){
         
 
@@ -998,5 +1004,5 @@ app.post('/users/edit_user.html/:id', function(req,res,next){
     LISTENER
 */
 app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
-    console.log('Express started on http://flip2.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.')
+    console.log('Express started on http://flip3.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.')
 });

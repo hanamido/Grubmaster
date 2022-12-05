@@ -37,7 +37,7 @@ addReviewForm.addEventListener("submit", function (e) {
             // Add the new data to the table
             addRowToTable(xhttp.response);
             location.reload();
-            alert("Succesfully Added Review!");
+            alert("Succesfully Added Review! Refreshing page...");
 
             // Clear the input fields for another transaction
             reviewRestaurantId.value = '';
