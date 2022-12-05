@@ -6,9 +6,13 @@
 const path = require('path');
 const express = require('express'); 
 const app = express(); 
-PORT = 9087; 
-app.use(express.static(path.join(__dirname, '/public'))); 
+PORT = 9097; 
+app.use(express.static('public'));
 app.use(express.json())
+// Citation for using multer to parse request body (for update functions)
+// Date: 11/21/2022
+// Adapted from code to get body from HTML request
+// Source URL: https://morioh.com/p/43487adbf5dc
 app.use(express.urlencoded({extended: true}));
 const multer = require('multer'); 
 const upload = multer(); 
@@ -153,10 +157,6 @@ app.get('/restaurants/edit_restaurant.html/:id', function(req, res) {
     data = req.params.id; 
     console.log(data)
     let restaurantID = data; 
-        // let restaurantName = (restaurant_name);
-        // let restaurantWebsite = (restaurant_website); 
-        // let restaurantEmail = (restaurant_email); 
-        // let restaurantCity = (city_id); 
     query1 = `SELECT * FROM Restaurants WHERE restaurant_id = ?`; 
     query2 = `SELECT * FROM Cities;`;
 
@@ -661,6 +661,69 @@ app.get('/reviews', function(req, res)
     })
 }); 
 
+// Reviews Routes
+app.get('/reviews', function(req, res)
+    {  
+        let query1;
+
+        // If there is no query string, we just perform a basic SELECT
+        if (req.query.review_restaurant_name === undefined)
+        {
+            query1 = "SELECT * FROM Reviews;";              
+        }
+
+        // If there is a query string, we assume this is a search, and return desired results
+        else
+        {
+            query1 = `SELECT * FROM Reviews WHERE review_restaurant_name LIKE "${req.query.review_restaurant_name}%"`
+        }
+
+        let query2 = "SELECT * FROM Users;";
+        let query3 = "SELECT * FROM Restaurants;";
+
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+
+            let reviews = rows;
+
+            db.pool.query(query2, function(error, rows, fields){ // Run the second query
+
+                let users = rows;
+            
+                db.pool.query(query3, function(error, rows, fields){    // Run the third query
+
+                    let restaurants = rows; 
+
+                    let restaurantmap = {};
+                    restaurants.map(restaurant => {
+                        let restaurant_id = parseInt(restaurant.restaurant_id, 10);
+        
+                        restaurantmap[restaurant_id] = restaurant["restaurant_name"];
+                    })
+
+                    // Overwrite the review ID with the name of the restaurant in the review object
+                    reviews = reviews.map(review => {
+                        return Object.assign(review, {review_restaurant_id: restaurantmap[review.review_restaurant_id]})
+                    })
+
+                    let usermap = {};
+                    users.map(user => {
+                        let user_id = parseInt(user.user_id, 10);
+        
+                        usermap[user_id] = user["user_first_name"] + " " + user["user_last_name"];
+                    })
+
+                    // Overwrite the city ID with the name of the city in the review object
+                    reviews = reviews.map(review => {
+                        return Object.assign(review, {review_user_id: usermap[review.review_user_id]})
+                    })        
+
+                    return res.render('reviews', {data: reviews, restaurants: restaurants, users:users});                  // Render the index.hbs file, and also send the renderer
+                })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
+            })
+        })
+}); 
+
 app.get('/users', function(req, res)
     {  
         let query1;
@@ -925,7 +988,7 @@ app.post('/users/edit_user.html/:id', function(req,res,next){
                         console.log(error);
                         res.sendStatus(400);
                     } else {
-                        res.redirect(rows);
+                        res.send(rows);
                     }
                 })
             }          
