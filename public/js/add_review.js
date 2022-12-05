@@ -37,7 +37,7 @@ addReviewForm.addEventListener("submit", function (e) {
             // Add the new data to the table
             addRowToTable(xhttp.response);
             location.reload();
-            alert("Succesfully Added User!");
+            alert("Succesfully Added Review! Refreshing page...");
 
             // Clear the input fields for another transaction
             reviewRestaurantId.value = '';
@@ -79,7 +79,7 @@ addRowToTable = (data) => {
     // Fill the cells with correct data
     idCell.innerText = newRow.review_id;
     restaurantCell.innerText = newRow.review_restaurant_name;
-    ratingCell.innerText = review_rating;
+    ratingCell.innerText = newRow.review_rating;
     dateCell.innerText = newRow.review_date;
     userCell.innerText = newRow.review_user;
 

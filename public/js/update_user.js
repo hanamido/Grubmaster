@@ -15,8 +15,6 @@ updateUserForm.addEventListener("submit", function (e) {
     let updateEmailAddress = document.getElementById("update_email_address");
     let updateCity = document.getElementById("update_city");
 
-    //let test = document.getElementById()
-
     // Get the values from the form fields
     let userIdValue = selectedUserId.value;
     let firstNameValue = updateFirstName.value;
@@ -24,13 +22,6 @@ updateUserForm.addEventListener("submit", function (e) {
     let emailAddressValue = updateEmailAddress.value;
     let cityValue = updateCity.value;
 
-    /* Capture NULL values when possible
-    if (firstNameValue.length === 0) {
-        // set firstNameValue equal to current name for the this userId 
-    } */
-
-    // currently the database table for Users does not allow updating values to NULL
-    // so we must abort if being passed NULL for Cities -- check on other values
 
     // Put our data we want to send in a javascript object
     let data = {
@@ -79,7 +70,7 @@ function updateRow(data, selected_user_id){
             // Get the location of the row where we found the matching person ID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
-            // Get td of homeworld value
+            // Get td of row
             let td = updateRowIndex.getElementsByTagName("td")[4];
 
             // Reassign homeworld to our value we updated to

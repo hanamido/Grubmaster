@@ -50,7 +50,7 @@
             {{/each}}
         </select></p>
 
-        
+
 
         <input type="submit" value="Edit Restaurant" name="editRestaurantButton" id="edit-restaurant-button" class="btn btn-primary"
             onClick="validateForm({{data.0.restaurant_id}});">
@@ -62,7 +62,6 @@
     </form>
 
 <script>
-    // Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
     // Checks if every required field is filled out before sending alert
     function validateForm(rowID) {
         let requiredFields = document.getElementById('update-restaurant-form')

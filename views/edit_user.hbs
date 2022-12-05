@@ -1,0 +1,85 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Edit a User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1", shrink-to-fit="yes">
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+</head>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/">Home<span class="sr-only"></span></a>
+            <a class="nav-item nav-link" href="/restaurants">Restaurants</a>
+            <a class="nav-item nav-link" href="/cuisines">Cuisines</a>
+            <a class="nav-item nav-link" href="/cities">Cities</a>
+            <a class="nav-item nav-link active" href="/users">Users</a>
+            <a class="nav-item nav-link" href="/reviews">Reviews</a>
+            <a class="nav-item nav-link" href="/restaurant_has_cuisines">Restaurants' Cuisines</a>  
+        </div>
+    </nav>
+
+<p></p>
+
+  <div class="form-fields" id="update-user-form" style="display: block">
+
+    <h2>Update a User's Details:</h2>
+    <p>Please enter all required fields to be updated.<br>
+    <small>Note: * indicates a required field.</small></p>
+    
+        <h4>Please Complete All Fields</h4>
+        
+                <form action="/users/edit_user.html/{{data.0.user_id}}" id="edit_user_form" method="POST">
+        
+                    <fieldset>
+                        <input type="hidden" value="{{data.0.user_id}}" class="form-control" id="user_id" name="user_id" required>
+        
+                        <p><label for="user_first_name">*First Name:</label>
+                        <input type="text" id="user_first" name="user_first_name" value="{{data.0.user_first_name}}" required></p>
+        
+                        <p><label for="user_last_name">*Last Name:</label>
+                        <input type="text" id="user_last_name" name="user_last_name" value="{{data.0.user_last_name}}" required></p>
+        
+                        <p><label for="user_email_address">Email:</label>
+                        <input type="text" id="user_email" name="user_email" value="{{data.0.user_email}}"></p>
+        
+                        <p><label for="update-user-city">*City: </label> 
+                        <select name="user_city" id="user_city" required>
+                            <option value="">Select a City</option>
+                            {{#each cities}}
+                            <option value="{{this.city_id}}">{{this.city_name}}</option>
+                            {{/each}}
+                        </select></p>
+        
+                    </fieldset>
+        
+                    <input type="submit" value="Edit User" name="editUserButton" id="edit-user-button" class="btn btn-primary"
+                    onClick="validateForm({{data.0.user_id}});">
+        
+                    <a href='/users'><input class="btn btn-secondary" type="button" value="Cancel"></a>    
+                </form>
+
+    <script>
+    // Citation for function to implement Data Validation for required fields 
+    // Date: 11/23/2022
+    // Adapted from User Cuong Le Ngoc's response
+    // Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
+    // Checks if every required field is filled out before sending alert
+       function validateForm(rowID) {
+        let requiredFields = document.getElementById('update-user-form')
+            .querySelectorAll('[required]')
+        let valid = []; 
+        requiredFields.forEach((element) => {
+            if (element.value !== "") {
+                valid.push(true)
+            } else {valid.push(false)}
+        })
+        let checker = arr => arr.every(v => v === true); 
+        if (checker(valid)) {
+            alert(`Successfully Updated User ID #${rowID}! Refreshing page...`)
+        }
+    }
+</script>
+
+</body>
+</html>

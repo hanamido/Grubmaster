@@ -165,7 +165,7 @@ DROP TABLE IF EXISTS `Reviews`;
 CREATE TABLE `Reviews` (
   `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `review_rating` int(11) NOT NULL,
-  `review_date` datetime NOT NULL,
+  `review_date` date NOT NULL,
   `review_restaurant_id` int(11) NOT NULL,
   `review_user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`review_id`),

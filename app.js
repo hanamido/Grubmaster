@@ -1,15 +1,63 @@
+// Citation Scope: All modules on the Github
+// Date: 11/05/2022
+// Adapted from modules for setting up Express & Routes for each page
+// Source: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
+// Citation Scope: Lines to alert user and get confirmation before deleting an entry
+// Date: 11/15/2022
+// Adapted from: 
+// Source: https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete
+
+// Citation Scope: Line to reload entire doc
+// Date: 11/16/2022
+// Copied from:
+// Source: https://www.w3schools.com/jsref/met_loc_reload.asp
+
+// Citation Scope: Function to implement Data Validation for required fields 
+// Date: 11/23/2022
+// Adapted from User Cuong Le Ngoc's response
+// Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
+
+// Citation Scope: Line (adding required option for each field of HTML form)
+// Date: 11/23/2022
+// Copied from official docs
+// Source: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
+
+// Citation Scope: Path and routing functions for each page
+// Date: 12/01/2022
+// Adapted from modules for adding Routes for each page
+// Source: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes 
+
+// Citation Scope: DataTables script/initialization module
+// Date: 12/01/2022
+// Copied from DataTables official docs
+// Source: https://datatables.net/examples/styling/bootstrap5.html 
+
+// Citation Scope: Navigation bar module
+// Date: 12/01/2022
+// Code adapted from official Bootstraps official docs
+// Source: https://getbootstrap.com/docs/4.0/components/navbar/
+
+// Citation Scope: Lines to update a form using HTML
+// Date: 12/01/2022
+// Adapted from:
+// Source: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/forms 
+
 /* 
     SETUP 
 */
-
 // Express
 const path = require('path');
 const express = require('express'); 
 const app = express(); 
 PORT = 9097; 
 app.use(express.static('public'));
-// app.use(express.static(path.join(__dirname, '/public'))); 
 app.use(express.json())
+
+// Citation for using multer to parse request body (for update functions)
+// Date: 11/21/2022
+// Adapted from code to get body from HTML request
+// Source URL: https://morioh.com/p/43487adbf5dc
 app.use(express.urlencoded({extended: true}));
 const multer = require('multer'); 
 const upload = multer(); 
@@ -33,8 +81,6 @@ if (typeof Handlebars !== 'undefined') {
       $('body').append('AFTER BODY');
     });
 }; 
-
-
 
 /* 
     ROUTES
@@ -154,10 +200,6 @@ app.get('/restaurants/edit_restaurant.html/:id', function(req, res) {
     data = req.params.id; 
     console.log(data)
     let restaurantID = data; 
-        // let restaurantName = (restaurant_name);
-        // let restaurantWebsite = (restaurant_website); 
-        // let restaurantEmail = (restaurant_email); 
-        // let restaurantCity = (city_id); 
     query1 = `SELECT * FROM Restaurants WHERE restaurant_id = ?`; 
     query2 = `SELECT * FROM Cities;`;
 
@@ -601,27 +643,26 @@ app.post('/restaurant_has_cuisines/edit_restaurant_cuisine.html/:id', function(r
             res.sendStatus(400); 
         }
         else { 
-            res.render('/restaurant_has_cuisines')
+            res.redirect('/restaurant_has_cuisines')
         }
     })
 }); 
 
 
-/// REVIEWS/USERS ROUTES
+/// REVIEWS ROUTES
 app.get('/reviews', function(req, res)
 {  
     let query1;
-
     // If there is no query string, we just perform a basic SELECT
     if (req.query.review_restaurant_name === undefined)
     {
         query1 = "SELECT * FROM Reviews;";              
     }
-
     // If there is a query string, we assume this is a search, and return desired results
     else
     {
-        query1 = `SELECT * FROM Reviews WHERE review_restaurant_name LIKE "${req.query.review_restaurant_name}%"`
+        //query1 = "SELECT * FROM Reviews;";// WHERE review_restaurant_id = 1;";     
+        query1 = `Select * FROM Reviews INNER JOIN Restaurants ON Reviews.review_restaurant_id = Restaurants.restaurant_id WHERE restaurant_name LIKE "${req.query.review_restaurant_name}%";`;         
     }
 
     let query2 = "SELECT * FROM Users;";
@@ -650,24 +691,87 @@ app.get('/reviews', function(req, res)
                 // Overwrite the review ID with the name of the restaurant in the review object
                 reviews = reviews.map(review => {
                     return Object.assign(review, {review_restaurant_id: restaurantmap[review.review_restaurant_id]})
-                })
-
+                }) 
+                
                 let usermap = {};
                 users.map(user => {
                     let user_id = parseInt(user.user_id, 10);
     
                     usermap[user_id] = user["user_first_name"] + " " + user["user_last_name"];
-                })
+                }) 
 
                 // Overwrite the city ID with the name of the city in the review object
                 reviews = reviews.map(review => {
                     return Object.assign(review, {review_user_id: usermap[review.review_user_id]})
-                })        
+                })  
 
                 return res.render('reviews', {data: reviews, restaurants: restaurants, users:users});                  // Render the index.hbs file, and also send the renderer
-            })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
+            })                                                     
         })
     })
+}); 
+
+// Reviews Routes
+app.get('/reviews', function(req, res)
+    {  
+        let query1;
+
+        // If there is no query string, we just perform a basic SELECT
+        if (req.query.review_restaurant_name === undefined)
+        {
+            query1 = "SELECT * FROM Reviews;";              
+        }
+
+        // If there is a query string, we assume this is a search, and return desired results
+        else
+        {
+            query1 = `SELECT * FROM Reviews WHERE review_restaurant_name LIKE "${req.query.review_restaurant_name}%"`
+        }
+
+        let query2 = "SELECT * FROM Users;";
+        let query3 = "SELECT * FROM Restaurants;";
+
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+
+            let reviews = rows;
+
+            db.pool.query(query2, function(error, rows, fields){ // Run the second query
+
+                let users = rows;
+            
+                db.pool.query(query3, function(error, rows, fields){    // Run the third query
+
+                    let restaurants = rows; 
+
+                    let restaurantmap = {};
+                    restaurants.map(restaurant => {
+                        let restaurant_id = parseInt(restaurant.restaurant_id, 10);
+        
+                        restaurantmap[restaurant_id] = restaurant["restaurant_name"];
+                    })
+
+                    // Overwrite the review ID with the name of the restaurant in the review object
+                    reviews = reviews.map(review => {
+                        return Object.assign(review, {review_restaurant_id: restaurantmap[review.review_restaurant_id]})
+                    })
+
+                    let usermap = {};
+                    users.map(user => {
+                        let user_id = parseInt(user.user_id, 10);
+        
+                        usermap[user_id] = user["user_first_name"] + " " + user["user_last_name"];
+                    })
+
+                    // Overwrite the city ID with the name of the city in the review object
+                    reviews = reviews.map(review => {
+                        return Object.assign(review, {review_user_id: usermap[review.review_user_id]})
+                    })        
+
+                    return res.render('reviews', {data: reviews, restaurants: restaurants, users:users});                  // Render the index.hbs file, and also send the renderer
+                })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
+            })
+        })
 }); 
 
 app.get('/users', function(req, res)
@@ -688,7 +792,7 @@ app.get('/users', function(req, res)
 
 
         let query2 = "SELECT * FROM Cities;";
-        let query0 = "SELECT user_id, CONCAT_WS(' ', user_first_name, user_last_name) AS User, user_email AS EfMail Address, city_name AS `City FROM Users INNER JOIN Cities ON user_city_id = city_id";
+        //let query0 = "SELECT user_id, CONCAT_WS(' ', user_first_name, user_last_name) AS User, user_email AS EfMail Address, city_name AS `City FROM Users INNER JOIN Cities ON user_city_id = city_id";
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
 
@@ -766,11 +870,12 @@ app.post('/add-review-ajax', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    /* Capture NULL values
+    // *** We need this to capture NULL values
     let review_user_id = data.review_user_id; 
     if (review_user_id.length === 0) { 
         review_user_id = 'NULL'
-    };  */
+    }
+    else {review_user_id = data.review_user_id};
 
     // Get today's date
     // from https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
@@ -781,7 +886,7 @@ app.post('/add-review-ajax', function(req, res)
     today = yyyy + '/' + mm + '/' + dd;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Reviews (review_rating, review_date, review_restaurant_id, review_user_id) VALUES (${data.review_restaurant_rating}, '${today}',  ${data.review_restaurant_id}, ${data.review_user_id})`;
+    query1 = `INSERT INTO Reviews (review_rating, review_date, review_restaurant_id, review_user_id) VALUES (${data.review_restaurant_rating}, '${today}',  ${data.review_restaurant_id}, ${review_user_id})`;
     db.pool.query(query1, function(error, rows, fields){
         
 
@@ -831,7 +936,44 @@ app.delete('/delete-user-ajax', function(req,res,next){
     })
 });
 
-app.put('/put-user-ajax', function(req,res,next){
+app.get('/users/edit_user.html/:id', function(req, res) {
+    data = req.params.id; 
+    //console.log(data)
+    let userID = data; 
+
+    query1 = `SELECT * FROM Users WHERE user_id = ?`; 
+    query2 = `SELECT * FROM Cities;`;
+
+    // Run 1st query
+    db.pool.query(query1, [userID], function(error, rows, fields){
+
+        // Save the users
+        let users = rows;
+
+        // Run 2nd query
+        db.pool.query(query2, (error, rows, fields) => {
+            // Save cities
+            let cities = rows;
+
+            // Construct an object for reference in the table -- USE Array.map 
+            let citiesMap = {};
+            cities.map(city => {
+                city_id = parseInt(city.city_id, 10)
+                citiesMap[city_id] = city["city_name"]; 
+            })
+
+            // Overwrite the Cities ID with the city name in the Restaurants object
+            users = users.map(user => {
+                return Object.assign(user, {city: citiesMap[user.city_id]}); 
+            })
+
+            //console.log({data: users})
+            return res.render('edit_user', {data: users, cities: cities});
+        })
+    })
+});
+
+app.post('/users/edit_user.html/:id', function(req,res,next){
     let data = req.body;
     console.log(data);
   
@@ -839,7 +981,7 @@ app.put('/put-user-ajax', function(req,res,next){
     let user_first_name = data.user_first_name;
     let user_last_name = data.user_last_name;
     let user_email = data.user_email;
-    let user_city_id = parseInt(data.user_city_id);
+    let user_city_id = parseInt(data.user_city);
   
     let queryUpdateUser = `UPDATE Users SET user_first_name = ?, user_last_name = ?, user_email = ?, user_city_id = ? WHERE Users.user_id = ?`; 
     let selectUser = `SELECT * FROM Users WHERE Users.user_id = ?`;
@@ -863,7 +1005,7 @@ app.put('/put-user-ajax', function(req,res,next){
                         console.log(error);
                         res.sendStatus(400);
                     } else {
-                        res.send(rows);
+                        res.redirect('/users'); 
                     }
                 })
             }          
@@ -871,7 +1013,6 @@ app.put('/put-user-ajax', function(req,res,next){
 
   app.put('/put-review-ajax', function(req,res,next){
     let data = req.body;
-    console.log(data);
   
     let review_id = parseInt(data.review_id);
     let updated_restaurant_rating = parseInt(data.updated_restaurant_rating);
@@ -898,7 +1039,7 @@ app.put('/put-user-ajax', function(req,res,next){
                         console.log(error);
                         res.sendStatus(400);
                     } else {
-                        res.redirect(rows);
+                        res.send(rows);
                     }
                 })
             }          
