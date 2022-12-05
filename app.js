@@ -6,7 +6,7 @@
 const path = require('path');
 const express = require('express'); 
 const app = express(); 
-PORT = 10500; 
+PORT = 9097; 
 app.use(express.static('public'));
 // app.use(express.static(path.join(__dirname, '/public'))); 
 app.use(express.json())
@@ -908,5 +908,5 @@ app.put('/put-user-ajax', function(req,res,next){
     LISTENER
 */
 app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
-    console.log('Express started on http://flip2.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.')
+    console.log('Express started on http://flip3.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.')
 });
