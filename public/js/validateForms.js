@@ -1,4 +1,5 @@
-// Data Validation for required fields Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
+// Data Validation for required fields 
+// Source: https://stackoverflow.com/questions/57087145/check-if-all-required-fields-are-filled-in-a-specific-div 
 // Checks if every required field is filled out before sending alert
 function validateAddForm(formID) {
     let requiredFields = document.getElementById(formID)
