@@ -18,6 +18,10 @@ function validateAddForm(formID) {
         entity = 'city'
     } if (formID.includes('cuisine')) {
         entity = 'cuisine'
+    } if (formID.includes('user')) {
+        entity = 'user'
+    } if (formID.includes('review')) {
+        entity = 'review'
     }
     let checker = arr => arr.every(v => v === true); 
     if (checker(valid)) {

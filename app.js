@@ -6,7 +6,7 @@
 const path = require('path');
 const express = require('express'); 
 const app = express(); 
-PORT = 9097; 
+PORT = 9087; 
 app.use(express.static(path.join(__dirname, '/public'))); 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
@@ -541,54 +541,37 @@ app.get('/restaurant_has_cuisines/edit_restaurant_cuisine.html/:id', function(re
     // Run 1st query
     db.pool.query(query1, [restaurantCuisineID], function(error, rows, fields){    // Execute the query
 
-        let restaurantCuisines = rows;
-        console.log(restaurantCuisines)
+    let restaurantCuisines = rows;
+    console.log(restaurantCuisines)
 
-        db.pool.query(query2, function(error, rows, fields){ // Run the second query
+    db.pool.query(query2, function(error, rows, fields){ // Run the second query
 
-/// REVIEWS ROUTES
-app.get('/reviews', function(req, res)
-{  
-    let query1;
-    // If there is no query string, we just perform a basic SELECT
-    if (req.query.review_restaurant_name === undefined)
-    {
-        query1 = "SELECT * FROM Reviews;";              
-    }
-    // If there is a query string, we assume this is a search, and return desired results
-    else
-    {
-        //query1 = "SELECT * FROM Reviews;";// WHERE review_restaurant_id = 1;";     
-        query1 = `Select * FROM Reviews INNER JOIN Restaurants ON Reviews.review_restaurant_id = Restaurants.restaurant_id WHERE restaurant_name LIKE "${req.query.review_restaurant_name}%";`;         
-    }
+            let cuisinemap = {};
+            cuisines.map(cuisine => {
+                let cuisine_id = parseInt(cuisine.cuisine_id, 10);
 
-                let cuisinemap = {};
-                cuisines.map(cuisine => {
-                    let cuisine_id = parseInt(cuisine.cuisine_id, 10);
-    
-                    cuisinemap[cuisine_id] = cuisine["cuisine_name"];
-                })
+                cuisinemap[cuisine_id] = cuisine["cuisine_name"];
+            })
 
-                // Overwrite the restaurantCuisine ID with the name of the cuisine in the review object
-                restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
-                    return Object.assign(restaurantCuisine, {cuisine_id: cuisinemap[restaurantCuisine.cuisine_id]})
-                })
+            // Overwrite the restaurantCuisine ID with the name of the cuisine in the review object
+            restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
+                return Object.assign(restaurantCuisine, {cuisine_id: cuisinemap[restaurantCuisine.cuisine_id]})
+            })
 
-                let restaurantmap = {};
-                restaurants.map(restaurant => {
-                    let restaurant_id = parseInt(restaurant.restaurant_id, 10);
-    
-                    restaurantmap[restaurant_id] = restaurant["restaurant_name"];
-                })
+            let restaurantmap = {};
+            restaurants.map(restaurant => {
+                let restaurant_id = parseInt(restaurant.restaurant_id, 10);
 
-                // Overwrite the restaurant ID with the name of the restaurant in the restaurantCuisine object
-                restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
-                    return Object.assign(restaurantCuisine, {restaurant_id: restaurantmap[restaurantCuisine.restaurant_id]})
-                })        
+                restaurantmap[restaurant_id] = restaurant["restaurant_name"];
+            })
 
-                return res.render('edit_restaurant_cuisine', {data: restaurantCuisines, restaurants: restaurants, cuisines: cuisines});                  // Render the index.hbs file, and also send the renderer
-            })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
-        })
+            // Overwrite the restaurant ID with the name of the restaurant in the restaurantCuisine object
+            restaurantCuisines = restaurantCuisines.map(restaurantCuisine => {
+                return Object.assign(restaurantCuisine, {restaurant_id: restaurantmap[restaurantCuisine.restaurant_id]})
+            })        
+
+            return res.render('edit_restaurant_cuisine', {data: restaurantCuisines, restaurants: restaurants, cuisines: cuisines});                  // Render the index.hbs file, and also send the renderer
+        })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
     })
 });
 
@@ -616,21 +599,20 @@ app.post('/restaurant_has_cuisines/edit_restaurant_cuisine.html/:id', function(r
 }); 
 
 
-/// REVIEWS/USERS ROUTES
+/// REVIEWS ROUTES
 app.get('/reviews', function(req, res)
 {  
     let query1;
-
     // If there is no query string, we just perform a basic SELECT
     if (req.query.review_restaurant_name === undefined)
     {
         query1 = "SELECT * FROM Reviews;";              
     }
-
     // If there is a query string, we assume this is a search, and return desired results
     else
     {
-        query1 = `SELECT * FROM Reviews WHERE review_restaurant_name LIKE "${req.query.review_restaurant_name}%"`
+        //query1 = "SELECT * FROM Reviews;";// WHERE review_restaurant_id = 1;";     
+        query1 = `Select * FROM Reviews INNER JOIN Restaurants ON Reviews.review_restaurant_id = Restaurants.restaurant_id WHERE restaurant_name LIKE "${req.query.review_restaurant_name}%";`;         
     }
 
     let query2 = "SELECT * FROM Users;";
@@ -660,7 +642,6 @@ app.get('/reviews', function(req, res)
                 reviews = reviews.map(review => {
                     return Object.assign(review, {review_restaurant_id: restaurantmap[review.review_restaurant_id]})
                 }) 
-                //  console.log(reviews); 
                 
                 let usermap = {};
                 users.map(user => {
@@ -675,7 +656,7 @@ app.get('/reviews', function(req, res)
                 })  
 
                 return res.render('reviews', {data: reviews, restaurants: restaurants, users:users});                  // Render the index.hbs file, and also send the renderer
-            })                                                      // an object where 'data' is equal to the 'rows' we received back from the query
+            })                                                     
         })
     })
 }); 
@@ -843,7 +824,7 @@ app.delete('/delete-user-ajax', function(req,res,next){
 
 app.get('/users/edit_user.html/:id', function(req, res) {
     data = req.params.id; 
-    console.log(data)
+    //console.log(data)
     let userID = data; 
 
     query1 = `SELECT * FROM Users WHERE user_id = ?`; 
@@ -872,7 +853,7 @@ app.get('/users/edit_user.html/:id', function(req, res) {
                 return Object.assign(user, {city: citiesMap[user.city_id]}); 
             })
 
-            console.log({data: users})
+            //console.log({data: users})
             return res.render('edit_user', {data: users, cities: cities});
         })
     })
@@ -886,7 +867,7 @@ app.post('/users/edit_user.html/:id', function(req,res,next){
     let user_first_name = data.user_first_name;
     let user_last_name = data.user_last_name;
     let user_email = data.user_email;
-    let user_city_id = parseInt(data.user_city_id);
+    let user_city_id = parseInt(data.user_city);
   
     let queryUpdateUser = `UPDATE Users SET user_first_name = ?, user_last_name = ?, user_email = ?, user_city_id = ? WHERE Users.user_id = ?`; 
     let selectUser = `SELECT * FROM Users WHERE Users.user_id = ?`;
@@ -910,7 +891,7 @@ app.post('/users/edit_user.html/:id', function(req,res,next){
                         console.log(error);
                         res.sendStatus(400);
                     } else {
-                        res.send(rows);
+                        res.redirect('/users'); 
                     }
                 })
             }          

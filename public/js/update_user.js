@@ -22,13 +22,6 @@ updateUserForm.addEventListener("submit", function (e) {
     let emailAddressValue = updateEmailAddress.value;
     let cityValue = updateCity.value;
 
-    /* Capture NULL values when possible
-    if (firstNameValue.length === 0) {
-        // set firstNameValue equal to current name for the this userId 
-    } */
-
-    // currently the database table for Users does not allow updating values to NULL
-    // so we must abort if being passed NULL for Cities -- check on other values
 
     // Put our data we want to send in a javascript object
     let data = {
@@ -48,7 +41,6 @@ updateUserForm.addEventListener("submit", function (e) {
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
-            console.log("this is running");
             // Add the new data to the table
             updateRow(xhttp.response, userIdValue);
             location.reload();
