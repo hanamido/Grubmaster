@@ -1,9 +1,12 @@
+// Delete a restaurant-cuisine
 function deleteRestaurantCuisine(restaurantCuisineID) {
     let link = '/restaurant_has_cuisines/delete-restaurant-cuisine-ajax';
+    // Put our data we want to send in a javascript object
     let data = {
         restaurant_cuisine_id: restaurantCuisineID
     }; 
 
+    // Setup our AJAX request
     $.ajax({
         url: link, 
         type: 'DELETE', 
