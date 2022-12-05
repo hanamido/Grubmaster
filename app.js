@@ -8,8 +8,11 @@ const express = require('express');
 const app = express(); 
 PORT = 10500; 
 app.use(express.static('public'));
-// app.use(express.static(path.join(__dirname, '/public'))); 
 app.use(express.json())
+// Citation for using multer to parse request body (for update functions)
+// Date: 11/21/2022
+// Adapted from code to get body from HTML request
+// Source URL: https://morioh.com/p/43487adbf5dc
 app.use(express.urlencoded({extended: true}));
 const multer = require('multer'); 
 const upload = multer(); 
@@ -154,10 +157,6 @@ app.get('/restaurants/edit_restaurant.html/:id', function(req, res) {
     data = req.params.id; 
     console.log(data)
     let restaurantID = data; 
-        // let restaurantName = (restaurant_name);
-        // let restaurantWebsite = (restaurant_website); 
-        // let restaurantEmail = (restaurant_email); 
-        // let restaurantCity = (city_id); 
     query1 = `SELECT * FROM Restaurants WHERE restaurant_id = ?`; 
     query2 = `SELECT * FROM Cities;`;
 
