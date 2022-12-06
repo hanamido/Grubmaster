@@ -463,7 +463,7 @@ app.get('/restaurant_has_cuisines', function(req, res) {   // Display all Restau
     showCuisinesQuery = `SELECT * FROM Cuisines;`;
 
     // If there is no query string, perform a basic SELECT
-    if (req.query.rc_restaurantSearch === undefined && req.query.rc_cuisineSearch === undefined) {
+    if (req.query.rc_restaurantSearch === undefined) {
         showRestaurantCuisinesQuery = `SELECT restaurant_cuisine_id, Restaurants.restaurant_name as restaurants, Cuisines.cuisine_name as cuisines FROM Restaurant_has_cuisines 
         INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
         INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id;`; 
@@ -643,7 +643,7 @@ app.post('/restaurant_has_cuisines/edit_restaurant_cuisine.html/:id', function(r
 }); 
 
 
-/// REVIEWS ROUTES
+// Reviews and Users Routes
 app.get('/reviews', function(req, res)
 {  
     let query1;
