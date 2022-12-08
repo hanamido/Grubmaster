@@ -648,7 +648,7 @@ app.post('/restaurant_has_cuisines/edit_restaurant_cuisine.html/:id', function(r
 }); 
 
 
-/// REVIEWS ROUTES
+// Reviews and Users Routes
 app.get('/reviews', function(req, res)
 {  
     let query1;
