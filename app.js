@@ -870,11 +870,11 @@ app.post('/add-review-ajax', function(req, res)
     let data = req.body;
 
     // *** We need this to capture NULL values
-    let review_user_id = data.review_user_id; 
-    if (review_user_id.length === 0) { 
+    let review_user_id = parseInt(data.review_user_id); 
+    if (isNaN(review_user_id)) { 
         review_user_id = null;
     }
-    else {review_user_id = `'${data.review_user_id}'`};
+    else {review_user_id = `${data.review_user_id}`};
 
     // Get today's date
     // from https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
@@ -1014,13 +1014,19 @@ app.post('/users/edit_user.html/:id', function(req,res,next){
     let data = req.body;
   
     let review_id = parseInt(data.review_id);
+    let updated_restaurant = parseInt(data.updated_restaurant); 
     let updated_restaurant_rating = parseInt(data.updated_restaurant_rating);
+    let updated_user = parseInt(data.updated_user);
+
+    // capture null value for user
+    if (isNaN(updated_user)) {
+        updated_user = null; }
   
-    let queryUpdateReview = `UPDATE Reviews SET review_rating = ? WHERE review_id = ?`; 
+    let queryUpdateReview = `UPDATE Reviews SET review_restaurant_id = ?, review_rating = ?, review_user_id = ? WHERE review_id = ?`; 
     let selectReview = `SELECT * FROM Reviews WHERE Reviews.review_id = ?`;
   
         // Run the 1st query
-        db.pool.query(queryUpdateReview, [updated_restaurant_rating, review_id], function(error, rows, fields) {
+        db.pool.query(queryUpdateReview, [updated_restaurant, updated_restaurant_rating, updated_user, review_id], function(error, rows, fields) {
             if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.

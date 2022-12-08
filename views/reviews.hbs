@@ -139,6 +139,13 @@ $(document).ready(function () {
                 <option value="{{this.review_id}}">{{this.review_id}}</option>
                 {{/each}}
             </select></p>
+        <p><label>* Restaurant Name: </label> 
+            <select name="review_restaurant_id" id="updated_review_restaurant" required>
+                <option value="">Select a Restaurant</option>
+                {{#each restaurants}}
+                <option value="{{this.restaurant_id}}">{{this.restaurant_name}}</option>
+                {{/each}}
+            </select></p>
         <p><label> Rating: </label>
             <select name="review_restaurant_rating" id="updated_restaurant_rating" required>
                 <option value="">Select a Rating</option>
@@ -147,7 +154,14 @@ $(document).ready(function () {
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
-            </select></p>             
+            </select></p>          
+        <p><label>User Name: </label> 
+            <select name="review_user" id="updated_review_user">
+                <option value="">Select a User</option>
+                {{#each users}}
+                <option value="{{this.user_id}}">{{this.user_first_name}} {{this.user_last_name}}</option>
+                {{/each}}
+            </select></p>   
     </fieldset>
     <input type="submit" id="update-review-form-ajax" value="Update Review" class="btn btn-primary">
     <a href="/reviews"><input type="button" value="Cancel" class="btn btn-secondary"></a></p>

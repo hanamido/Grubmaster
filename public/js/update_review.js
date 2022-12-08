@@ -9,16 +9,22 @@ updateReviewForm.addEventListener("submit", function (e) {
 
     // Get form fields we need to get data from
     let reviewId = document.getElementById("selected_review_id")
+    let updatedReviewRestaurant = document.getElementById("updated_review_restaurant"); 
     let updatedRestaurantRating = document.getElementById("updated_restaurant_rating");
+    let updatedReviewUser = document.getElementById("updated_review_user"); 
 
     // Get the values from the form fields
     let reviewIdValue = reviewId.value;
+    let newRestaurantValue = updatedReviewRestaurant.value; 
     let updatedRestaurantRatingValue = updatedRestaurantRating.value;
+    let newUserValue = updatedReviewUser.value; 
 
     // Pull our data we want to send in a JS object
     let data = {
         review_id: reviewIdValue,
+        updated_restaurant: newRestaurantValue, 
         updated_restaurant_rating: updatedRestaurantRatingValue, 
+        updated_user: newUserValue,
     }
 
     // Setup AJAX request
@@ -31,7 +37,7 @@ updateReviewForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             console.log(data);
             // Add the new data to the table
-            updateRow(xhttp.response, reviewIdValue);
+            updateRows(xhttp.response, reviewIdValue);
             location.reload();
             alert(`Succesfully Updated Review ID #${data.review_id}! Refreshing page...`);
 
@@ -48,7 +54,7 @@ updateReviewForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data)); 
 }); 
 
-function updateRow(data, reviewIdValue) {
+function updateRows(data, reviewIdValue) {
 
     let table = document.getElementById("reviews-table");
 
@@ -62,8 +68,15 @@ function updateRow(data, reviewIdValue) {
             // Get the location of the row where we found the matching restaurant ID
             let updateRowIndex = currentTable.getElementsByTagName("tr")[counter]; 
 
+            let reviewRestaurantTd = updateRowIndex.getElementsByTagName("td")[1];
+            reviewRestaurantTd.innerHTML = data.updated_restaurant; 
+
             let reviewRatingTd = updateRowIndex.getElementsByTagName("td")[2]; 
             reviewRatingTd.innerHTML = data.updated_restaurant_rating;
+
+            let reviewUserTd = updateRowIndex.getElementsByTagName("td")[4];
+            reviewUserTd.innerHTMl = data.updated_user; 
+
         }
     }
 }; 
