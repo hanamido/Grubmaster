@@ -50,7 +50,7 @@
 const path = require('path');
 const express = require('express'); 
 const app = express(); 
-PORT = 9097; 
+PORT = 10500; 
 app.use(express.static('public'));
 app.use(express.json())
 
@@ -142,21 +142,24 @@ app.get('/restaurants', function(req, res) {   // Display all Restaurants and th
 app.post('/restaurants/add-restaurant-form', function(req, res){
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
-    console.log(data)
+    let restaurant_website = data['input-restaurant-website']; 
+    let restaurant_email = data['input-restaurant-email']; 
 
     // Capture NULL values
-    let restaurant_website = data['input-restaurant-website']; 
-    if (restaurant_website.length === 0 ) { 
-        restaurant_website = 'NULL';
+    if (restaurant_website.length === 0) { 
+        restaurant_website = null;
+    } else {
+        restaurant_website = `'${data['input-restaurant-website']}'`
     }; 
 
-    let restaurant_email = data['input-restaurant-email']; 
     if (restaurant_email.length === 0) { 
-        restaurant_email = 'NULL';
-    }; 
+        restaurant_email = null;
+    } else {
+        restaurant_email = `'${data['input-restaurant-email']}'`
+    };
 
     // Create the query and run it on the database
-    query1 =`INSERT INTO Restaurants (restaurant_name, restaurant_website, restaurant_email, city_id) VALUES ('${data['input-restaurant-name']}', '${restaurant_website}', '${restaurant_email}', '${data['input-restaurant-city']}');`;
+    query1 =`INSERT INTO Restaurants (restaurant_name, restaurant_website, restaurant_email, city_id) VALUES ('${data['input-restaurant-name']}', ${restaurant_website}, ${restaurant_email}, '${data['input-restaurant-city']}');`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error
@@ -241,6 +244,8 @@ app.post('/restaurants/edit_restaurant.html/:id', upload.none(), function(req, r
     var updateRestWebsite = formData.restaurant_website; 
     var updateRestEmail = formData.restaurant_email; 
     var updateRestCity = parseInt(formData.restaurant_city); 
+
+
 
     query1 = `UPDATE Restaurants SET restaurant_name = ?, restaurant_website = ?, restaurant_email = ?, city_id = ? WHERE restaurant_id = ?`; 
 
@@ -463,7 +468,7 @@ app.get('/restaurant_has_cuisines', function(req, res) {   // Display all Restau
     showCuisinesQuery = `SELECT * FROM Cuisines;`;
 
     // If there is no query string, perform a basic SELECT
-    if (req.query.rc_restaurantSearch === undefined && req.query.rc_cuisineSearch === undefined) {
+    if (req.query.rc_restaurantSearch === undefined) {
         showRestaurantCuisinesQuery = `SELECT restaurant_cuisine_id, Restaurants.restaurant_name as restaurants, Cuisines.cuisine_name as cuisines FROM Restaurant_has_cuisines 
         INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
         INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id;`; 
@@ -475,12 +480,6 @@ app.get('/restaurant_has_cuisines', function(req, res) {   // Display all Restau
         INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id
         WHERE Restaurants.restaurant_name LIKE "${req.query.rc_restaurantSearch}%";`; 
     } 
-    // if (req.query.rc_cuisineSearch !== undefined && req.query.rc_restaurantSearch === undefined) {
-    //     showRestaurantCuisinesQuery = `SELECT restaurant_cuisine_id, Restaurants.restaurant_name as restaurants, Cuisines.cuisine_name as cuisines FROM Restaurant_has_cuisines 
-    //     INNER JOIN Restaurants on Restaurant_has_cuisines.restaurant_id = Restaurants.restaurant_id 
-    //     INNER JOIN Cuisines on Restaurant_has_cuisines.cuisine_id = Cuisines.cuisine_id
-    //     WHERE Cuisines.cuisine_name LIKE "${req.query.rc_cuisineSearch}%";`; 
-    // }
 
     db.pool.query(showRestaurantCuisinesQuery, function(error, rows, fields){    // Execute the query
 
@@ -649,7 +648,7 @@ app.post('/restaurant_has_cuisines/edit_restaurant_cuisine.html/:id', function(r
 }); 
 
 
-/// REVIEWS ROUTES
+// Reviews and Users Routes
 app.get('/reviews', function(req, res)
 {  
     let query1;
@@ -873,9 +872,9 @@ app.post('/add-review-ajax', function(req, res)
     // *** We need this to capture NULL values
     let review_user_id = data.review_user_id; 
     if (review_user_id.length === 0) { 
-        review_user_id = 'NULL'
+        review_user_id = null;
     }
-    else {review_user_id = data.review_user_id};
+    else {review_user_id = `'${data.review_user_id}'`};
 
     // Get today's date
     // from https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
