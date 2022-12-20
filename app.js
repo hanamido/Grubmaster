@@ -50,7 +50,8 @@
 const path = require('path');
 const express = require('express'); 
 const app = express(); 
-PORT = 10500; 
+const hostname = '0.0.0.0';
+const PORT = 8080;
 app.use(express.static('public'));
 app.use(express.json())
 
@@ -1060,6 +1061,6 @@ app.post('/users/edit_user.html/:id', function(req,res,next){
 /*
     LISTENER
 */
-app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
+app.listen(PORT, "0.0.0.0", function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
