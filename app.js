@@ -66,18 +66,8 @@ const upload = multer();
 var mysql = require('mysql');
 var mysql2 = require('mysql2'); 
 
-var http = require('http');
-http.createServer(function (req,res){ 
-    res.write('Nodejs started using xampp'); res.end();}).listen(80);
-console.log('http server started'); 
-
 // Database
 const db = require('./database/db-connector'); 
-
-// database.connect((err) => {
-//     if (err) {throw err}
-//     console.log("Connected to database!")
-// });
 
 // Handlebars
 const { engine } = require('express-handlebars');  // Import express-handlebars
@@ -1061,6 +1051,6 @@ app.post('/users/edit_user.html/:id', function(req,res,next){
 /*
     LISTENER
 */
-app.listen(PORT, "0.0.0.0", function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
+app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
