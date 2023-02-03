@@ -2,4 +2,4 @@ A database for a website where a database administrator can create, read, update
 
 Full description of the app is in the PDF file above: Grubmaster Description :)
 
-Tech Stack: MySQL, Javascript, NodeJS, Handlebars, Bootstrap (for styling)
+Tech Stack: MySQL, Javascript, NodeJS, Handlebars, HTML/CSS Bootstrap (for styling)
